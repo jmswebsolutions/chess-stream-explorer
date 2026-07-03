@@ -1,97 +1,32 @@
-import React, { useState, useMemo } from 'react';
 import { FaSync } from 'react-icons/fa';
-import { useStreamers } from '../hooks/useStreamers';
+import { useHome } from '../hooks/useHome';
 import { Stats } from '../components/Stats';
 import { Filters } from '../components/Filters';
-import { Sort, SortOption } from '../components/Sort';
+import { Sort } from '../components/Sort';
 import { StreamerCard } from '../components/StreamerCard';
 import { Skeleton } from '../components/Skeleton';
 import { ErrorState } from '../components/ErrorState';
-import { Streamer } from '../types/streamer';
+import { Streamer } from '../api/chessApi';
 
-export const Home: React.FC = () => {
-  const { streamers, loading, error, refresh } = useStreamers();
-
-  const [searchTerm, setSearchTerm] = useState('');
-  const [showOnlineOnly, setShowOnlineOnly] = useState(false);
-  const [showOfflineOnly, setShowOfflineOnly] = useState(false);
-  const [showCommunityOnly, setShowCommunityOnly] = useState(false);
-  const [sortBy, setSortBy] = useState<SortOption>('online-first');
-
-  const filteredAndSortedStreamers = useMemo(() => {
-    let filtered = streamers;
-
-    // Apply search filter
-    if (searchTerm) {
-      filtered = filtered.filter((streamer) =>
-        streamer.username.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    // Apply status filters
-    if (showOnlineOnly && showOfflineOnly) {
-      // Both selected - show all
-    } else if (showOnlineOnly) {
-      filtered = filtered.filter((streamer) => streamer.status === 'live');
-    } else if (showOfflineOnly) {
-      filtered = filtered.filter((streamer) => streamer.status === 'offline');
-    }
-
-    // Apply community filter
-    if (showCommunityOnly) {
-      filtered = filtered.filter((streamer) => streamer.is_community_streamer);
-    }
-
-    // Apply sorting
-    const sorted = [...filtered];
-    switch (sortBy) {
-      case 'name-asc':
-        sorted.sort((a, b) => a.username.localeCompare(b.username));
-        break;
-      case 'name-desc':
-        sorted.sort((a, b) => b.username.localeCompare(a.username));
-        break;
-      case 'online-first':
-        sorted.sort((a, b) => {
-          if (a.status === 'live' && b.status !== 'live') return -1;
-          if (a.status !== 'live' && b.status === 'live') return 1;
-          return 0;
-        });
-        break;
-      case 'offline-first':
-        sorted.sort((a, b) => {
-          if (a.status === 'offline' && b.status !== 'offline') return -1;
-          if (a.status !== 'offline' && b.status === 'offline') return 1;
-          return 0;
-        });
-        break;
-    }
-
-    return sorted;
-  }, [
+export const Home = () => {
+  const {
     streamers,
+    loading,
+    error,
+    stats,
     searchTerm,
+    setSearchTerm,
     showOnlineOnly,
+    setShowOnlineOnly,
     showOfflineOnly,
+    setShowOfflineOnly,
     showCommunityOnly,
+    setShowCommunityOnly,
     sortBy,
-  ]);
-
-  const stats = useMemo(() => {
-    return {
-      total: streamers.length,
-      online: streamers.filter((s) => s.status === 'live').length,
-      offline: streamers.filter((s) => s.status === 'offline').length,
-      community: streamers.filter((s) => s.is_community_streamer).length,
-    };
-  }, [streamers]);
-
-  const handleClearFilters = () => {
-    setSearchTerm('');
-    setShowOnlineOnly(false);
-    setShowOfflineOnly(false);
-    setShowCommunityOnly(false);
-  };
+    setSortBy,
+    handleClearFilters,
+    refresh,
+  } = useHome();
 
   if (error) {
     return (
@@ -149,12 +84,12 @@ export const Home: React.FC = () => {
           <div className="lg:col-span-2">
             <div className="bg-gray-800 rounded-lg p-4 shadow-lg">
               <h2 className="text-white font-semibold mb-2">
-                Results: {filteredAndSortedStreamers.length}
+                Results: {streamers.length}
               </h2>
               <p className="text-gray-400 text-sm">
                 {loading
                   ? 'Loading streamers...'
-                  : filteredAndSortedStreamers.length === 0
+                  : streamers.length === 0
                   ? 'No streamers match your filters'
                   : 'Showing streamers based on your filters'}
               </p>
@@ -168,7 +103,7 @@ export const Home: React.FC = () => {
               <Skeleton key={index} />
             ))}
           </div>
-        ) : filteredAndSortedStreamers.length === 0 ? (
+        ) : streamers.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-400 text-lg">
               No streamers found matching your criteria
@@ -176,7 +111,7 @@ export const Home: React.FC = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredAndSortedStreamers.map((streamer: Streamer) => (
+            {streamers.map((streamer: Streamer) => (
               <StreamerCard key={streamer.username} streamer={streamer} />
             ))}
           </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaTwitch, FaYoutube, FaExternalLinkAlt } from 'react-icons/fa';
 import { Badge } from './Badge';
-import { Streamer } from '../types/streamer';
+import { Streamer } from '../api/chessApi';
 
 interface StreamerCardProps {
   streamer: Streamer;

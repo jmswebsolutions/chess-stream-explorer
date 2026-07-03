@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { chessApi } from '../services/chessApi';
-import { Streamer } from '../types/streamer';
+import { chessApi, Streamer } from '../api/chessApi';
 
 export const useStreamers = () => {
   const [streamers, setStreamers] = useState<Streamer[]>([]);
