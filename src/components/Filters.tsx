@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaSearch, FaFilter } from 'react-icons/fa';
+import { FaSearch, FaFilter, FaStar } from 'react-icons/fa';
 
 interface FiltersProps {
   searchTerm: string;
@@ -10,6 +10,8 @@ interface FiltersProps {
   onShowOfflineOnlyChange: (value: boolean) => void;
   showCommunityOnly: boolean;
   onShowCommunityOnlyChange: (value: boolean) => void;
+  showFavoritesOnly: boolean;
+  onShowFavoritesOnlyChange: (value: boolean) => void;
   onClearFilters: () => void;
 }
 
@@ -22,6 +24,8 @@ export const Filters: React.FC<FiltersProps> = ({
   onShowOfflineOnlyChange,
   showCommunityOnly,
   onShowCommunityOnlyChange,
+  showFavoritesOnly,
+  onShowFavoritesOnlyChange,
   onClearFilters,
 }) => {
   return (
@@ -72,6 +76,17 @@ export const Filters: React.FC<FiltersProps> = ({
               className="w-4 h-4 rounded bg-gray-700 border-gray-600 text-blue-500 focus:ring-blue-500"
             />
             Community Streamers
+          </label>
+
+          <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">
+            <input
+              type="checkbox"
+              checked={showFavoritesOnly}
+              onChange={(e) => onShowFavoritesOnlyChange(e.target.checked)}
+              className="w-4 h-4 rounded bg-gray-700 border-gray-600 text-yellow-500 focus:ring-yellow-500"
+            />
+            <FaStar className="text-yellow-400 text-xs" />
+            Favorites Only
           </label>
         </div>
 

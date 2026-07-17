@@ -5,14 +5,14 @@ interface StatsProps {
   total: number;
   online: number;
   offline: number;
-  community: number;
+  favorites: number;
 }
 
 export const Stats: React.FC<StatsProps> = ({
   total,
   online,
   offline,
-  community,
+  favorites,
 }) => {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
@@ -50,8 +50,8 @@ export const Stats: React.FC<StatsProps> = ({
         <div className="flex items-center gap-3">
           <FaStar className="text-yellow-400 text-2xl" />
           <div>
-            <p className="text-gray-400 text-sm">Community</p>
-            <p className="text-white text-2xl font-bold">{community}</p>
+            <p className="text-gray-400 text-sm">Favorites</p>
+            <p className="text-white text-2xl font-bold">{favorites}</p>
           </div>
         </div>
       </div>

@@ -1,14 +1,17 @@
 import { useState, useMemo } from 'react';
 import { useStreamers } from './useStreamers';
+import { useFavorites } from './useFavorites';
 import { SortOption } from '../components/Sort';
 
 export const useHome = () => {
   const { streamers, loading, error, refresh } = useStreamers();
+  const { favorites, toggleFavorite, isFavorite } = useFavorites();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
   const [showOfflineOnly, setShowOfflineOnly] = useState(false);
   const [showCommunityOnly, setShowCommunityOnly] = useState(false);
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>('online-first');
 
   const filteredAndSortedStreamers = useMemo(() => {
@@ -29,6 +32,10 @@ export const useHome = () => {
 
     if (showCommunityOnly) {
       filtered = filtered.filter((streamer) => streamer.is_community_streamer);
+    }
+
+    if (showFavoritesOnly) {
+      filtered = filtered.filter((streamer) => favorites.has(streamer.username));
     }
 
     const sorted = [...filtered];
@@ -62,6 +69,8 @@ export const useHome = () => {
     showOnlineOnly,
     showOfflineOnly,
     showCommunityOnly,
+    showFavoritesOnly,
+    favorites,
     sortBy,
   ]);
 
@@ -71,14 +80,16 @@ export const useHome = () => {
       online: streamers.filter((s) => s.status === 'live').length,
       offline: streamers.filter((s) => s.status === 'offline').length,
       community: streamers.filter((s) => s.is_community_streamer).length,
+      favorites: favorites.size,
     };
-  }, [streamers]);
+  }, [streamers, favorites]);
 
   const handleClearFilters = () => {
     setSearchTerm('');
     setShowOnlineOnly(false);
     setShowOfflineOnly(false);
     setShowCommunityOnly(false);
+    setShowFavoritesOnly(false);
   };
 
   return {
@@ -94,9 +105,13 @@ export const useHome = () => {
     setShowOfflineOnly,
     showCommunityOnly,
     setShowCommunityOnly,
+    showFavoritesOnly,
+    setShowFavoritesOnly,
     sortBy,
     setSortBy,
     handleClearFilters,
     refresh,
+    toggleFavorite,
+    isFavorite,
   };
 };

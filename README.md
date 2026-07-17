@@ -111,7 +111,9 @@ chess-stream-explorer/
 │   └── workflows/
 │       └── deploy.yml       # GitHub Actions workflow
 ├── src/
-│   ├── components/          # React components
+│   ├── api/                # Data layer - API communication
+│   │   └── chessApi.ts     # Chess.com API client with types
+│   ├── components/         # React components
 │   │   ├── Badge.tsx
 │   │   ├── ErrorState.tsx
 │   │   ├── Filters.tsx
@@ -121,16 +123,10 @@ chess-stream-explorer/
 │   │   ├── Stats.tsx
 │   │   └── StreamerCard.tsx
 │   ├── hooks/              # Custom React hooks
-│   │   └── useStreamers.ts
+│   │   ├── useStreamers.ts # Data fetching hook
+│   │   └── useHome.ts      # Application logic hook
 │   ├── pages/              # Page components
-│   │   └── Home.tsx
-│   ├── services/           # API services
-│   │   └── chessApi.ts
-│   ├── types/              # TypeScript types
-│   │   └── streamer.ts
-│   ├── utils/              # Utility functions
-│   ├── assets/             # Static assets
-│   ├── styles/             # Global styles
+│   │   └── Home.tsx         # Main page (presentation only)
 │   ├── App.tsx             # Root component
 │   ├── main.tsx            # Entry point
 │   ├── index.css           # Global CSS
@@ -161,6 +157,39 @@ MIT License - feel free to use this project for any purpose.
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Future Features & Roadmap
+
+### Short-term (Days)
+- [x] **Favorite Streamers**: Allow users to save favorite streamers to local storage
+- [ ] **Stream Preview**: Add embedded video preview for live streamers (Twitch/YouTube)
+- [ ] **Advanced Search**: Add search by platform (Twitch, YouTube, Chess.com)
+- [ ] **Keyboard Shortcuts**: Add keyboard shortcuts for common actions (refresh, clear filters)
+- [ ] **Performance Optimization**: Implement virtual scrolling for large lists
+
+### Medium-term (Weeks)
+- [ ] **Streamer Profiles**: Detailed view with more information (rating, country, games)
+- [ ] **Notifications**: Browser notifications when favorite streamers go live
+- [ ] **Charts & Analytics**: Visualize streaming trends and statistics
+- [ ] **Multi-language Support**: Add i18n for Portuguese, Spanish, and other languages
+- [ ] **Dark/Light Theme Toggle**: Allow users to switch between themes
+- [ ] **Export Data**: Export filtered results to CSV/JSON
+
+### Long-term (Months)
+- [ ] **User Accounts**: Authentication with GitHub/Google for cloud sync
+- [ ] **Recommendation System**: Suggest streamers based on viewing history
+- [ ] **Community Features**: Comments, ratings, and reviews for streamers
+- [ ] **Mobile App**: PWA with offline support and app store distribution
+- [ ] **Real-time WebSocket**: Real-time updates without polling
+- [ ] **Admin Dashboard**: Analytics dashboard for administrators
+
+### Technical Improvements
+- [ ] **Testing**: Add unit tests with Vitest and integration tests with Playwright
+- [ ] **State Management**: Consider Zustand or Jotai for complex state scenarios
+- [ ] **API Caching**: Implement React Query for better caching and synchronization
+- [ ] **Error Boundaries**: Add React error boundaries for better error handling
+- [ ] **Bundle Optimization**: Code splitting and lazy loading for better performance
+- [ ] **Accessibility**: Full WCAG 2.1 AA compliance with ARIA labels and keyboard navigation
 
 ## Screenshots
 

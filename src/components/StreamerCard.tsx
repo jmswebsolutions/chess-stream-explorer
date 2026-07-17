@@ -1,13 +1,19 @@
 import React from 'react';
-import { FaTwitch, FaYoutube, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaTwitch, FaYoutube, FaExternalLinkAlt, FaStar } from 'react-icons/fa';
 import { Badge } from './Badge';
 import { Streamer } from '../api/chessApi';
 
 interface StreamerCardProps {
   streamer: Streamer;
+  onToggleFavorite: (username: string) => void;
+  isFavorite: boolean;
 }
 
-export const StreamerCard: React.FC<StreamerCardProps> = ({ streamer }) => {
+export const StreamerCard: React.FC<StreamerCardProps> = ({
+  streamer,
+  onToggleFavorite,
+  isFavorite,
+}) => {
   const { username, avatar, status, is_community_streamer, url, twitch, youtube } =
     streamer;
 
@@ -22,7 +28,20 @@ export const StreamerCard: React.FC<StreamerCardProps> = ({ streamer }) => {
         <div className="flex-1">
           <div className="flex items-center justify-between">
             <h3 className="text-white font-semibold text-lg">{username}</h3>
-            <Badge type={status} />
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => onToggleFavorite(username)}
+                className={`p-2 rounded-full transition-colors ${
+                  isFavorite
+                    ? 'text-yellow-400 hover:text-yellow-300'
+                    : 'text-gray-400 hover:text-yellow-400'
+                }`}
+                aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+              >
+                <FaStar />
+              </button>
+              <Badge type={status} />
+            </div>
           </div>
           {is_community_streamer && (
             <span className="inline-block mt-1 text-xs text-blue-400 bg-blue-900/30 px-2 py-0.5 rounded">

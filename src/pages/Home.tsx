@@ -22,10 +22,14 @@ export const Home = () => {
     setShowOfflineOnly,
     showCommunityOnly,
     setShowCommunityOnly,
+    showFavoritesOnly,
+    setShowFavoritesOnly,
     sortBy,
     setSortBy,
     handleClearFilters,
     refresh,
+    toggleFavorite,
+    isFavorite,
   } = useHome();
 
   if (error) {
@@ -73,6 +77,8 @@ export const Home = () => {
               onShowOfflineOnlyChange={setShowOfflineOnly}
               showCommunityOnly={showCommunityOnly}
               onShowCommunityOnlyChange={setShowCommunityOnly}
+              showFavoritesOnly={showFavoritesOnly}
+              onShowFavoritesOnlyChange={setShowFavoritesOnly}
               onClearFilters={handleClearFilters}
             />
           </div>
@@ -112,7 +118,12 @@ export const Home = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {streamers.map((streamer: Streamer) => (
-              <StreamerCard key={streamer.username} streamer={streamer} />
+              <StreamerCard
+                key={streamer.username}
+                streamer={streamer}
+                onToggleFavorite={toggleFavorite}
+                isFavorite={isFavorite(streamer.username)}
+              />
             ))}
           </div>
         )}
