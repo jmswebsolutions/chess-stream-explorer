@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FaSync } from 'react-icons/fa';
 import { useHome } from '../hooks/useHome';
 import { Stats } from '../components/Stats';
@@ -6,6 +7,7 @@ import { Sort } from '../components/Sort';
 import { StreamerCard } from '../components/StreamerCard';
 import { Skeleton } from '../components/Skeleton';
 import { ErrorState } from '../components/ErrorState';
+import { StreamPreview } from '../components/StreamPreview';
 import { Streamer } from '../api/chessApi';
 
 export const Home = () => {
@@ -31,6 +33,36 @@ export const Home = () => {
     toggleFavorite,
     isFavorite,
   } = useHome();
+
+  const [previewState, setPreviewState] = useState<{
+    isOpen: boolean;
+    platform: 'twitch' | 'youtube';
+    channel: string;
+    username: string;
+  }>({
+    isOpen: false,
+    platform: 'twitch',
+    channel: '',
+    username: '',
+  });
+
+  const handlePreview = (platform: 'twitch' | 'youtube', channel: string, username: string) => {
+    setPreviewState({
+      isOpen: true,
+      platform,
+      channel,
+      username,
+    });
+  };
+
+  const handleClosePreview = () => {
+    setPreviewState({
+      isOpen: false,
+      platform: 'twitch',
+      channel: '',
+      username: '',
+    });
+  };
 
   if (error) {
     return (
@@ -123,11 +155,22 @@ export const Home = () => {
                 streamer={streamer}
                 onToggleFavorite={toggleFavorite}
                 isFavorite={isFavorite(streamer.username)}
+                onPreview={(platform, channel) =>
+                  handlePreview(platform, channel, streamer.username)
+                }
               />
             ))}
           </div>
         )}
       </div>
+
+      <StreamPreview
+        isOpen={previewState.isOpen}
+        onClose={handleClosePreview}
+        platform={previewState.platform}
+        channel={previewState.channel}
+        username={previewState.username}
+      />
     </div>
   );
 };

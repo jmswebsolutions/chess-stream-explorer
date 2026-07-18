@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaTwitch, FaYoutube, FaExternalLinkAlt, FaStar } from 'react-icons/fa';
+import { FaTwitch, FaYoutube, FaExternalLinkAlt, FaStar, FaPlay } from 'react-icons/fa';
 import { Badge } from './Badge';
 import { Streamer } from '../api/chessApi';
 
@@ -7,12 +7,14 @@ interface StreamerCardProps {
   streamer: Streamer;
   onToggleFavorite: (username: string) => void;
   isFavorite: boolean;
+  onPreview?: (platform: 'twitch' | 'youtube', channel: string) => void;
 }
 
 export const StreamerCard: React.FC<StreamerCardProps> = ({
   streamer,
   onToggleFavorite,
   isFavorite,
+  onPreview,
 }) => {
   const { username, avatar, status, is_community_streamer, url, twitch, youtube } =
     streamer;
@@ -62,26 +64,50 @@ export const StreamerCard: React.FC<StreamerCardProps> = ({
           Chess.com
         </a>
         {twitch && (
-          <a
-            href={`https://twitch.tv/${twitch.login}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 text-sm text-purple-400 hover:text-purple-300 transition-colors"
-          >
-            <FaTwitch />
-            Twitch
-          </a>
+          <>
+            <a
+              href={`https://twitch.tv/${twitch.login}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-sm text-purple-400 hover:text-purple-300 transition-colors"
+            >
+              <FaTwitch />
+              Twitch
+            </a>
+            {status === 'live' && onPreview && (
+              <button
+                onClick={() => onPreview('twitch', twitch.login)}
+                className="flex items-center gap-1 text-sm text-green-400 hover:text-green-300 transition-colors"
+                aria-label={`Preview ${username}'s stream`}
+              >
+                <FaPlay />
+                Preview
+              </button>
+            )}
+          </>
         )}
         {youtube && (
-          <a
-            href={`https://youtube.com/${youtube.channel}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 text-sm text-red-500 hover:text-red-400 transition-colors"
-          >
-            <FaYoutube />
-            YouTube
-          </a>
+          <>
+            <a
+              href={`https://youtube.com/${youtube.channel}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-sm text-red-500 hover:text-red-400 transition-colors"
+            >
+              <FaYoutube />
+              YouTube
+            </a>
+            {status === 'live' && onPreview && (
+              <button
+                onClick={() => onPreview('youtube', youtube.channel)}
+                className="flex items-center gap-1 text-sm text-green-400 hover:text-green-300 transition-colors"
+                aria-label={`Preview ${username}'s stream`}
+              >
+                <FaPlay />
+                Preview
+              </button>
+            )}
+          </>
         )}
       </div>
     </div>
