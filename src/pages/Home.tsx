@@ -26,6 +26,10 @@ export const Home = () => {
     setShowCommunityOnly,
     showFavoritesOnly,
     setShowFavoritesOnly,
+    showTwitchOnly,
+    setShowTwitchOnly,
+    showYouTubeOnly,
+    setShowYouTubeOnly,
     sortBy,
     setSortBy,
     handleClearFilters,
@@ -111,6 +115,10 @@ export const Home = () => {
               onShowCommunityOnlyChange={setShowCommunityOnly}
               showFavoritesOnly={showFavoritesOnly}
               onShowFavoritesOnlyChange={setShowFavoritesOnly}
+              showTwitchOnly={showTwitchOnly}
+              onShowTwitchOnlyChange={setShowTwitchOnly}
+              showYouTubeOnly={showYouTubeOnly}
+              onShowYouTubeOnlyChange={setShowYouTubeOnly}
               onClearFilters={handleClearFilters}
             />
           </div>

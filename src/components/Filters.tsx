@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaSearch, FaFilter, FaStar } from 'react-icons/fa';
+import { FaSearch, FaFilter, FaStar, FaTwitch, FaYoutube } from 'react-icons/fa';
 
 interface FiltersProps {
   searchTerm: string;
@@ -12,6 +12,10 @@ interface FiltersProps {
   onShowCommunityOnlyChange: (value: boolean) => void;
   showFavoritesOnly: boolean;
   onShowFavoritesOnlyChange: (value: boolean) => void;
+  showTwitchOnly: boolean;
+  onShowTwitchOnlyChange: (value: boolean) => void;
+  showYouTubeOnly: boolean;
+  onShowYouTubeOnlyChange: (value: boolean) => void;
   onClearFilters: () => void;
 }
 
@@ -26,6 +30,10 @@ export const Filters: React.FC<FiltersProps> = ({
   onShowCommunityOnlyChange,
   showFavoritesOnly,
   onShowFavoritesOnlyChange,
+  showTwitchOnly,
+  onShowTwitchOnlyChange,
+  showYouTubeOnly,
+  onShowYouTubeOnlyChange,
   onClearFilters,
 }) => {
   return (
@@ -87,6 +95,28 @@ export const Filters: React.FC<FiltersProps> = ({
             />
             <FaStar className="text-yellow-400 text-xs" />
             Favorites Only
+          </label>
+
+          <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">
+            <input
+              type="checkbox"
+              checked={showTwitchOnly}
+              onChange={(e) => onShowTwitchOnlyChange(e.target.checked)}
+              className="w-4 h-4 rounded bg-gray-700 border-gray-600 text-purple-500 focus:ring-purple-500"
+            />
+            <FaTwitch className="text-purple-400 text-xs" />
+            Twitch Only
+          </label>
+
+          <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">
+            <input
+              type="checkbox"
+              checked={showYouTubeOnly}
+              onChange={(e) => onShowYouTubeOnlyChange(e.target.checked)}
+              className="w-4 h-4 rounded bg-gray-700 border-gray-600 text-red-500 focus:ring-red-500"
+            />
+            <FaYoutube className="text-red-400 text-xs" />
+            YouTube Only
           </label>
         </div>
 

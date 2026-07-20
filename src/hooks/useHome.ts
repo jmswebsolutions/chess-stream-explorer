@@ -12,6 +12,8 @@ export const useHome = () => {
   const [showOfflineOnly, setShowOfflineOnly] = useState(false);
   const [showCommunityOnly, setShowCommunityOnly] = useState(false);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  const [showTwitchOnly, setShowTwitchOnly] = useState(false);
+  const [showYouTubeOnly, setShowYouTubeOnly] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>('online-first');
 
   const filteredAndSortedStreamers = useMemo(() => {
@@ -36,6 +38,13 @@ export const useHome = () => {
 
     if (showFavoritesOnly) {
       filtered = filtered.filter((streamer) => favorites.has(streamer.username));
+    }
+
+    if (showTwitchOnly && showYouTubeOnly) {
+    } else if (showTwitchOnly) {
+      filtered = filtered.filter((streamer) => streamer.twitch !== undefined);
+    } else if (showYouTubeOnly) {
+      filtered = filtered.filter((streamer) => streamer.youtube !== undefined);
     }
 
     const sorted = [...filtered];
@@ -70,6 +79,8 @@ export const useHome = () => {
     showOfflineOnly,
     showCommunityOnly,
     showFavoritesOnly,
+    showTwitchOnly,
+    showYouTubeOnly,
     favorites,
     sortBy,
   ]);
@@ -90,6 +101,8 @@ export const useHome = () => {
     setShowOfflineOnly(false);
     setShowCommunityOnly(false);
     setShowFavoritesOnly(false);
+    setShowTwitchOnly(false);
+    setShowYouTubeOnly(false);
   };
 
   return {
@@ -107,6 +120,10 @@ export const useHome = () => {
     setShowCommunityOnly,
     showFavoritesOnly,
     setShowFavoritesOnly,
+    showTwitchOnly,
+    setShowTwitchOnly,
+    showYouTubeOnly,
+    setShowYouTubeOnly,
     sortBy,
     setSortBy,
     handleClearFilters,
