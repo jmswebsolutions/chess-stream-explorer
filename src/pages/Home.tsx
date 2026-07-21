@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { FaSync } from 'react-icons/fa';
+import { FaSync, FaKeyboard } from 'react-icons/fa';
 import { useHome } from '../hooks/useHome';
+import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { Stats } from '../components/Stats';
 import { Filters } from '../components/Filters';
 import { Sort } from '../components/Sort';
@@ -50,6 +51,26 @@ export const Home = () => {
     username: '',
   });
 
+  const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
+
+  useKeyboardShortcuts([
+    {
+      key: 'r',
+      action: refresh,
+      description: 'Refresh streamers',
+    },
+    {
+      key: 'escape',
+      action: handleClearFilters,
+      description: 'Clear filters',
+    },
+    {
+      key: '?',
+      action: () => setShowShortcutsHelp(true),
+      description: 'Show keyboard shortcuts',
+    },
+  ]);
+
   const handlePreview = (platform: 'twitch' | 'youtube', channel: string, username: string) => {
     setPreviewState({
       isOpen: true,
@@ -89,14 +110,24 @@ export const Home = () => {
                 Discover and follow chess streamers from around the world
               </p>
             </div>
-            <button
-              onClick={refresh}
-              disabled={loading}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white rounded-lg transition-colors duration-200"
-            >
-              <FaSync className={loading ? 'animate-spin' : ''} />
-              Refresh
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setShowShortcutsHelp(true)}
+                className="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200"
+                aria-label="Show keyboard shortcuts"
+              >
+                <FaKeyboard />
+                <span className="hidden sm:inline">Shortcuts</span>
+              </button>
+              <button
+                onClick={refresh}
+                disabled={loading}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white rounded-lg transition-colors duration-200"
+              >
+                <FaSync className={loading ? 'animate-spin' : ''} />
+                Refresh
+              </button>
+            </div>
           </div>
         </header>
 
@@ -179,6 +210,37 @@ export const Home = () => {
         channel={previewState.channel}
         username={previewState.username}
       />
+
+      {showShortcutsHelp && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+          <div className="bg-gray-800 rounded-lg w-full max-w-md p-6 shadow-2xl">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-white font-semibold text-lg">Keyboard Shortcuts</h2>
+              <button
+                onClick={() => setShowShortcutsHelp(false)}
+                className="text-gray-400 hover:text-white transition-colors p-2"
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between text-gray-300">
+                <span>Refresh streamers</span>
+                <kbd className="px-2 py-1 bg-gray-700 rounded text-sm">R</kbd>
+              </div>
+              <div className="flex items-center justify-between text-gray-300">
+                <span>Clear filters</span>
+                <kbd className="px-2 py-1 bg-gray-700 rounded text-sm">Esc</kbd>
+              </div>
+              <div className="flex items-center justify-between text-gray-300">
+                <span>Show shortcuts</span>
+                <kbd className="px-2 py-1 bg-gray-700 rounded text-sm">?</kbd>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

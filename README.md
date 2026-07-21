@@ -164,7 +164,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Favorite Streamers**: Allow users to save favorite streamers to local storage
 - [x] **Stream Preview**: Add embedded video preview for live streamers (Twitch/YouTube)
 - [x] **Advanced Search**: Add search by platform (Twitch, YouTube, Chess.com)
-- [ ] **Keyboard Shortcuts**: Add keyboard shortcuts for common actions (refresh, clear filters)
+- [x] **Keyboard Shortcuts**: Add keyboard shortcuts for common actions (refresh, clear filters)
 - [ ] **Performance Optimization**: Implement virtual scrolling for large lists
 
 ### Medium-term (Weeks)
