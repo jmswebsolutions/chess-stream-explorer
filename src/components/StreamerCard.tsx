@@ -10,7 +10,7 @@ interface StreamerCardProps {
   onPreview?: (platform: 'twitch' | 'youtube', channel: string) => void;
 }
 
-export const StreamerCard: React.FC<StreamerCardProps> = ({
+export const StreamerCard = React.memo<StreamerCardProps>(({
   streamer,
   onToggleFavorite,
   isFavorite,
@@ -112,4 +112,4 @@ export const StreamerCard: React.FC<StreamerCardProps> = ({
       </div>
     </div>
   );
-};
+});
