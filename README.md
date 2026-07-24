@@ -169,7 +169,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ### Medium-term (Weeks)
 - [ ] **Streamer Profiles**: Detailed view with more information (rating, country, games)
-- [ ] **Notifications**: Browser notifications when favorite streamers go live
+- [x] **Notifications**: Browser notifications when favorite streamers go live
 - [ ] **Charts & Analytics**: Visualize streaming trends and statistics
 - [ ] **Multi-language Support**: Add i18n for Portuguese, Spanish, and other languages
 - [ ] **Dark/Light Theme Toggle**: Allow users to switch between themes

@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { FaSync, FaKeyboard } from 'react-icons/fa';
+import { useState, useEffect, useRef } from 'react';
+import { FaSync, FaKeyboard, FaBell, FaBellSlash } from 'react-icons/fa';
 import { useHome } from '../hooks/useHome';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
+import { useNotifications } from '../hooks/useNotifications';
 import { Stats } from '../components/Stats';
 import { Filters } from '../components/Filters';
 import { Sort } from '../components/Sort';
@@ -52,6 +53,8 @@ export const Home = () => {
   });
 
   const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
+  const { enabled: notificationsEnabled, showNotification, toggleNotifications } = useNotifications();
+  const previousStreamersRef = useRef<Streamer[]>([]);
 
   useKeyboardShortcuts([
     {
@@ -70,6 +73,31 @@ export const Home = () => {
       description: 'Show keyboard shortcuts',
     },
   ]);
+
+  // Check for favorite streamers going live
+  useEffect(() => {
+    if (!notificationsEnabled || loading) return;
+
+    const previousStreamers = previousStreamersRef.current;
+    const currentStreamers = streamers;
+
+    currentStreamers.forEach((currentStreamer) => {
+      if (isFavorite(currentStreamer.username) && currentStreamer.status === 'live') {
+        const previousStreamer = previousStreamers.find((s) => s.username === currentStreamer.username);
+        
+        // If streamer was offline before and is now live, show notification
+        if (previousStreamer && previousStreamer.status === 'offline') {
+          showNotification({
+            title: `${currentStreamer.username} is now live!`,
+            body: 'Your favorite streamer just started streaming.',
+            icon: currentStreamer.avatar,
+          });
+        }
+      }
+    });
+
+    previousStreamersRef.current = currentStreamers;
+  }, [streamers, notificationsEnabled, loading, isFavorite, showNotification]);
 
   const handlePreview = (platform: 'twitch' | 'youtube', channel: string, username: string) => {
     setPreviewState({
@@ -111,6 +139,20 @@ export const Home = () => {
               </p>
             </div>
             <div className="flex items-center gap-2">
+              <button
+                onClick={toggleNotifications}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
+                  notificationsEnabled
+                    ? 'bg-green-600 hover:bg-green-700 text-white'
+                    : 'bg-gray-700 hover:bg-gray-600 text-white'
+                }`}
+                aria-label={notificationsEnabled ? 'Disable notifications' : 'Enable notifications'}
+              >
+                {notificationsEnabled ? <FaBell /> : <FaBellSlash />}
+                <span className="hidden sm:inline">
+                  {notificationsEnabled ? 'Notifications On' : 'Notifications Off'}
+                </span>
+              </button>
               <button
                 onClick={() => setShowShortcutsHelp(true)}
                 className="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200"
