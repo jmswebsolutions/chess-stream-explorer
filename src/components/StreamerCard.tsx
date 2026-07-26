@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaTwitch, FaYoutube, FaExternalLinkAlt, FaStar, FaPlay } from 'react-icons/fa';
+import { FaTwitch, FaYoutube, FaExternalLinkAlt, FaStar, FaPlay, FaUser } from 'react-icons/fa';
 import { Badge } from './Badge';
 import { Streamer } from '../api/chessApi';
 
@@ -8,6 +8,7 @@ interface StreamerCardProps {
   onToggleFavorite: (username: string) => void;
   isFavorite: boolean;
   onPreview?: (platform: 'twitch' | 'youtube', channel: string) => void;
+  onProfile?: (username: string) => void;
 }
 
 export const StreamerCard = React.memo<StreamerCardProps>(({
@@ -15,6 +16,7 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
   onToggleFavorite,
   isFavorite,
   onPreview,
+  onProfile,
 }) => {
   const { username, avatar, status, is_community_streamer, url, twitch, youtube } =
     streamer;
@@ -31,6 +33,15 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
           <div className="flex items-center justify-between">
             <h3 className="text-white font-semibold text-lg">{username}</h3>
             <div className="flex items-center gap-2">
+              {onProfile && (
+                <button
+                  onClick={() => onProfile(username)}
+                  className="p-2 rounded-full text-gray-400 hover:text-blue-400 transition-colors"
+                  aria-label="View profile"
+                >
+                  <FaUser />
+                </button>
+              )}
               <button
                 onClick={() => onToggleFavorite(username)}
                 className={`p-2 rounded-full transition-colors ${

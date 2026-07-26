@@ -168,7 +168,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Performance Optimization**: Implement React.memo for component optimization
 
 ### Medium-term (Weeks)
-- [ ] **Streamer Profiles**: Detailed view with more information (rating, country, games)
+- [x] **Streamer Profiles**: Detailed view with more information (rating, country, games)
 - [x] **Notifications**: Browser notifications when favorite streamers go live
 - [ ] **Charts & Analytics**: Visualize streaming trends and statistics
 - [ ] **Multi-language Support**: Add i18n for Portuguese, Spanish, and other languages

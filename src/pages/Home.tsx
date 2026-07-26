@@ -10,6 +10,7 @@ import { StreamerCard } from '../components/StreamerCard';
 import { Skeleton } from '../components/Skeleton';
 import { ErrorState } from '../components/ErrorState';
 import { StreamPreview } from '../components/StreamPreview';
+import { StreamerProfile } from '../components/StreamerProfile';
 import { Streamer } from '../api/chessApi';
 
 export const Home = () => {
@@ -49,6 +50,14 @@ export const Home = () => {
     isOpen: false,
     platform: 'twitch',
     channel: '',
+    username: '',
+  });
+
+  const [profileState, setProfileState] = useState<{
+    isOpen: boolean;
+    username: string;
+  }>({
+    isOpen: false,
     username: '',
   });
 
@@ -113,6 +122,20 @@ export const Home = () => {
       isOpen: false,
       platform: 'twitch',
       channel: '',
+      username: '',
+    });
+  };
+
+  const handleProfile = (username: string) => {
+    setProfileState({
+      isOpen: true,
+      username,
+    });
+  };
+
+  const handleCloseProfile = () => {
+    setProfileState({
+      isOpen: false,
       username: '',
     });
   };
@@ -239,6 +262,7 @@ export const Home = () => {
                 onPreview={(platform, channel) =>
                   handlePreview(platform, channel, streamer.username)
                 }
+                onProfile={handleProfile}
               />
             ))}
           </div>
@@ -251,6 +275,12 @@ export const Home = () => {
         platform={previewState.platform}
         channel={previewState.channel}
         username={previewState.username}
+      />
+
+      <StreamerProfile
+        username={profileState.username}
+        isOpen={profileState.isOpen}
+        onClose={handleCloseProfile}
       />
 
       {showShortcutsHelp && (
