@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { FaSync, FaKeyboard, FaBell, FaBellSlash } from 'react-icons/fa';
+import { FaSync, FaKeyboard, FaBell, FaBellSlash, FaChartBar } from 'react-icons/fa';
 import { useHome } from '../hooks/useHome';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { useNotifications } from '../hooks/useNotifications';
@@ -11,6 +11,7 @@ import { Skeleton } from '../components/Skeleton';
 import { ErrorState } from '../components/ErrorState';
 import { StreamPreview } from '../components/StreamPreview';
 import { StreamerProfile } from '../components/StreamerProfile';
+import { Analytics } from '../components/Analytics';
 import { Streamer } from '../api/chessApi';
 
 export const Home = () => {
@@ -62,6 +63,7 @@ export const Home = () => {
   });
 
   const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
+  const [showAnalytics, setShowAnalytics] = useState(false);
   const { enabled: notificationsEnabled, showNotification, toggleNotifications } = useNotifications();
   const previousStreamersRef = useRef<Streamer[]>([]);
 
@@ -163,6 +165,18 @@ export const Home = () => {
             </div>
             <div className="flex items-center gap-2">
               <button
+                onClick={() => setShowAnalytics(!showAnalytics)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
+                  showAnalytics
+                    ? 'bg-purple-600 hover:bg-purple-700 text-white'
+                    : 'bg-gray-700 hover:bg-gray-600 text-white'
+                }`}
+                aria-label="Toggle analytics"
+              >
+                <FaChartBar />
+                <span className="hidden sm:inline">Analytics</span>
+              </button>
+              <button
                 onClick={toggleNotifications}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
                   notificationsEnabled
@@ -197,6 +211,12 @@ export const Home = () => {
         </header>
 
         <Stats {...stats} />
+
+        {showAnalytics && (
+          <div className="mb-6">
+            <Analytics streamers={streamers} />
+          </div>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
           <div className="lg:col-span-1">
