@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaSort } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 export type SortOption =
   | 'name-asc'
@@ -13,11 +14,12 @@ interface SortProps {
 }
 
 export const Sort: React.FC<SortProps> = ({ sortBy, onSortChange }) => {
+  const { t } = useTranslation();
   return (
     <div className="bg-gray-800 rounded-lg p-4 shadow-lg mb-6">
       <div className="flex items-center gap-2 mb-4">
         <FaSort className="text-blue-400" />
-        <h2 className="text-white font-semibold text-lg">Sort By</h2>
+        <h2 className="text-white font-semibold text-lg">{t('sort.title')}</h2>
       </div>
 
       <div className="space-y-2">
@@ -30,7 +32,7 @@ export const Sort: React.FC<SortProps> = ({ sortBy, onSortChange }) => {
             onChange={() => onSortChange('name-asc')}
             className="w-4 h-4 bg-gray-700 border-gray-600 text-blue-500 focus:ring-blue-500"
           />
-          Name (A-Z)
+          {t('sort.username')} (A-Z)
         </label>
 
         <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">
@@ -42,7 +44,7 @@ export const Sort: React.FC<SortProps> = ({ sortBy, onSortChange }) => {
             onChange={() => onSortChange('name-desc')}
             className="w-4 h-4 bg-gray-700 border-gray-600 text-blue-500 focus:ring-blue-500"
           />
-          Name (Z-A)
+          {t('sort.username')} (Z-A)
         </label>
 
         <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">
@@ -54,7 +56,7 @@ export const Sort: React.FC<SortProps> = ({ sortBy, onSortChange }) => {
             onChange={() => onSortChange('online-first')}
             className="w-4 h-4 bg-gray-700 border-gray-600 text-green-500 focus:ring-green-500"
           />
-          Online First
+          {t('sort.status')}: {t('stats.live')}
         </label>
 
         <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">
@@ -66,7 +68,7 @@ export const Sort: React.FC<SortProps> = ({ sortBy, onSortChange }) => {
             onChange={() => onSortChange('offline-first')}
             className="w-4 h-4 bg-gray-700 border-gray-600 text-red-500 focus:ring-red-500"
           />
-          Offline First
+          {t('sort.status')}: {t('stats.offline')}
         </label>
       </div>
     </div>

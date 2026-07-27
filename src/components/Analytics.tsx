@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { useTranslation } from 'react-i18next';
 import { Streamer } from '../api/chessApi';
 
 interface AnalyticsProps {
@@ -16,6 +17,7 @@ const COLORS = {
 };
 
 export const Analytics = ({ streamers }: AnalyticsProps) => {
+  const { t } = useTranslation();
   const analyticsData = useMemo(() => {
     const platformData = [
       { name: 'Twitch', value: streamers.filter(s => s.twitch).length, color: COLORS.twitch },
@@ -56,12 +58,12 @@ export const Analytics = ({ streamers }: AnalyticsProps) => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-white font-semibold text-xl">Analytics & Statistics</h2>
+      <h2 className="text-white font-semibold text-xl">{t('analytics.title')}</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
         {/* Platform Distribution */}
         <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
-          <h3 className="text-white font-semibold mb-4">Platform Distribution</h3>
+          <h3 className="text-white font-semibold mb-4">{t('analytics.platformDistribution')}</h3>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart>
               <Pie
@@ -86,7 +88,7 @@ export const Analytics = ({ streamers }: AnalyticsProps) => {
 
         {/* Status Distribution */}
         <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
-          <h3 className="text-white font-semibold mb-4">Live Status</h3>
+          <h3 className="text-white font-semibold mb-4">{t('analytics.liveStatus')}</h3>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart>
               <Pie
@@ -111,7 +113,7 @@ export const Analytics = ({ streamers }: AnalyticsProps) => {
 
         {/* Community vs Regular */}
         <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
-          <h3 className="text-white font-semibold mb-4">Streamer Type</h3>
+          <h3 className="text-white font-semibold mb-4">{t('analytics.streamerType')}</h3>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart>
               <Pie
@@ -136,7 +138,7 @@ export const Analytics = ({ streamers }: AnalyticsProps) => {
 
         {/* Platform Overlap */}
         <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
-          <h3 className="text-white font-semibold mb-4">Platform Overlap</h3>
+          <h3 className="text-white font-semibold mb-4">{t('analytics.platformOverlap')}</h3>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={analyticsData.platformOverlap}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
@@ -153,19 +155,19 @@ export const Analytics = ({ streamers }: AnalyticsProps) => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-gray-800 rounded-lg p-4 text-center">
           <p className="text-3xl font-bold text-white">{streamers.length}</p>
-          <p className="text-gray-400 text-sm">Total Streamers</p>
+          <p className="text-gray-400 text-sm">{t('analytics.totalStreamers')}</p>
         </div>
         <div className="bg-gray-800 rounded-lg p-4 text-center">
           <p className="text-3xl font-bold text-green-400">{analyticsData.statusData[0].value}</p>
-          <p className="text-gray-400 text-sm">Currently Live</p>
+          <p className="text-gray-400 text-sm">{t('analytics.currentlyLive')}</p>
         </div>
         <div className="bg-gray-800 rounded-lg p-4 text-center">
           <p className="text-3xl font-bold text-purple-400">{analyticsData.platformData[0].value}</p>
-          <p className="text-gray-400 text-sm">On Twitch</p>
+          <p className="text-gray-400 text-sm">{t('analytics.onTwitch')}</p>
         </div>
         <div className="bg-gray-800 rounded-lg p-4 text-center">
           <p className="text-3xl font-bold text-red-400">{analyticsData.platformData[1].value}</p>
-          <p className="text-gray-400 text-sm">On YouTube</p>
+          <p className="text-gray-400 text-sm">{t('analytics.onYouTube')}</p>
         </div>
       </div>
     </div>

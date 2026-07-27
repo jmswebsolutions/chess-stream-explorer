@@ -1,0 +1,107 @@
+{
+  "app": {
+    "title": "Chess Stream Explorer",
+    "subtitle": "Discover and follow chess streamers from around the world"
+  },
+  "header": {
+    "shortcuts": "Shortcuts",
+    "notificationsOn": "Notifications On",
+    "notificationsOff": "Notifications Off",
+    "analytics": "Analytics",
+    "refresh": "Refresh"
+  },
+  "stats": {
+    "total": "Total Streamers",
+    "live": "Currently Live",
+    "offline": "Offline",
+    "community": "Community Streamers"
+  },
+  "filters": {
+    "title": "Filters",
+    "search": "Search streamers...",
+    "onlineOnly": "Online Only",
+    "offlineOnly": "Offline Only",
+    "communityOnly": "Community Only",
+    "favoritesOnly": "Favorites Only",
+    "twitchOnly": "Twitch Only",
+    "youtubeOnly": "YouTube Only",
+    "clearFilters": "Clear Filters"
+  },
+  "sort": {
+    "title": "Sort By",
+    "username": "Username",
+    "status": "Status",
+    "platform": "Platform"
+  },
+  "results": {
+    "title": "Results",
+    "loading": "Loading streamers...",
+    "noResults": "No streamers match your filters",
+    "showing": "Showing streamers based on your filters"
+  },
+  "streamerCard": {
+    "addToFavorites": "Add to favorites",
+    "removeFromFavorites": "Remove from favorites",
+    "viewProfile": "View profile",
+    "preview": "Preview",
+    "communityStreamer": "Community Streamer",
+    "chessCom": "Chess.com"
+  },
+  "analytics": {
+    "title": "Analytics & Statistics",
+    "platformDistribution": "Platform Distribution",
+    "liveStatus": "Live Status",
+    "streamerType": "Streamer Type",
+    "platformOverlap": "Platform Overlap",
+    "twitchOnly": "Twitch Only",
+    "youtubeOnly": "YouTube Only",
+    "bothPlatforms": "Both Platforms",
+    "chessComOnly": "Chess.com Only",
+    "live": "Live",
+    "offline": "Offline",
+    "community": "Community",
+    "regular": "Regular",
+    "totalStreamers": "Total Streamers",
+    "currentlyLive": "Currently Live",
+    "onTwitch": "On Twitch",
+    "onYouTube": "On YouTube"
+  },
+  "profile": {
+    "title": "Streamer Profile",
+    "joined": "Joined",
+    "followers": "Followers",
+    "following": "Following",
+    "fideRating": "FIDE Rating",
+    "gameStatistics": "Game Statistics",
+    "currentRating": "Current Rating",
+    "bestRating": "Best Rating",
+    "record": "Record",
+    "league": "League",
+    "highestRating": "Highest Rating",
+    "achieved": "Achieved",
+    "blitz": "Blitz",
+    "rapid": "Rapid",
+    "daily": "Daily",
+    "tactics": "Tactics",
+    "loading": "Loading profile...",
+    "error": "Failed to load profile data"
+  },
+  "shortcuts": {
+    "title": "Keyboard Shortcuts",
+    "refresh": "Refresh streamers",
+    "clearFilters": "Clear filters",
+    "showShortcuts": "Show shortcuts"
+  },
+  "language": {
+    "title": "Language",
+    "english": "English",
+    "portuguese": "Português",
+    "spanish": "Español"
+  },
+  "common": {
+    "close": "Close",
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry"
+  }
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaSearch, FaFilter, FaStar, FaTwitch, FaYoutube } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 interface FiltersProps {
   searchTerm: string;
@@ -36,11 +37,12 @@ export const Filters: React.FC<FiltersProps> = ({
   onShowYouTubeOnlyChange,
   onClearFilters,
 }) => {
+  const { t } = useTranslation();
   return (
     <div className="bg-gray-800 rounded-lg p-4 shadow-lg mb-6">
       <div className="flex items-center gap-2 mb-4">
         <FaFilter className="text-blue-400" />
-        <h2 className="text-white font-semibold text-lg">Filters</h2>
+        <h2 className="text-white font-semibold text-lg">{t('filters.title')}</h2>
       </div>
 
       <div className="space-y-4">
@@ -48,7 +50,7 @@ export const Filters: React.FC<FiltersProps> = ({
           <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <input
             type="text"
-            placeholder="Search by username..."
+            placeholder={t('filters.search')}
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
             className="w-full pl-10 pr-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
@@ -63,7 +65,7 @@ export const Filters: React.FC<FiltersProps> = ({
               onChange={(e) => onShowOnlineOnlyChange(e.target.checked)}
               className="w-4 h-4 rounded bg-gray-700 border-gray-600 text-green-500 focus:ring-green-500"
             />
-            Online Only
+            {t('filters.onlineOnly')}
           </label>
 
           <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">
@@ -73,7 +75,7 @@ export const Filters: React.FC<FiltersProps> = ({
               onChange={(e) => onShowOfflineOnlyChange(e.target.checked)}
               className="w-4 h-4 rounded bg-gray-700 border-gray-600 text-red-500 focus:ring-red-500"
             />
-            Offline Only
+            {t('filters.offlineOnly')}
           </label>
 
           <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">
@@ -83,7 +85,7 @@ export const Filters: React.FC<FiltersProps> = ({
               onChange={(e) => onShowCommunityOnlyChange(e.target.checked)}
               className="w-4 h-4 rounded bg-gray-700 border-gray-600 text-blue-500 focus:ring-blue-500"
             />
-            Community Streamers
+            {t('filters.communityOnly')}
           </label>
 
           <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">
@@ -94,7 +96,7 @@ export const Filters: React.FC<FiltersProps> = ({
               className="w-4 h-4 rounded bg-gray-700 border-gray-600 text-yellow-500 focus:ring-yellow-500"
             />
             <FaStar className="text-yellow-400 text-xs" />
-            Favorites Only
+            {t('filters.favoritesOnly')}
           </label>
 
           <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">
@@ -105,7 +107,7 @@ export const Filters: React.FC<FiltersProps> = ({
               className="w-4 h-4 rounded bg-gray-700 border-gray-600 text-purple-500 focus:ring-purple-500"
             />
             <FaTwitch className="text-purple-400 text-xs" />
-            Twitch Only
+            {t('filters.twitchOnly')}
           </label>
 
           <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">
@@ -116,7 +118,7 @@ export const Filters: React.FC<FiltersProps> = ({
               className="w-4 h-4 rounded bg-gray-700 border-gray-600 text-red-500 focus:ring-red-500"
             />
             <FaYoutube className="text-red-400 text-xs" />
-            YouTube Only
+            {t('filters.youtubeOnly')}
           </label>
         </div>
 
@@ -124,7 +126,7 @@ export const Filters: React.FC<FiltersProps> = ({
           onClick={onClearFilters}
           className="w-full py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200"
         >
-          Clear Filters
+          {t('filters.clearFilters')}
         </button>
       </div>
     </div>

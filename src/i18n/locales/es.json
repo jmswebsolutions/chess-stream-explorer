@@ -1,0 +1,107 @@
+{
+  "app": {
+    "title": "Explorador de Streamers de Ajedrez",
+    "subtitle": "Descubre y sigue a streamers de ajedrez de todo el mundo"
+  },
+  "header": {
+    "shortcuts": "Atajos",
+    "notificationsOn": "Notificaciones Activadas",
+    "notificationsOff": "Notificaciones Desactivadas",
+    "analytics": "Análisis",
+    "refresh": "Actualizar"
+  },
+  "stats": {
+    "total": "Total de Streamers",
+    "live": "En Vivo",
+    "offline": "Offline",
+    "community": "Streamers de la Comunidad"
+  },
+  "filters": {
+    "title": "Filtros",
+    "search": "Buscar streamers...",
+    "onlineOnly": "Solo Online",
+    "offlineOnly": "Solo Offline",
+    "communityOnly": "Solo Comunidad",
+    "favoritesOnly": "Solo Favoritos",
+    "twitchOnly": "Solo Twitch",
+    "youtubeOnly": "Solo YouTube",
+    "clearFilters": "Limpiar Filtros"
+  },
+  "sort": {
+    "title": "Ordenar Por",
+    "username": "Nombre de Usuario",
+    "status": "Estado",
+    "platform": "Plataforma"
+  },
+  "results": {
+    "title": "Resultados",
+    "loading": "Cargando streamers...",
+    "noResults": "Ningún streamer coincide con tus filtros",
+    "showing": "Mostrando streamers basados en tus filtros"
+  },
+  "streamerCard": {
+    "addToFavorites": "Agregar a favoritos",
+    "removeFromFavorites": "Eliminar de favoritos",
+    "viewProfile": "Ver perfil",
+    "preview": "Vista previa",
+    "communityStreamer": "Streamer de la Comunidad",
+    "chessCom": "Chess.com"
+  },
+  "analytics": {
+    "title": "Análisis y Estadísticas",
+    "platformDistribution": "Distribución de Plataformas",
+    "liveStatus": "Estado En Vivo",
+    "streamerType": "Tipo de Streamer",
+    "platformOverlap": "Superposición de Plataformas",
+    "twitchOnly": "Solo Twitch",
+    "youtubeOnly": "Solo YouTube",
+    "bothPlatforms": "Ambas Plataformas",
+    "chessComOnly": "Solo Chess.com",
+    "live": "En Vivo",
+    "offline": "Offline",
+    "community": "Comunidad",
+    "regular": "Regular",
+    "totalStreamers": "Total de Streamers",
+    "currentlyLive": "Actualmente En Vivo",
+    "onTwitch": "En Twitch",
+    "onYouTube": "En YouTube"
+  },
+  "profile": {
+    "title": "Perfil del Streamer",
+    "joined": "Se unió",
+    "followers": "Seguidores",
+    "following": "Siguiendo",
+    "fideRating": "Clasificación FIDE",
+    "gameStatistics": "Estadísticas de Juegos",
+    "currentRating": "Clasificación Actual",
+    "bestRating": "Mejor Clasificación",
+    "record": "Récord",
+    "league": "Liga",
+    "highestRating": "Mejor Clasificación",
+    "achieved": "Logrado",
+    "blitz": "Blitz",
+    "rapid": "Rápido",
+    "daily": "Diario",
+    "tactics": "Tácticas",
+    "loading": "Cargando perfil...",
+    "error": "Error al cargar datos del perfil"
+  },
+  "shortcuts": {
+    "title": "Atajos de Teclado",
+    "refresh": "Actualizar streamers",
+    "clearFilters": "Limpiar filtros",
+    "showShortcuts": "Mostrar atajos"
+  },
+  "language": {
+    "title": "Idioma",
+    "english": "English",
+    "portuguese": "Português",
+    "spanish": "Español"
+  },
+  "common": {
+    "close": "Cerrar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "retry": "Reintentar"
+  }
+}

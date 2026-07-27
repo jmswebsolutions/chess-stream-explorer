@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { FaSync, FaKeyboard, FaBell, FaBellSlash, FaChartBar } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import { useHome } from '../hooks/useHome';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { useNotifications } from '../hooks/useNotifications';
@@ -12,9 +13,11 @@ import { ErrorState } from '../components/ErrorState';
 import { StreamPreview } from '../components/StreamPreview';
 import { StreamerProfile } from '../components/StreamerProfile';
 import { Analytics } from '../components/Analytics';
+import { LanguageSelector } from '../components/LanguageSelector';
 import { Streamer } from '../api/chessApi';
 
 export const Home = () => {
+  const { t } = useTranslation();
   const {
     streamers,
     loading,
@@ -157,13 +160,14 @@ export const Home = () => {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-                Chess Stream Explorer
+                {t('app.title')}
               </h1>
               <p className="text-gray-400">
-                Discover and follow chess streamers from around the world
+                {t('app.subtitle')}
               </p>
             </div>
             <div className="flex items-center gap-2">
+              <LanguageSelector />
               <button
                 onClick={() => setShowAnalytics(!showAnalytics)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
@@ -174,7 +178,7 @@ export const Home = () => {
                 aria-label="Toggle analytics"
               >
                 <FaChartBar />
-                <span className="hidden sm:inline">Analytics</span>
+                <span className="hidden sm:inline">{t('header.analytics')}</span>
               </button>
               <button
                 onClick={toggleNotifications}
@@ -187,7 +191,7 @@ export const Home = () => {
               >
                 {notificationsEnabled ? <FaBell /> : <FaBellSlash />}
                 <span className="hidden sm:inline">
-                  {notificationsEnabled ? 'Notifications On' : 'Notifications Off'}
+                  {notificationsEnabled ? t('header.notificationsOn') : t('header.notificationsOff')}
                 </span>
               </button>
               <button
@@ -196,7 +200,7 @@ export const Home = () => {
                 aria-label="Show keyboard shortcuts"
               >
                 <FaKeyboard />
-                <span className="hidden sm:inline">Shortcuts</span>
+                <span className="hidden sm:inline">{t('header.shortcuts')}</span>
               </button>
               <button
                 onClick={refresh}
@@ -204,7 +208,7 @@ export const Home = () => {
                 className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white rounded-lg transition-colors duration-200"
               >
                 <FaSync className={loading ? 'animate-spin' : ''} />
-                Refresh
+                {t('header.refresh')}
               </button>
             </div>
           </div>
@@ -246,14 +250,14 @@ export const Home = () => {
           <div className="lg:col-span-2">
             <div className="bg-gray-800 rounded-lg p-4 shadow-lg">
               <h2 className="text-white font-semibold mb-2">
-                Results: {streamers.length}
+                {t('results.title')}: {streamers.length}
               </h2>
               <p className="text-gray-400 text-sm">
                 {loading
-                  ? 'Loading streamers...'
+                  ? t('results.loading')
                   : streamers.length === 0
-                  ? 'No streamers match your filters'
-                  : 'Showing streamers based on your filters'}
+                  ? t('results.noResults')
+                  : t('results.showing')}
               </p>
             </div>
           </div>
