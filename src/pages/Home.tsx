@@ -14,6 +14,7 @@ import { StreamPreview } from '../components/StreamPreview';
 import { StreamerProfile } from '../components/StreamerProfile';
 import { Analytics } from '../components/Analytics';
 import { LanguageSelector } from '../components/LanguageSelector';
+import { ThemeToggle } from '../components/ThemeToggle';
 import { Streamer } from '../api/chessApi';
 
 export const Home = () => {
@@ -168,6 +169,7 @@ export const Home = () => {
             </div>
             <div className="flex items-center gap-2">
               <LanguageSelector />
+              <ThemeToggle />
               <button
                 onClick={() => setShowAnalytics(!showAnalytics)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
