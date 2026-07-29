@@ -8,7 +8,8 @@
     "notificationsOn": "Notificaciones Activadas",
     "notificationsOff": "Notificaciones Desactivadas",
     "analytics": "Análisis",
-    "refresh": "Actualizar"
+    "refresh": "Actualizar",
+    "export": "Exportar"
   },
   "stats": {
     "total": "Total de Streamers",

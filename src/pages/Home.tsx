@@ -15,6 +15,8 @@ import { StreamerProfile } from '../components/StreamerProfile';
 import { Analytics } from '../components/Analytics';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { ThemeToggle } from '../components/ThemeToggle';
+import { ExportButton } from '../components/ExportButton';
+import { exportToCSV, exportToJSON } from '../utils/exportData';
 import { Streamer } from '../api/chessApi';
 
 export const Home = () => {
@@ -70,6 +72,14 @@ export const Home = () => {
   const [showAnalytics, setShowAnalytics] = useState(false);
   const { enabled: notificationsEnabled, showNotification, toggleNotifications } = useNotifications();
   const previousStreamersRef = useRef<Streamer[]>([]);
+
+  const handleExportCSV = () => {
+    exportToCSV(streamers);
+  };
+
+  const handleExportJSON = () => {
+    exportToJSON(streamers);
+  };
 
   useKeyboardShortcuts([
     {
@@ -170,6 +180,11 @@ export const Home = () => {
             <div className="flex items-center gap-2">
               <LanguageSelector />
               <ThemeToggle />
+              <ExportButton
+                onExportCSV={handleExportCSV}
+                onExportJSON={handleExportJSON}
+                disabled={loading || streamers.length === 0}
+              />
               <button
                 onClick={() => setShowAnalytics(!showAnalytics)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${

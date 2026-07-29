@@ -173,7 +173,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Charts & Analytics**: Visualize streaming trends and statistics
 - [x] **Multi-language Support**: Add i18n for Portuguese, Spanish, and other languages
 - [x] **Dark/Light Theme Toggle**: Allow users to switch between themes
-- [ ] **Export Data**: Export filtered results to CSV/JSON
+- [x] **Export Data**: Export filtered results to CSV/JSON
 
 ### Long-term (Months)
 - [ ] **User Accounts**: Authentication with GitHub/Google for cloud sync
