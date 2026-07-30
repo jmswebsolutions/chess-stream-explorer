@@ -1,11 +1,14 @@
 import { Home } from './pages/Home';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 function App() {
   return (
-    <ThemeProvider>
-      <Home />
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <Home />
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
 
