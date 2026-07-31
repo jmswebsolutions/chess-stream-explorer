@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { FaSync, FaKeyboard, FaBell, FaBellSlash, FaChartBar } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import { useHome } from '../hooks/useHome';
@@ -10,14 +10,15 @@ import { Sort } from '../components/Sort';
 import { StreamerCard } from '../components/StreamerCard';
 import { Skeleton } from '../components/Skeleton';
 import { ErrorState } from '../components/ErrorState';
-import { StreamPreview } from '../components/StreamPreview';
-import { StreamerProfile } from '../components/StreamerProfile';
-import { Analytics } from '../components/Analytics';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { ExportButton } from '../components/ExportButton';
 import { exportToCSV, exportToJSON } from '../utils/exportData';
 import { Streamer } from '../api/chessApi';
+
+const StreamPreview = lazy(() => import('../components/StreamPreview').then(m => ({ default: m.StreamPreview })));
+const StreamerProfile = lazy(() => import('../components/StreamerProfile').then(m => ({ default: m.StreamerProfile })));
+const Analytics = lazy(() => import('../components/Analytics').then(m => ({ default: m.Analytics })));
 
 export const Home = () => {
   const { t } = useTranslation();
@@ -235,7 +236,9 @@ export const Home = () => {
 
         {showAnalytics && (
           <div className="mb-6">
-            <Analytics streamers={streamers} />
+            <Suspense fallback={<div className="text-gray-400 text-center py-8">Loading analytics...</div>}>
+              <Analytics streamers={streamers} />
+            </Suspense>
           </div>
         )}
 
@@ -310,19 +313,23 @@ export const Home = () => {
         )}
       </div>
 
-      <StreamPreview
-        isOpen={previewState.isOpen}
-        onClose={handleClosePreview}
-        platform={previewState.platform}
-        channel={previewState.channel}
-        username={previewState.username}
-      />
+      <Suspense fallback={null}>
+        <StreamPreview
+          isOpen={previewState.isOpen}
+          onClose={handleClosePreview}
+          platform={previewState.platform}
+          channel={previewState.channel}
+          username={previewState.username}
+        />
+      </Suspense>
 
-      <StreamerProfile
-        username={profileState.username}
-        isOpen={profileState.isOpen}
-        onClose={handleCloseProfile}
-      />
+      <Suspense fallback={null}>
+        <StreamerProfile
+          username={profileState.username}
+          isOpen={profileState.isOpen}
+          onClose={handleCloseProfile}
+        />
+      </Suspense>
 
       {showShortcutsHelp && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
