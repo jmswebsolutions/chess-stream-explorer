@@ -6,6 +6,9 @@ function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider>
+        <a href="#main-content" className="skip-to-main">
+          Skip to main content
+        </a>
         <Home />
       </ThemeProvider>
     </ErrorBoundary>

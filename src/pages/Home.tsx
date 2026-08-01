@@ -166,9 +166,9 @@ export const Home = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 p-4 md:p-8">
-      <div className="max-w-7xl mx-auto">
-        <header className="mb-8">
+    <div className="min-h-screen bg-gray-900 text-white">
+      <header className="bg-gray-800 shadow-lg" role="banner">
+        <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
@@ -230,88 +230,92 @@ export const Home = () => {
               </button>
             </div>
           </div>
-        </header>
+        </div>
+      </header>
 
-        <Stats {...stats} />
+      <main id="main-content" role="main" tabIndex={-1}>
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <Stats {...stats} />
 
-        {showAnalytics && (
-          <div className="mb-6">
-            <Suspense fallback={<div className="text-gray-400 text-center py-8">Loading analytics...</div>}>
-              <Analytics streamers={streamers} />
-            </Suspense>
-          </div>
-        )}
+          {showAnalytics && (
+            <div className="mb-6">
+              <Suspense fallback={<div className="text-gray-400 text-center py-8">Loading analytics...</div>}>
+                <Analytics streamers={streamers} />
+              </Suspense>
+            </div>
+          )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
-          <div className="lg:col-span-1">
-            <Filters
-              searchTerm={searchTerm}
-              onSearchChange={setSearchTerm}
-              showOnlineOnly={showOnlineOnly}
-              onShowOnlineOnlyChange={setShowOnlineOnly}
-              showOfflineOnly={showOfflineOnly}
-              onShowOfflineOnlyChange={setShowOfflineOnly}
-              showCommunityOnly={showCommunityOnly}
-              onShowCommunityOnlyChange={setShowCommunityOnly}
-              showFavoritesOnly={showFavoritesOnly}
-              onShowFavoritesOnlyChange={setShowFavoritesOnly}
-              showTwitchOnly={showTwitchOnly}
-              onShowTwitchOnlyChange={setShowTwitchOnly}
-              showYouTubeOnly={showYouTubeOnly}
-              onShowYouTubeOnlyChange={setShowYouTubeOnly}
-              onClearFilters={handleClearFilters}
-            />
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
+            <div className="lg:col-span-1">
+              <Filters
+                searchTerm={searchTerm}
+                onSearchChange={setSearchTerm}
+                showOnlineOnly={showOnlineOnly}
+                onShowOnlineOnlyChange={setShowOnlineOnly}
+                showOfflineOnly={showOfflineOnly}
+                onShowOfflineOnlyChange={setShowOfflineOnly}
+                showCommunityOnly={showCommunityOnly}
+                onShowCommunityOnlyChange={setShowCommunityOnly}
+                showFavoritesOnly={showFavoritesOnly}
+                onShowFavoritesOnlyChange={setShowFavoritesOnly}
+                showTwitchOnly={showTwitchOnly}
+                onShowTwitchOnlyChange={setShowTwitchOnly}
+                showYouTubeOnly={showYouTubeOnly}
+                onShowYouTubeOnlyChange={setShowYouTubeOnly}
+                onClearFilters={handleClearFilters}
+              />
+            </div>
 
-          <div className="lg:col-span-1">
-            <Sort sortBy={sortBy} onSortChange={setSortBy} />
-          </div>
+            <div className="lg:col-span-1">
+              <Sort sortBy={sortBy} onSortChange={setSortBy} />
+            </div>
 
-          <div className="lg:col-span-2">
-            <div className="bg-gray-800 rounded-lg p-4 shadow-lg">
-              <h2 className="text-white font-semibold mb-2">
-                {t('results.title')}: {streamers.length}
-              </h2>
-              <p className="text-gray-400 text-sm">
-                {loading
-                  ? t('results.loading')
-                  : streamers.length === 0
-                  ? t('results.noResults')
-                  : t('results.showing')}
-              </p>
+            <div className="lg:col-span-2">
+              <div className="bg-gray-800 rounded-lg p-4 shadow-lg">
+                <h2 className="text-white font-semibold mb-2">
+                  {t('results.title')}: {streamers.length}
+                </h2>
+                <p className="text-gray-400 text-sm">
+                  {loading
+                    ? t('results.loading')
+                    : streamers.length === 0
+                    ? t('results.noResults')
+                    : t('results.showing')}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[...Array(6)].map((_, index) => (
-              <Skeleton key={index} />
-            ))}
-          </div>
-        ) : streamers.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-gray-400 text-lg">
-              No streamers found matching your criteria
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {streamers.map((streamer: Streamer) => (
-              <StreamerCard
-                key={streamer.username}
-                streamer={streamer}
-                onToggleFavorite={toggleFavorite}
-                isFavorite={isFavorite(streamer.username)}
-                onPreview={(platform, channel) =>
-                  handlePreview(platform, channel, streamer.username)
-                }
-                onProfile={handleProfile}
-              />
-            ))}
-          </div>
-        )}
-      </div>
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[...Array(6)].map((_, index) => (
+                <Skeleton key={index} />
+              ))}
+            </div>
+          ) : streamers.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-400 text-lg">
+                No streamers found matching your criteria
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {streamers.map((streamer: Streamer) => (
+                <StreamerCard
+                  key={streamer.username}
+                  streamer={streamer}
+                  onToggleFavorite={toggleFavorite}
+                  isFavorite={isFavorite(streamer.username)}
+                  onPreview={(platform, channel) =>
+                    handlePreview(platform, channel, streamer.username)
+                  }
+                  onProfile={handleProfile}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </main>
 
       <Suspense fallback={null}>
         <StreamPreview
