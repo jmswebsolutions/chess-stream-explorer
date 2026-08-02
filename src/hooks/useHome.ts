@@ -1,23 +1,52 @@
-import { useState, useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useStreamers } from './useStreamers';
-import { useFavorites } from './useFavorites';
-import { SortOption } from '../components/Sort';
+import { useStreamersStore } from '../store/streamersStore';
+import { useFavoritesStore } from '../store/favoritesStore';
 
 export const useHome = () => {
-  const { streamers, loading, error, refresh } = useStreamers();
-  const { favorites, toggleFavorite, isFavorite } = useFavorites();
+  const { streamers: allStreamers, loading, error, refresh } = useStreamers();
+  
+  // Zustand stores
+  const {
+    searchTerm,
+    showOnlineOnly,
+    showOfflineOnly,
+    showCommunityOnly,
+    showFavoritesOnly,
+    showTwitchOnly,
+    showYouTubeOnly,
+    sortBy,
+    setSearchTerm,
+    setShowOnlineOnly,
+    setShowOfflineOnly,
+    setShowCommunityOnly,
+    setShowFavoritesOnly,
+    setShowTwitchOnly,
+    setShowYouTubeOnly,
+    setSortBy,
+    clearFilters,
+  } = useStreamersStore();
+  
+  const {
+    favorites,
+    addFavorite,
+    removeFavorite,
+    isFavorite,
+    loadFavorites,
+  } = useFavoritesStore();
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [showOnlineOnly, setShowOnlineOnly] = useState(false);
-  const [showOfflineOnly, setShowOfflineOnly] = useState(false);
-  const [showCommunityOnly, setShowCommunityOnly] = useState(false);
-  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
-  const [showTwitchOnly, setShowTwitchOnly] = useState(false);
-  const [showYouTubeOnly, setShowYouTubeOnly] = useState(false);
-  const [sortBy, setSortBy] = useState<SortOption>('online-first');
+  // Load favorites on mount
+  useEffect(() => {
+    loadFavorites();
+  }, [loadFavorites]);
+
+  // Update streamers in store when data changes
+  useEffect(() => {
+    useStreamersStore.getState().setStreamers(allStreamers);
+  }, [allStreamers]);
 
   const filteredAndSortedStreamers = useMemo(() => {
-    let filtered = streamers;
+    let filtered = allStreamers;
 
     if (searchTerm) {
       filtered = filtered.filter((streamer) =>
@@ -37,7 +66,7 @@ export const useHome = () => {
     }
 
     if (showFavoritesOnly) {
-      filtered = filtered.filter((streamer) => favorites.has(streamer.username));
+      filtered = filtered.filter((streamer) => favorites.includes(streamer.username));
     }
 
     if (showTwitchOnly && showYouTubeOnly) {
@@ -73,7 +102,7 @@ export const useHome = () => {
 
     return sorted;
   }, [
-    streamers,
+    allStreamers,
     searchTerm,
     showOnlineOnly,
     showOfflineOnly,
@@ -87,22 +116,20 @@ export const useHome = () => {
 
   const stats = useMemo(() => {
     return {
-      total: streamers.length,
-      online: streamers.filter((s) => s.status === 'live').length,
-      offline: streamers.filter((s) => s.status === 'offline').length,
-      community: streamers.filter((s) => s.is_community_streamer).length,
-      favorites: favorites.size,
+      total: allStreamers.length,
+      online: allStreamers.filter((s) => s.status === 'live').length,
+      offline: allStreamers.filter((s) => s.status === 'offline').length,
+      community: allStreamers.filter((s) => s.is_community_streamer).length,
+      favorites: favorites.length,
     };
-  }, [streamers, favorites]);
+  }, [allStreamers, favorites]);
 
-  const handleClearFilters = () => {
-    setSearchTerm('');
-    setShowOnlineOnly(false);
-    setShowOfflineOnly(false);
-    setShowCommunityOnly(false);
-    setShowFavoritesOnly(false);
-    setShowTwitchOnly(false);
-    setShowYouTubeOnly(false);
+  const toggleFavorite = (username: string) => {
+    if (isFavorite(username)) {
+      removeFavorite(username);
+    } else {
+      addFavorite(username);
+    }
   };
 
   return {
@@ -126,7 +153,7 @@ export const useHome = () => {
     setShowYouTubeOnly,
     sortBy,
     setSortBy,
-    handleClearFilters,
+    handleClearFilters: clearFilters,
     refresh,
     toggleFavorite,
     isFavorite,
