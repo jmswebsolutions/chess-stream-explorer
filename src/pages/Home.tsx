@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react';
-import { FaSync, FaKeyboard, FaBell, FaBellSlash, FaChartBar } from 'react-icons/fa';
+import { FaSync, FaKeyboard, FaBell, FaBellSlash, FaChartBar, FaShieldAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useHome } from '../hooks/useHome';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
@@ -181,6 +182,14 @@ export const Home = () => {
             <div className="flex items-center gap-2">
               <LanguageSelector />
               <ThemeToggle />
+              <Link
+                to="/admin"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-colors duration-200"
+                aria-label="Admin Dashboard"
+              >
+                <FaShieldAlt />
+                <span className="hidden md:inline">Admin</span>
+              </Link>
               <ExportButton
                 onExportCSV={handleExportCSV}
                 onExportJSON={handleExportJSON}
