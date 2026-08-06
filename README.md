@@ -179,7 +179,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [ ] **User Accounts**: Authentication with GitHub/Google for cloud sync
 - [ ] **Recommendation System**: Suggest streamers based on viewing history
 - [ ] **Community Features**: Comments, ratings, and reviews for streamers
-- [ ] **Mobile App**: PWA with offline support and app store distribution
+- [x] **Mobile App**: PWA with offline support and app store distribution
 - [ ] **Real-time WebSocket**: Real-time updates without polling
 - [x] **Admin Dashboard**: Analytics dashboard for administrators
 
