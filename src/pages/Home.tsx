@@ -5,10 +5,12 @@ import { useTranslation } from 'react-i18next';
 import { useHome } from '../hooks/useHome';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { useNotifications } from '../hooks/useNotifications';
+import { useRecommendationsStore } from '../store/recommendationsStore';
 import { Stats } from '../components/Stats';
 import { Filters } from '../components/Filters';
 import { Sort } from '../components/Sort';
 import { StreamerCard } from '../components/StreamerCard';
+import { RecommendedStreamers } from '../components/RecommendedStreamers';
 import { Skeleton } from '../components/Skeleton';
 import { ErrorState } from '../components/ErrorState';
 import { LanguageSelector } from '../components/LanguageSelector';
@@ -48,7 +50,9 @@ export const Home = () => {
     refresh,
     toggleFavorite,
     isFavorite,
+    favorites,
   } = useHome();
+  const { addView, getRecommendations } = useRecommendationsStore();
 
   const [previewState, setPreviewState] = useState<{
     isOpen: boolean;
@@ -127,6 +131,7 @@ export const Home = () => {
   }, [streamers, notificationsEnabled, loading, isFavorite, showNotification]);
 
   const handlePreview = (platform: 'twitch' | 'youtube', channel: string, username: string) => {
+    addView(username);
     setPreviewState({
       isOpen: true,
       platform,
@@ -145,6 +150,7 @@ export const Home = () => {
   };
 
   const handleProfile = (username: string) => {
+    addView(username);
     setProfileState({
       isOpen: true,
       username,
@@ -245,6 +251,8 @@ export const Home = () => {
       <main id="main-content" role="main" tabIndex={-1}>
         <div className="max-w-7xl mx-auto px-4 py-8">
           <Stats {...stats} />
+
+          <RecommendedStreamers streamers={getRecommendations(streamers, favorites)} />
 
           {showAnalytics && (
             <div className="mb-6">

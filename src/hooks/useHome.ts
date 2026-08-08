@@ -157,5 +157,6 @@ export const useHome = () => {
     refresh,
     toggleFavorite,
     isFavorite,
+    favorites,
   };
 };

@@ -177,7 +177,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ### Long-term (Months)
 - [ ] **User Accounts**: Authentication with GitHub/Google for cloud sync
-- [ ] **Recommendation System**: Suggest streamers based on viewing history
+- [x] **Recommendation System**: Suggest streamers based on viewing history
 - [ ] **Community Features**: Comments, ratings, and reviews for streamers
 - [x] **Mobile App**: PWA with offline support and app store distribution
 - [ ] **Real-time WebSocket**: Real-time updates without polling
