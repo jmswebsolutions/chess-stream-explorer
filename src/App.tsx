@@ -10,7 +10,7 @@ function App() {
     <ErrorBoundary>
       <QueryProvider>
         <ThemeProvider>
-          <BrowserRouter>
+          <BrowserRouter basename="/chess-stream-explorer">
             <a href="#main-content" className="skip-to-main">
               Skip to main content
             </a>

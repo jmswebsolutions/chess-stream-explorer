@@ -40,11 +40,6 @@ export const useHome = () => {
     loadFavorites();
   }, [loadFavorites]);
 
-  // Update streamers in store when data changes
-  useEffect(() => {
-    useStreamersStore.getState().setStreamers(allStreamers);
-  }, [allStreamers]);
-
   const filteredAndSortedStreamers = useMemo(() => {
     let filtered = allStreamers;
 
