@@ -14,6 +14,7 @@ interface StreamersState {
   showTwitchOnly: boolean;
   showYouTubeOnly: boolean;
   sortBy: SortOption;
+  compactMode: boolean;
   setStreamers: (streamers: Streamer[]) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
@@ -25,6 +26,7 @@ interface StreamersState {
   setShowTwitchOnly: (show: boolean) => void;
   setShowYouTubeOnly: (show: boolean) => void;
   setSortBy: (sort: SortOption) => void;
+  setCompactMode: (compact: boolean) => void;
   clearFilters: () => void;
 }
 
@@ -40,6 +42,7 @@ export const useStreamersStore = create<StreamersState>((set) => ({
   showTwitchOnly: false,
   showYouTubeOnly: false,
   sortBy: 'online-first',
+  compactMode: false,
   setStreamers: (streamers) => set({ streamers }),
   setLoading: (loading) => set({ loading }),
   setError: (error) => set({ error }),
@@ -51,6 +54,7 @@ export const useStreamersStore = create<StreamersState>((set) => ({
   setShowTwitchOnly: (showTwitchOnly) => set({ showTwitchOnly }),
   setShowYouTubeOnly: (showYouTubeOnly) => set({ showYouTubeOnly }),
   setSortBy: (sortBy) => set({ sortBy }),
+  setCompactMode: (compactMode) => set({ compactMode }),
   clearFilters: () => set({
     searchTerm: '',
     showOnlineOnly: false,

@@ -16,6 +16,7 @@ export const useHome = () => {
     showTwitchOnly,
     showYouTubeOnly,
     sortBy,
+    compactMode,
     setSearchTerm,
     setShowOnlineOnly,
     setShowOfflineOnly,
@@ -24,6 +25,7 @@ export const useHome = () => {
     setShowTwitchOnly,
     setShowYouTubeOnly,
     setSortBy,
+    setCompactMode,
     clearFilters,
   } = useStreamersStore();
   
@@ -148,6 +150,8 @@ export const useHome = () => {
     setShowYouTubeOnly,
     sortBy,
     setSortBy,
+    compactMode,
+    setCompactMode,
     handleClearFilters: clearFilters,
     refresh,
     toggleFavorite,

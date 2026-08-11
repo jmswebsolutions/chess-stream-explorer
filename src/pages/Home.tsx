@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react';
-import { FaSync, FaKeyboard, FaBell, FaBellSlash, FaChartBar, FaShieldAlt } from 'react-icons/fa';
+import { FaSync, FaKeyboard, FaBell, FaBellSlash, FaChartBar, FaShieldAlt, FaTh, FaList } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useHome } from '../hooks/useHome';
@@ -46,6 +46,8 @@ export const Home = () => {
     setShowYouTubeOnly,
     sortBy,
     setSortBy,
+    compactMode,
+    setCompactMode,
     handleClearFilters,
     refresh,
     toggleFavorite,
@@ -188,6 +190,18 @@ export const Home = () => {
             <div className="flex items-center gap-2">
               <LanguageSelector />
               <ThemeToggle />
+              <button
+                onClick={() => setCompactMode(!compactMode)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
+                  compactMode
+                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                    : 'bg-gray-700 hover:bg-gray-600 text-white'
+                }`}
+                aria-label="Toggle compact mode"
+              >
+                {compactMode ? <FaList /> : <FaTh />}
+                <span className="hidden md:inline">{compactMode ? 'Normal' : 'Compact'}</span>
+              </button>
               <Link
                 to="/admin"
                 className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-colors duration-200"
@@ -316,7 +330,11 @@ export const Home = () => {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className={`grid gap-4 ${
+              compactMode
+                ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
+                : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+            }`}>
               {streamers.map((streamer: Streamer) => (
                 <StreamerCard
                   key={streamer.username}
@@ -327,6 +345,7 @@ export const Home = () => {
                     handlePreview(platform, channel, streamer.username)
                   }
                   onProfile={handleProfile}
+                  compactMode={compactMode}
                 />
               ))}
             </div>
