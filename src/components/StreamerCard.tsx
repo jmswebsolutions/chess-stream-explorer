@@ -10,6 +10,7 @@ interface StreamerCardProps {
   onPreview?: (platform: 'twitch' | 'youtube', channel: string) => void;
   onProfile?: (username: string) => void;
   compactMode?: boolean;
+  className?: string;
 }
 
 export const StreamerCard = React.memo<StreamerCardProps>(({
@@ -19,14 +20,15 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
   onPreview,
   onProfile,
   compactMode = false,
+  className = '',
 }) => {
   const { username, avatar, status, is_community_streamer, url, twitch, youtube } =
     streamer;
 
   return (
-    <div className={`bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${
+    <div className={`bg-gray-800 rounded-lg shadow-lg card-hover animate-fade-in ${
       compactMode ? 'p-2' : 'p-4'
-    }`}>
+    } ${className}`}>
       <div className={`flex items-start ${compactMode ? 'space-x-2' : 'space-x-4'}`}>
         <img
           src={avatar}

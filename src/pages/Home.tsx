@@ -335,7 +335,7 @@ export const Home = () => {
                 ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
                 : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
             }`}>
-              {streamers.map((streamer: Streamer) => (
+              {streamers.map((streamer: Streamer, index: number) => (
                 <StreamerCard
                   key={streamer.username}
                   streamer={streamer}
@@ -346,6 +346,7 @@ export const Home = () => {
                   }
                   onProfile={handleProfile}
                   compactMode={compactMode}
+                  className={`animate-fade-in animate-stagger-${(index % 5) + 1}`}
                 />
               ))}
             </div>
