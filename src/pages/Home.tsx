@@ -89,23 +89,60 @@ export const Home = () => {
     exportToJSON(streamers);
   };
 
-  useKeyboardShortcuts([
+  const shortcuts = [
     {
       key: 'r',
       action: refresh,
       description: 'Refresh streamers',
     },
     {
-      key: 'escape',
+      key: 'f',
+      action: () => document.getElementById('search-input')?.focus(),
+      description: 'Focus search',
+    },
+    {
+      key: 'c',
       action: handleClearFilters,
       description: 'Clear filters',
+    },
+    {
+      key: 'o',
+      action: () => setShowOnlineOnly(!showOnlineOnly),
+      description: 'Toggle online filter',
+    },
+    {
+      key: 'v',
+      action: () => setShowFavoritesOnly(!showFavoritesOnly),
+      description: 'Toggle favorites filter',
+    },
+    {
+      key: 't',
+      action: () => setShowTwitchOnly(!showTwitchOnly),
+      description: 'Toggle Twitch filter',
+    },
+    {
+      key: 'y',
+      action: () => setShowYouTubeOnly(!showYouTubeOnly),
+      description: 'Toggle YouTube filter',
+    },
+    {
+      key: 'm',
+      action: () => setCompactMode(!compactMode),
+      description: 'Toggle compact mode',
+    },
+    {
+      key: 'a',
+      action: () => setShowAnalytics(!showAnalytics),
+      description: 'Toggle analytics',
     },
     {
       key: '?',
       action: () => setShowShortcutsHelp(true),
       description: 'Show keyboard shortcuts',
     },
-  ]);
+  ];
+
+  useKeyboardShortcuts(shortcuts);
 
   // Check for favorite streamers going live
   useEffect(() => {

@@ -194,6 +194,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Automatic Dark Mode**: Detect system preference and auto-switch theme
 - [x] **Compact Mode**: Toggle for denser streamer card layout
 - [x] **Smooth Animations**: Add transitions and animations for better UX
+- [x] **Additional Keyboard Shortcuts**: More shortcuts for navigation and filters
 
 ## Screenshots
 

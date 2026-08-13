@@ -49,6 +49,7 @@ export const Filters: React.FC<FiltersProps> = ({
         <div className="relative">
           <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <input
+            id="search-input"
             type="text"
             placeholder={t('filters.search')}
             value={searchTerm}
