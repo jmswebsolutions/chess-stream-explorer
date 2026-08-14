@@ -1,15 +1,19 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 type Theme = 'dark' | 'light';
+type ColorTheme = 'blue' | 'purple' | 'green' | 'orange' | 'pink';
 
 interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;
+  colorTheme: ColorTheme;
+  setColorTheme: (color: ColorTheme) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const THEME_KEY = 'chess-stream-explorer-theme';
+const COLOR_THEME_KEY = 'chess-stream-explorer-color-theme';
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<Theme>(() => {
@@ -21,12 +25,24 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     return systemPrefersDark ? 'dark' : 'light';
   });
 
+  const [colorTheme, setColorTheme] = useState<ColorTheme>(() => {
+    const savedColorTheme = localStorage.getItem(COLOR_THEME_KEY) as ColorTheme;
+    return savedColorTheme || 'blue';
+  });
+
   useEffect(() => {
     const root = document.documentElement;
     root.classList.remove('dark', 'light');
     root.classList.add(theme);
     localStorage.setItem(THEME_KEY, theme);
   }, [theme]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.remove('theme-blue', 'theme-purple', 'theme-green', 'theme-orange', 'theme-pink');
+    root.classList.add(`theme-${colorTheme}`);
+    localStorage.setItem(COLOR_THEME_KEY, colorTheme);
+  }, [colorTheme]);
 
   // Listen for system theme changes
   useEffect(() => {
@@ -65,7 +81,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   }, [toggleTheme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, colorTheme, setColorTheme }}>
       {children}
     </ThemeContext.Provider>
   );

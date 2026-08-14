@@ -15,6 +15,7 @@ import { Skeleton } from '../components/Skeleton';
 import { ErrorState } from '../components/ErrorState';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { ThemeToggle } from '../components/ThemeToggle';
+import { ColorThemePicker } from '../components/ColorThemePicker';
 import { ExportButton } from '../components/ExportButton';
 import { exportToCSV, exportToJSON } from '../utils/exportData';
 import { Streamer } from '../api/chessApi';
@@ -227,6 +228,7 @@ export const Home = () => {
             <div className="flex items-center gap-2">
               <LanguageSelector />
               <ThemeToggle />
+              <ColorThemePicker />
               <button
                 onClick={() => setCompactMode(!compactMode)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${

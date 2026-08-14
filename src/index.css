@@ -9,7 +9,8 @@
   --text-primary: #ffffff;
   --text-secondary: #9ca3af;
   --border-color: #374151;
-  --accent-blue: #3b82f6;
+  --accent-primary: #3b82f6;
+  --accent-secondary: #60a5fa;
   --accent-green: #10b981;
   --accent-red: #ef4444;
   --accent-purple: #8b5cf6;
@@ -23,11 +24,42 @@
   --text-primary: #111827;
   --text-secondary: #6b7280;
   --border-color: #d1d5db;
-  --accent-blue: #3b82f6;
+  --accent-primary: #3b82f6;
+  --accent-secondary: #60a5fa;
   --accent-green: #10b981;
   --accent-red: #ef4444;
   --accent-purple: #8b5cf6;
   --accent-yellow: #f59e0b;
+}
+
+/* Blue theme (default) */
+.theme-blue {
+  --accent-primary: #3b82f6;
+  --accent-secondary: #60a5fa;
+}
+
+/* Purple theme */
+.theme-purple {
+  --accent-primary: #8b5cf6;
+  --accent-secondary: #a78bfa;
+}
+
+/* Green theme */
+.theme-green {
+  --accent-primary: #10b981;
+  --accent-secondary: #34d399;
+}
+
+/* Orange theme */
+.theme-orange {
+  --accent-primary: #f59e0b;
+  --accent-secondary: #fbbf24;
+}
+
+/* Pink theme */
+.theme-pink {
+  --accent-primary: #ec4899;
+  --accent-secondary: #f472b6;
 }
 
 /* Skip to main content link for keyboard users */
@@ -35,7 +67,7 @@
   position: absolute;
   top: -40px;
   left: 0;
-  background: var(--accent-blue);
+  background: var(--accent-primary);
   color: white;
   padding: 8px 16px;
   z-index: 100;
@@ -50,7 +82,7 @@
 
 /* Improved focus styles for accessibility */
 *:focus-visible {
-  outline: 3px solid var(--accent-blue);
+  outline: 3px solid var(--accent-primary);
   outline-offset: 2px;
 }
 
@@ -58,7 +90,7 @@ button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 3px solid var(--accent-blue);
+  outline: 3px solid var(--accent-primary);
   outline-offset: 2px;
 }
 
