@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 interface FiltersProps {
   searchTerm: string;
   onSearchChange: (value: string) => void;
+  searchBy: 'name' | 'platform' | 'status';
+  onSearchByChange: (value: 'name' | 'platform' | 'status') => void;
   showOnlineOnly: boolean;
   onShowOnlineOnlyChange: (value: boolean) => void;
   showOfflineOnly: boolean;
@@ -23,6 +25,8 @@ interface FiltersProps {
 export const Filters: React.FC<FiltersProps> = ({
   searchTerm,
   onSearchChange,
+  searchBy,
+  onSearchByChange,
   showOnlineOnly,
   onShowOnlineOnlyChange,
   showOfflineOnly,
@@ -46,16 +50,27 @@ export const Filters: React.FC<FiltersProps> = ({
       </div>
 
       <div className="space-y-4">
-        <div className="relative">
-          <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-          <input
-            id="search-input"
-            type="text"
-            placeholder={t('filters.search')}
-            value={searchTerm}
-            onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-          />
+        <div className="flex gap-2">
+          <div className="relative flex-1">
+            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <input
+              id="search-input"
+              type="text"
+              placeholder={t('filters.search')}
+              value={searchTerm}
+              onChange={(e) => onSearchChange(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+          </div>
+          <select
+            value={searchBy}
+            onChange={(e) => onSearchByChange(e.target.value as 'name' | 'platform' | 'status')}
+            className="px-3 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+          >
+            <option value="name">Name</option>
+            <option value="platform">Platform</option>
+            <option value="status">Status</option>
+          </select>
         </div>
 
         <div className="flex flex-wrap gap-2">

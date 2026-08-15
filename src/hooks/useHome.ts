@@ -9,6 +9,7 @@ export const useHome = () => {
   // Zustand stores
   const {
     searchTerm,
+    searchBy,
     showOnlineOnly,
     showOfflineOnly,
     showCommunityOnly,
@@ -18,6 +19,7 @@ export const useHome = () => {
     sortBy,
     compactMode,
     setSearchTerm,
+    setSearchBy,
     setShowOnlineOnly,
     setShowOfflineOnly,
     setShowCommunityOnly,
@@ -46,9 +48,22 @@ export const useHome = () => {
     let filtered = allStreamers;
 
     if (searchTerm) {
-      filtered = filtered.filter((streamer) =>
-        streamer.username.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      const term = searchTerm.toLowerCase();
+      filtered = filtered.filter((streamer) => {
+        switch (searchBy) {
+          case 'name':
+            return streamer.username.toLowerCase().includes(term);
+          case 'platform':
+            const platforms = [];
+            if (streamer.twitch) platforms.push('twitch');
+            if (streamer.youtube) platforms.push('youtube');
+            return platforms.some(p => p.includes(term));
+          case 'status':
+            return streamer.status.toLowerCase().includes(term);
+          default:
+            return streamer.username.toLowerCase().includes(term);
+        }
+      });
     }
 
     if (showOnlineOnly && showOfflineOnly) {
@@ -101,6 +116,7 @@ export const useHome = () => {
   }, [
     allStreamers,
     searchTerm,
+    searchBy,
     showOnlineOnly,
     showOfflineOnly,
     showCommunityOnly,
@@ -135,7 +151,9 @@ export const useHome = () => {
     error,
     stats,
     searchTerm,
+    searchBy,
     setSearchTerm,
+    setSearchBy,
     showOnlineOnly,
     setShowOnlineOnly,
     showOfflineOnly,

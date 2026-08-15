@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react';
-import { FaSync, FaKeyboard, FaBell, FaBellSlash, FaChartBar, FaShieldAlt, FaTh, FaList } from 'react-icons/fa';
+import { FaSync, FaBell, FaBellSlash, FaChartBar, FaShieldAlt, FaTh, FaList, FaBars } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useHome } from '../hooks/useHome';
@@ -32,7 +32,9 @@ export const Home = () => {
     error,
     stats,
     searchTerm,
+    searchBy,
     setSearchTerm,
+    setSearchBy,
     showOnlineOnly,
     setShowOnlineOnly,
     showOfflineOnly,
@@ -79,6 +81,7 @@ export const Home = () => {
 
   const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
   const [showAnalytics, setShowAnalytics] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { enabled: notificationsEnabled, showNotification, toggleNotifications } = useNotifications();
   const previousStreamersRef = useRef<Streamer[]>([]);
 
@@ -215,23 +218,32 @@ export const Home = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <header className="bg-gray-800 shadow-lg" role="banner">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-                {t('app.title')}
-              </h1>
-              <p className="text-gray-400">
-                {t('app.subtitle')}
-              </p>
+        <div className="max-w-7xl mx-auto px-4 py-3">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-xl md:text-3xl lg:text-4xl font-bold text-white">
+                  {t('app.title')}
+                </h1>
+                <p className="text-gray-400 text-sm md:text-base">
+                  {t('app.subtitle')}
+                </p>
+              </div>
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="md:hidden p-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white"
+                aria-label="Toggle menu"
+              >
+                <FaBars />
+              </button>
             </div>
-            <div className="flex items-center gap-2">
+            <div className={`flex flex-wrap items-center gap-2 ${mobileMenuOpen ? 'block' : 'hidden'} md:flex`}>
               <LanguageSelector />
               <ThemeToggle />
               <ColorThemePicker />
               <button
                 onClick={() => setCompactMode(!compactMode)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors duration-200 ${
                   compactMode
                     ? 'bg-blue-600 hover:bg-blue-700 text-white'
                     : 'bg-gray-700 hover:bg-gray-600 text-white'
@@ -239,15 +251,15 @@ export const Home = () => {
                 aria-label="Toggle compact mode"
               >
                 {compactMode ? <FaList /> : <FaTh />}
-                <span className="hidden md:inline">{compactMode ? 'Normal' : 'Compact'}</span>
+                <span className="hidden lg:inline">{compactMode ? 'Normal' : 'Compact'}</span>
               </button>
               <Link
                 to="/admin"
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-colors duration-200"
+                className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-colors duration-200"
                 aria-label="Admin Dashboard"
               >
                 <FaShieldAlt />
-                <span className="hidden md:inline">Admin</span>
+                <span className="hidden lg:inline">Admin</span>
               </Link>
               <ExportButton
                 onExportCSV={handleExportCSV}
@@ -256,7 +268,7 @@ export const Home = () => {
               />
               <button
                 onClick={() => setShowAnalytics(!showAnalytics)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors duration-200 ${
                   showAnalytics
                     ? 'bg-purple-600 hover:bg-purple-700 text-white'
                     : 'bg-gray-700 hover:bg-gray-600 text-white'
@@ -264,37 +276,27 @@ export const Home = () => {
                 aria-label="Toggle analytics"
               >
                 <FaChartBar />
-                <span className="hidden sm:inline">{t('header.analytics')}</span>
+                <span className="hidden lg:inline">Analytics</span>
               </button>
               <button
                 onClick={toggleNotifications}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors duration-200 ${
                   notificationsEnabled
                     ? 'bg-green-600 hover:bg-green-700 text-white'
                     : 'bg-gray-700 hover:bg-gray-600 text-white'
                 }`}
-                aria-label={notificationsEnabled ? 'Disable notifications' : 'Enable notifications'}
+                aria-label="Toggle notifications"
               >
                 {notificationsEnabled ? <FaBell /> : <FaBellSlash />}
-                <span className="hidden sm:inline">
-                  {notificationsEnabled ? t('header.notificationsOn') : t('header.notificationsOff')}
-                </span>
-              </button>
-              <button
-                onClick={() => setShowShortcutsHelp(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200"
-                aria-label="Show keyboard shortcuts"
-              >
-                <FaKeyboard />
-                <span className="hidden sm:inline">{t('header.shortcuts')}</span>
+                <span className="hidden lg:inline">{notificationsEnabled ? 'On' : 'Off'}</span>
               </button>
               <button
                 onClick={refresh}
-                disabled={loading}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white rounded-lg transition-colors duration-200"
+                className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-colors duration-200"
+                aria-label="Refresh"
               >
                 <FaSync className={loading ? 'animate-spin' : ''} />
-                {t('header.refresh')}
+                <span className="hidden lg:inline">Refresh</span>
               </button>
             </div>
           </div>
@@ -320,6 +322,8 @@ export const Home = () => {
               <Filters
                 searchTerm={searchTerm}
                 onSearchChange={setSearchTerm}
+                searchBy={searchBy}
+                onSearchByChange={setSearchBy}
                 showOnlineOnly={showOnlineOnly}
                 onShowOnlineOnlyChange={setShowOnlineOnly}
                 showOfflineOnly={showOfflineOnly}

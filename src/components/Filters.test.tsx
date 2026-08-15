@@ -6,6 +6,8 @@ import { Filters } from './Filters';
 const mockProps = {
   searchTerm: '',
   onSearchChange: vi.fn(),
+  searchBy: 'name' as const,
+  onSearchByChange: vi.fn(),
   showOnlineOnly: false,
   onShowOnlineOnlyChange: vi.fn(),
   showOfflineOnly: false,

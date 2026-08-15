@@ -7,6 +7,7 @@ interface StreamersState {
   loading: boolean;
   error: string | null;
   searchTerm: string;
+  searchBy: 'name' | 'platform' | 'status';
   showOnlineOnly: boolean;
   showOfflineOnly: boolean;
   showCommunityOnly: boolean;
@@ -19,6 +20,7 @@ interface StreamersState {
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   setSearchTerm: (term: string) => void;
+  setSearchBy: (by: 'name' | 'platform' | 'status') => void;
   setShowOnlineOnly: (show: boolean) => void;
   setShowOfflineOnly: (show: boolean) => void;
   setShowCommunityOnly: (show: boolean) => void;
@@ -35,6 +37,7 @@ export const useStreamersStore = create<StreamersState>((set) => ({
   loading: false,
   error: null,
   searchTerm: '',
+  searchBy: 'name',
   showOnlineOnly: false,
   showOfflineOnly: false,
   showCommunityOnly: false,
@@ -47,6 +50,7 @@ export const useStreamersStore = create<StreamersState>((set) => ({
   setLoading: (loading) => set({ loading }),
   setError: (error) => set({ error }),
   setSearchTerm: (searchTerm) => set({ searchTerm }),
+  setSearchBy: (searchBy) => set({ searchBy }),
   setShowOnlineOnly: (showOnlineOnly) => set({ showOnlineOnly }),
   setShowOfflineOnly: (showOfflineOnly) => set({ showOfflineOnly }),
   setShowCommunityOnly: (showCommunityOnly) => set({ showCommunityOnly }),
@@ -57,6 +61,7 @@ export const useStreamersStore = create<StreamersState>((set) => ({
   setCompactMode: (compactMode) => set({ compactMode }),
   clearFilters: () => set({
     searchTerm: '',
+    searchBy: 'name',
     showOnlineOnly: false,
     showOfflineOnly: false,
     showCommunityOnly: false,

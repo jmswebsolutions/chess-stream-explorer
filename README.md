@@ -196,6 +196,8 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Smooth Animations**: Add transitions and animations for better UX
 - [x] **Additional Keyboard Shortcuts**: More shortcuts for navigation and filters
 - [x] **Customizable Themes**: Add color themes (blue, purple, green, orange, pink)
+- [x] **Mobile Header Improvements**: Better responsive layout with hamburger menu
+- [x] **Advanced Search**: Search by name, platform, or status
 
 ## Screenshots
 
