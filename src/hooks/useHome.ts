@@ -33,6 +33,7 @@ export const useHome = () => {
   
   const {
     favorites,
+    activeGroup,
     addFavorite,
     removeFavorite,
     isFavorite,
@@ -81,6 +82,14 @@ export const useHome = () => {
       filtered = filtered.filter((streamer) => favorites.includes(streamer.username));
     }
 
+    if (activeGroup) {
+      const groupAssignments = JSON.parse(localStorage.getItem('chess-stream-explorer-group-assignments') || '{}');
+      filtered = filtered.filter((streamer) => {
+        const groupId = groupAssignments[streamer.username];
+        return groupId === activeGroup;
+      });
+    }
+
     if (showTwitchOnly && showYouTubeOnly) {
     } else if (showTwitchOnly) {
       filtered = filtered.filter((streamer) => streamer.twitch !== undefined);
@@ -124,6 +133,7 @@ export const useHome = () => {
     showTwitchOnly,
     showYouTubeOnly,
     favorites,
+    activeGroup,
     sortBy,
   ]);
 

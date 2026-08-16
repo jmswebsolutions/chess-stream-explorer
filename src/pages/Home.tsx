@@ -16,6 +16,7 @@ import { ErrorState } from '../components/ErrorState';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { ColorThemePicker } from '../components/ColorThemePicker';
+import { FavoriteGroups } from '../components/FavoriteGroups';
 import { ExportButton } from '../components/ExportButton';
 import { exportToCSV, exportToJSON } from '../utils/exportData';
 import { Streamer } from '../api/chessApi';
@@ -318,7 +319,8 @@ export const Home = () => {
           )}
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1 space-y-4">
+              <FavoriteGroups />
               <Filters
                 searchTerm={searchTerm}
                 onSearchChange={setSearchTerm}
