@@ -1,7 +1,8 @@
 import React from 'react';
-import { FaTwitch, FaYoutube, FaExternalLinkAlt, FaStar, FaPlay, FaUser } from 'react-icons/fa';
+import { FaTwitch, FaYoutube, FaStar, FaExternalLinkAlt, FaUser, FaPlay } from 'react-icons/fa';
 import { Badge } from './Badge';
 import { Streamer } from '../api/chessApi';
+import { useViewingStatsStore } from '../store/viewingStatsStore';
 
 interface StreamerCardProps {
   streamer: Streamer;
@@ -22,6 +23,7 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
   compactMode = false,
   className = '',
 }) => {
+  const { recordView } = useViewingStatsStore();
   const { username, avatar, status, is_community_streamer, url, twitch, youtube } =
     streamer;
 
@@ -81,6 +83,7 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
           href={url}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => recordView(username)}
           className={`flex items-center gap-1 text-gray-300 hover:text-white transition-colors ${
             compactMode ? 'text-xs' : 'text-sm'
           }`}
@@ -94,6 +97,7 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
               href={`https://twitch.tv/${twitch.login}`}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => recordView(username)}
               className={`flex items-center gap-1 text-purple-400 hover:text-purple-300 transition-colors ${
                 compactMode ? 'text-xs' : 'text-sm'
               }`}
@@ -103,7 +107,10 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
             </a>
             {status === 'live' && onPreview && (
               <button
-                onClick={() => onPreview('twitch', twitch.login)}
+                onClick={() => {
+                  recordView(username);
+                  onPreview('twitch', twitch.login);
+                }}
                 className={`flex items-center gap-1 text-green-400 hover:text-green-300 transition-colors ${
                   compactMode ? 'text-xs' : 'text-sm'
                 }`}
@@ -121,6 +128,7 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
               href={`https://youtube.com/${youtube.channel}`}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => recordView(username)}
               className={`flex items-center gap-1 text-red-500 hover:text-red-400 transition-colors ${
                 compactMode ? 'text-xs' : 'text-sm'
               }`}
@@ -130,7 +138,10 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
             </a>
             {status === 'live' && onPreview && (
               <button
-                onClick={() => onPreview('youtube', youtube.channel)}
+                onClick={() => {
+                  recordView(username);
+                  onPreview('youtube', youtube.channel);
+                }}
                 className={`flex items-center gap-1 text-green-400 hover:text-green-300 transition-colors ${
                   compactMode ? 'text-xs' : 'text-sm'
                 }`}
