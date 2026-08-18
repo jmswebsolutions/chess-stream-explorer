@@ -19,7 +19,7 @@ import { ColorThemePicker } from '../components/ColorThemePicker';
 import { FavoriteGroups } from '../components/FavoriteGroups';
 import { PersonalStats } from '../components/PersonalStats';
 import { ExportButton } from '../components/ExportButton';
-import { exportToCSV, exportToJSON } from '../utils/exportData';
+import { exportToCSV, exportToJSON, exportToExcel } from '../utils/exportData';
 import { Streamer } from '../api/chessApi';
 
 const StreamPreview = lazy(() => import('../components/StreamPreview').then(m => ({ default: m.StreamPreview })));
@@ -93,6 +93,10 @@ export const Home = () => {
 
   const handleExportJSON = () => {
     exportToJSON(streamers);
+  };
+
+  const handleExportExcel = () => {
+    exportToExcel(streamers);
   };
 
   const shortcuts = [
@@ -266,6 +270,7 @@ export const Home = () => {
               <ExportButton
                 onExportCSV={handleExportCSV}
                 onExportJSON={handleExportJSON}
+                onExportExcel={handleExportExcel}
                 disabled={loading || streamers.length === 0}
               />
               <button

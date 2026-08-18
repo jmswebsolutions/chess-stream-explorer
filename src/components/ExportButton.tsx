@@ -1,14 +1,15 @@
 import { useState } from 'react';
-import { FaDownload, FaFileCsv, FaFileCode } from 'react-icons/fa';
+import { FaDownload, FaFileCsv, FaFileCode, FaFileExcel } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
 interface ExportButtonProps {
   onExportCSV: () => void;
   onExportJSON: () => void;
+  onExportExcel?: () => void;
   disabled?: boolean;
 }
 
-export const ExportButton = ({ onExportCSV, onExportJSON, disabled = false }: ExportButtonProps) => {
+export const ExportButton = ({ onExportCSV, onExportJSON, onExportExcel, disabled = false }: ExportButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
 
@@ -55,6 +56,18 @@ export const ExportButton = ({ onExportCSV, onExportJSON, disabled = false }: Ex
               <FaFileCode className="text-blue-400" />
               <span>JSON</span>
             </button>
+            {onExportExcel && (
+              <button
+                onClick={() => {
+                  onExportExcel();
+                  setIsOpen(false);
+                }}
+                className="w-full text-left px-4 py-3 hover:bg-gray-700 transition-colors flex items-center gap-3 text-white"
+              >
+                <FaFileExcel className="text-green-600" />
+                <span>Excel</span>
+              </button>
+            )}
           </div>
         </>
       )}

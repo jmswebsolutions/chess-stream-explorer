@@ -1,4 +1,5 @@
 import { Streamer } from '../api/chessApi';
+import * as XLSX from 'xlsx';
 
 export const exportToCSV = (streamers: Streamer[]) => {
   if (streamers.length === 0) return;
@@ -58,4 +59,23 @@ export const exportToJSON = (streamers: Streamer[]) => {
   link.click();
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
+};
+
+export const exportToExcel = (streamers: Streamer[]) => {
+  if (streamers.length === 0) return;
+
+  const data = streamers.map(streamer => ({
+    Username: streamer.username,
+    Status: streamer.status,
+    Twitch: streamer.twitch ? 'Yes' : 'No',
+    YouTube: streamer.youtube ? 'Yes' : 'No',
+    Community: streamer.is_community_streamer ? 'Yes' : 'No',
+    Avatar: streamer.avatar || '',
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(data);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Streamers');
+  
+  XLSX.writeFile(workbook, `streamers-${new Date().toISOString().split('T')[0]}.xlsx`);
 };
