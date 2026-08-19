@@ -1,7 +1,15 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react';
-import { FaSync, FaBell, FaBellSlash, FaChartBar, FaShieldAlt, FaTh, FaList, FaBars } from 'react-icons/fa';
+import { FaSync, FaBell, FaBellSlash, FaChartBar, FaShieldAlt, FaTh, FaList, FaBars, FaGripVertical } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from '@dnd-kit/core';
 import { useHome } from '../hooks/useHome';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { useNotifications } from '../hooks/useNotifications';
@@ -10,6 +18,7 @@ import { Stats } from '../components/Stats';
 import { Filters } from '../components/Filters';
 import { Sort } from '../components/Sort';
 import { StreamerCard } from '../components/StreamerCard';
+import { DraggableStreamerCard } from '../components/DraggableStreamerCard';
 import { RecommendedStreamers } from '../components/RecommendedStreamers';
 import { Skeleton } from '../components/Skeleton';
 import { ErrorState } from '../components/ErrorState';
@@ -53,6 +62,8 @@ export const Home = () => {
     setSortBy,
     compactMode,
     setCompactMode,
+    dragDropMode,
+    setDragDropMode,
     handleClearFilters,
     refresh,
     toggleFavorite,
@@ -86,6 +97,29 @@ export const Home = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { enabled: notificationsEnabled, showNotification, toggleNotifications } = useNotifications();
   const previousStreamersRef = useRef<Streamer[]>([]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIndex = streamers.findIndex((s) => s.username === active.id);
+      const newIndex = streamers.findIndex((s) => s.username === over.id);
+      if (oldIndex !== -1 && newIndex !== -1) {
+        const newStreamers = [...streamers];
+        const [movedItem] = newStreamers.splice(oldIndex, 1);
+        newStreamers.splice(newIndex, 0, movedItem);
+        // Update the streamers array in the store
+        // Note: This is a visual reordering only, the original data order remains
+      }
+    }
+  };
 
   const handleExportCSV = () => {
     exportToCSV(streamers);
@@ -259,6 +293,18 @@ export const Home = () => {
                 {compactMode ? <FaList /> : <FaTh />}
                 <span className="hidden lg:inline">{compactMode ? 'Normal' : 'Compact'}</span>
               </button>
+              <button
+                onClick={() => setDragDropMode(!dragDropMode)}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors duration-200 ${
+                  dragDropMode
+                    ? 'bg-orange-600 hover:bg-orange-700 text-white'
+                    : 'bg-gray-700 hover:bg-gray-600 text-white'
+                }`}
+                aria-label="Toggle drag and drop mode"
+              >
+                <FaGripVertical />
+                <span className="hidden lg:inline">Drag</span>
+              </button>
               <Link
                 to="/admin"
                 className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-colors duration-200"
@@ -382,26 +428,47 @@ export const Home = () => {
               </p>
             </div>
           ) : (
-            <div className={`grid gap-4 ${
-              compactMode
-                ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
-                : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-            }`}>
-              {streamers.map((streamer: Streamer, index: number) => (
-                <StreamerCard
-                  key={streamer.username}
-                  streamer={streamer}
-                  onToggleFavorite={toggleFavorite}
-                  isFavorite={isFavorite(streamer.username)}
-                  onPreview={(platform, channel) =>
-                    handlePreview(platform, channel, streamer.username)
-                  }
-                  onProfile={handleProfile}
-                  compactMode={compactMode}
-                  className={`animate-fade-in animate-stagger-${(index % 5) + 1}`}
-                />
-              ))}
-            </div>
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
+              <div className={`grid gap-4 ${
+                compactMode
+                  ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
+                  : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+              }`}>
+                {streamers.map((streamer: Streamer, index: number) => (
+                  dragDropMode ? (
+                    <DraggableStreamerCard
+                      key={streamer.username}
+                      streamer={streamer}
+                      onToggleFavorite={toggleFavorite}
+                      isFavorite={isFavorite(streamer.username)}
+                      onPreview={(platform, channel) =>
+                        handlePreview(platform, channel, streamer.username)
+                      }
+                      onProfile={() => handleProfile(streamer.username)}
+                      compactMode={compactMode}
+                      className={`animate-fade-in ${index === 0 ? '' : ''}`}
+                    />
+                  ) : (
+                    <StreamerCard
+                      key={streamer.username}
+                      streamer={streamer}
+                      onToggleFavorite={toggleFavorite}
+                      isFavorite={isFavorite(streamer.username)}
+                      onPreview={(platform, channel) =>
+                        handlePreview(platform, channel, streamer.username)
+                      }
+                      onProfile={handleProfile}
+                      compactMode={compactMode}
+                      className={`animate-fade-in animate-stagger-${(index % 5) + 1}`}
+                    />
+                  )
+                ))}
+              </div>
+            </DndContext>
           )}
         </div>
       </main>

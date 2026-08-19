@@ -18,6 +18,7 @@ export const useHome = () => {
     showYouTubeOnly,
     sortBy,
     compactMode,
+    dragDropMode,
     setSearchTerm,
     setSearchBy,
     setShowOnlineOnly,
@@ -28,6 +29,7 @@ export const useHome = () => {
     setShowYouTubeOnly,
     setSortBy,
     setCompactMode,
+    setDragDropMode,
     clearFilters,
   } = useStreamersStore();
   
@@ -180,6 +182,8 @@ export const useHome = () => {
     setSortBy,
     compactMode,
     setCompactMode,
+    dragDropMode,
+    setDragDropMode,
     handleClearFilters: clearFilters,
     refresh,
     toggleFavorite,

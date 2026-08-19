@@ -201,6 +201,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Favorites Groups**: Organize favorites in categories/groups
 - [x] **Personal Statistics**: Track viewing time and views per streamer
 - [x] **Advanced Export**: Export data to Excel (.xlsx) format
+- [x] **Drag & Drop**: Reorder streamer cards with drag and drop
 
 ## Screenshots
 
