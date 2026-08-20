@@ -1,5 +1,7 @@
 import { Streamer } from '../api/chessApi';
 import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 export const exportToCSV = (streamers: Streamer[]) => {
   if (streamers.length === 0) return;
@@ -78,4 +80,36 @@ export const exportToExcel = (streamers: Streamer[]) => {
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Streamers');
   
   XLSX.writeFile(workbook, `streamers-${new Date().toISOString().split('T')[0]}.xlsx`);
+};
+
+export const exportToPDF = (streamers: Streamer[]) => {
+  if (streamers.length === 0) return;
+
+  const doc = new jsPDF();
+  
+  doc.setFontSize(18);
+  doc.text('Chess Streamers Report', 14, 22);
+  
+  doc.setFontSize(11);
+  doc.text(`Generated: ${new Date().toLocaleDateString()}`, 14, 30);
+  doc.text(`Total Streamers: ${streamers.length}`, 14, 38);
+
+  const tableData = streamers.map(streamer => [
+    streamer.username,
+    streamer.status,
+    streamer.twitch ? 'Yes' : 'No',
+    streamer.youtube ? 'Yes' : 'No',
+    streamer.is_community_streamer ? 'Yes' : 'No',
+  ]);
+
+  autoTable(doc, {
+    head: [['Username', 'Status', 'Twitch', 'YouTube', 'Community']],
+    body: tableData,
+    startY: 45,
+    theme: 'grid',
+    headStyles: { fillColor: [66, 139, 202] },
+    styles: { fontSize: 10 },
+  });
+
+  doc.save(`streamers-${new Date().toISOString().split('T')[0]}.pdf`);
 };
