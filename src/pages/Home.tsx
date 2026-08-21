@@ -14,6 +14,7 @@ import { useHome } from '../hooks/useHome';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { useNotifications } from '../hooks/useNotifications';
 import { useRecommendationsStore } from '../store/recommendationsStore';
+import { useRecentlyViewedStore } from '../store/recentlyViewedStore';
 import { Stats } from '../components/Stats';
 import { Filters } from '../components/Filters';
 import { Sort } from '../components/Sort';
@@ -27,6 +28,7 @@ import { ThemeToggle } from '../components/ThemeToggle';
 import { ColorThemePicker } from '../components/ColorThemePicker';
 import { FavoriteGroups } from '../components/FavoriteGroups';
 import { PersonalStats } from '../components/PersonalStats';
+import { RecentlyViewed } from '../components/RecentlyViewed';
 import { ExportButton } from '../components/ExportButton';
 import { exportToCSV, exportToJSON, exportToExcel, exportToPDF } from '../utils/exportData';
 import { Streamer } from '../api/chessApi';
@@ -70,7 +72,8 @@ export const Home = () => {
     isFavorite,
     favorites,
   } = useHome();
-  const { addView, getRecommendations } = useRecommendationsStore();
+  const { getRecommendations } = useRecommendationsStore();
+  const { addToRecentlyViewed } = useRecentlyViewedStore();
 
   const [previewState, setPreviewState] = useState<{
     isOpen: boolean;
@@ -218,7 +221,10 @@ export const Home = () => {
   }, [streamers, notificationsEnabled, loading, isFavorite, showNotification]);
 
   const handlePreview = (platform: 'twitch' | 'youtube', channel: string, username: string) => {
-    addView(username);
+    const streamer = streamers.find((s) => s.username === username);
+    if (streamer) {
+      addToRecentlyViewed(streamer);
+    }
     setPreviewState({
       isOpen: true,
       platform,
@@ -237,11 +243,14 @@ export const Home = () => {
   };
 
   const handleProfile = (username: string) => {
-    addView(username);
-    setProfileState({
-      isOpen: true,
-      username,
-    });
+    const streamer = streamers.find((s) => s.username === username);
+    if (streamer) {
+      addToRecentlyViewed(streamer);
+      setProfileState({
+        isOpen: true,
+        username: streamer.username,
+      });
+    }
   };
 
   const handleCloseProfile = () => {
@@ -377,6 +386,7 @@ export const Home = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
             <div className="lg:col-span-1 space-y-4">
+              <RecentlyViewed onToggleFavorite={toggleFavorite} isFavorite={isFavorite} />
               <PersonalStats />
               <FavoriteGroups />
               <Filters

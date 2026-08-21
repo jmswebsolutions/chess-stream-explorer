@@ -202,6 +202,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Personal Statistics**: Track viewing time and views per streamer
 - [x] **Advanced Export**: Export data to Excel (.xlsx) and PDF formats
 - [x] **Drag & Drop**: Reorder streamer cards with drag and drop
+- [x] **Recently Viewed**: Track and display recently viewed streamers
 
 ## Screenshots
 
