@@ -81,7 +81,7 @@ export const FavoriteGroups: React.FC = () => {
           <FaFolderOpen />
           <span>All</span>
         </button>
-        {favoriteGroups.map((group) => (
+        {favoriteGroups.map((group: any) => (
           <button
             key={group.id}
             onClick={() => setActiveGroup(group.id)}

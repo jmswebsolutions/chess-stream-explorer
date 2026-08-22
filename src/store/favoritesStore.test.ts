@@ -24,7 +24,7 @@ describe('favoritesStore', () => {
       addFavorite('testuser');
       addFavorite('testuser');
       
-      expect(useFavoritesStore.getState().favorites.filter(f => f === 'testuser').length).toBe(1);
+      expect(useFavoritesStore.getState().favorites.filter((f: string) => f === 'testuser').length).toBe(1);
     });
 
     it('should persist to localStorage', () => {

@@ -1,8 +1,9 @@
-import React from 'react';
-import { FaTwitch, FaYoutube, FaStar, FaExternalLinkAlt, FaUser, FaPlay } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { FaTwitch, FaYoutube, FaStar, FaExternalLinkAlt, FaUser, FaPlay, FaStickyNote } from 'react-icons/fa';
 import { Badge } from './Badge';
 import { Streamer } from '../api/chessApi';
 import { useViewingStatsStore } from '../store/viewingStatsStore';
+import { useFavoritesStore } from '../store/favoritesStore';
 
 interface StreamerCardProps {
   streamer: Streamer;
@@ -24,8 +25,13 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
   className = '',
 }) => {
   const { recordView } = useViewingStatsStore();
+  const { getNote, setNote, clearNote } = useFavoritesStore();
+  const [showNoteInput, setShowNoteInput] = useState(false);
+  const [noteText, setNoteText] = useState('');
+  
   const { username, avatar, status, is_community_streamer, url, twitch, youtube } =
     streamer;
+  const note = getNote(username);
 
   return (
     <div className={`bg-gray-800 rounded-lg shadow-lg card-hover animate-fade-in ${
@@ -74,6 +80,17 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
             }`}>
               Community Streamer
             </span>
+          )}
+          {isFavorite && (
+            <button
+              onClick={() => setShowNoteInput(!showNoteInput)}
+              className={`ml-2 text-yellow-400 hover:text-yellow-300 transition-colors ${
+                compactMode ? 'text-xs' : 'text-sm'
+              }`}
+              aria-label="Add note"
+            >
+              <FaStickyNote />
+            </button>
           )}
         </div>
       </div>
@@ -154,6 +171,51 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
           </>
         )}
       </div>
+
+      {showNoteInput && isFavorite && (
+        <div className={`${compactMode ? 'mt-2' : 'mt-4'}`}>
+          {note ? (
+            <div className="bg-gray-700 rounded p-2 text-gray-300 text-sm">
+              <p>{note}</p>
+              <button
+                onClick={() => clearNote(username)}
+                className="text-xs text-red-400 hover:text-red-300 mt-1"
+              >
+                Clear note
+              </button>
+            </div>
+          ) : (
+            <div className="flex gap-2">
+              <input
+                type="text"
+                placeholder="Add a note..."
+                value={noteText}
+                onChange={(e) => setNoteText(e.target.value)}
+                className="flex-1 bg-gray-700 text-white text-sm rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter' && noteText.trim()) {
+                    setNote(username, noteText.trim());
+                    setNoteText('');
+                    setShowNoteInput(false);
+                  }
+                }}
+              />
+              <button
+                onClick={() => {
+                  if (noteText.trim()) {
+                    setNote(username, noteText.trim());
+                    setNoteText('');
+                    setShowNoteInput(false);
+                  }
+                }}
+                className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1 rounded transition-colors"
+              >
+                Save
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 });
