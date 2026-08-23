@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaTwitch, FaYoutube, FaStar, FaExternalLinkAlt, FaUser, FaPlay, FaStickyNote } from 'react-icons/fa';
+import { FaTwitch, FaYoutube, FaStar, FaExternalLinkAlt, FaUser, FaPlay, FaStickyNote, FaShareAlt, FaTwitter, FaFacebook, FaWhatsapp } from 'react-icons/fa';
 import { Badge } from './Badge';
 import { Streamer } from '../api/chessApi';
 import { useViewingStatsStore } from '../store/viewingStatsStore';
@@ -28,10 +28,33 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
   const { getNote, setNote, clearNote } = useFavoritesStore();
   const [showNoteInput, setShowNoteInput] = useState(false);
   const [noteText, setNoteText] = useState('');
+  const [showShareMenu, setShowShareMenu] = useState(false);
   
   const { username, avatar, status, is_community_streamer, url, twitch, youtube } =
     streamer;
   const note = getNote(username);
+
+  const shareText = `Check out ${username} on Chess.com!`;
+  const shareUrl = url;
+
+  const handleShare = (platform: string) => {
+    let shareLink = '';
+    switch (platform) {
+      case 'twitter':
+        shareLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+        break;
+      case 'facebook':
+        shareLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+        break;
+      case 'whatsapp':
+        shareLink = `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
+        break;
+    }
+    if (shareLink) {
+      window.open(shareLink, '_blank', 'width=600,height=400');
+    }
+    setShowShareMenu(false);
+  };
 
   return (
     <div className={`bg-gray-800 rounded-lg shadow-lg card-hover animate-fade-in ${
@@ -92,6 +115,15 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
               <FaStickyNote />
             </button>
           )}
+          <button
+            onClick={() => setShowShareMenu(!showShareMenu)}
+            className={`ml-2 text-blue-400 hover:text-blue-300 transition-colors ${
+              compactMode ? 'text-xs' : 'text-sm'
+            }`}
+            aria-label="Share"
+          >
+            <FaShareAlt />
+          </button>
         </div>
       </div>
 
@@ -214,6 +246,37 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
               </button>
             </div>
           )}
+        </div>
+      )}
+
+      {showShareMenu && (
+        <div className={`${compactMode ? 'mt-2' : 'mt-4'} bg-gray-700 rounded p-2`}>
+          <div className="flex gap-2">
+            <button
+              onClick={() => handleShare('twitter')}
+              className="flex items-center gap-1 text-blue-400 hover:text-blue-300 text-sm transition-colors"
+              aria-label="Share on Twitter"
+            >
+              <FaTwitter />
+              <span>Twitter</span>
+            </button>
+            <button
+              onClick={() => handleShare('facebook')}
+              className="flex items-center gap-1 text-blue-600 hover:text-blue-500 text-sm transition-colors"
+              aria-label="Share on Facebook"
+            >
+              <FaFacebook />
+              <span>Facebook</span>
+            </button>
+            <button
+              onClick={() => handleShare('whatsapp')}
+              className="flex items-center gap-1 text-green-500 hover:text-green-400 text-sm transition-colors"
+              aria-label="Share on WhatsApp"
+            >
+              <FaWhatsapp />
+              <span>WhatsApp</span>
+            </button>
+          </div>
         </div>
       )}
     </div>

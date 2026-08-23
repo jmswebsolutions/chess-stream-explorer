@@ -204,6 +204,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Drag & Drop**: Reorder streamer cards with drag and drop
 - [x] **Recently Viewed**: Track and display recently viewed streamers
 - [x] **Favorite Notes**: Add custom notes to favorite streamers
+- [x] **Social Sharing**: Share streamers on Twitter, Facebook, and WhatsApp
 
 ## Screenshots
 
