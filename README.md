@@ -205,6 +205,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Recently Viewed**: Track and display recently viewed streamers
 - [x] **Favorite Notes**: Add custom notes to favorite streamers
 - [x] **Social Sharing**: Share streamers on Twitter, Facebook, and WhatsApp
+- [x] **Settings Export/Import**: Backup and restore user preferences
 
 ## Screenshots
 
