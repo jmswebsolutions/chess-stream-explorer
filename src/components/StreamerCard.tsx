@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { FaTwitch, FaYoutube, FaStar, FaExternalLinkAlt, FaUser, FaPlay, FaStickyNote, FaShareAlt, FaTwitter, FaFacebook, FaWhatsapp } from 'react-icons/fa';
+import { FaTwitch, FaYoutube, FaStar, FaExternalLinkAlt, FaUser, FaPlay, FaStickyNote, FaShareAlt, FaTwitter, FaFacebook, FaWhatsapp, FaTags } from 'react-icons/fa';
 import { Badge } from './Badge';
 import { Streamer } from '../api/chessApi';
 import { useViewingStatsStore } from '../store/viewingStatsStore';
 import { useFavoritesStore } from '../store/favoritesStore';
+import { useTagsStore } from '../store/tagsStore';
 
 interface StreamerCardProps {
   streamer: Streamer;
@@ -26,13 +27,16 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
 }) => {
   const { recordView } = useViewingStatsStore();
   const { getNote, setNote, clearNote } = useFavoritesStore();
+  const { tags, getStreamerTags, addTagToStreamer, removeTagFromStreamer } = useTagsStore();
   const [showNoteInput, setShowNoteInput] = useState(false);
   const [noteText, setNoteText] = useState('');
   const [showShareMenu, setShowShareMenu] = useState(false);
+  const [showTagMenu, setShowTagMenu] = useState(false);
   
   const { username, avatar, status, is_community_streamer, url, twitch, youtube } =
     streamer;
   const note = getNote(username);
+  const streamerTags = getStreamerTags(username);
 
   const shareText = `Check out ${username} on Chess.com!`;
   const shareUrl = url;
@@ -123,6 +127,15 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
             aria-label="Share"
           >
             <FaShareAlt />
+          </button>
+          <button
+            onClick={() => setShowTagMenu(!showTagMenu)}
+            className={`ml-2 text-purple-400 hover:text-purple-300 transition-colors ${
+              compactMode ? 'text-xs' : 'text-sm'
+            }`}
+            aria-label="Tags"
+          >
+            <FaTags />
           </button>
         </div>
       </div>
@@ -276,6 +289,59 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
               <FaWhatsapp />
               <span>WhatsApp</span>
             </button>
+          </div>
+        </div>
+      )}
+
+      {showTagMenu && (
+        <div className={`${compactMode ? 'mt-2' : 'mt-4'} bg-gray-700 rounded p-2`}>
+          <div className="space-y-2">
+            {tags.length === 0 ? (
+              <p className="text-gray-400 text-xs">No tags available. Create tags in the Tags menu.</p>
+            ) : (
+              <>
+                <div className="flex flex-wrap gap-1">
+                  {tags.map((tag) => {
+                    const isTagged = streamerTags.some((t) => t.id === tag.id);
+                    return (
+                      <button
+                        key={tag.id}
+                        onClick={() => {
+                          if (isTagged) {
+                            removeTagFromStreamer(username, tag.id);
+                          } else {
+                            addTagToStreamer(username, tag.id);
+                          }
+                        }}
+                        className={`px-2 py-1 rounded text-xs transition-colors ${
+                          isTagged
+                            ? 'text-white'
+                            : 'text-gray-400 hover:text-white'
+                        }`}
+                        style={{
+                          backgroundColor: isTagged ? tag.color : 'rgba(255,255,255,0.1)',
+                        }}
+                      >
+                        {tag.name}
+                      </button>
+                    );
+                  })}
+                </div>
+                {streamerTags.length > 0 && (
+                  <div className="flex flex-wrap gap-1 pt-2 border-t border-gray-600">
+                    {streamerTags.map((tag) => (
+                      <span
+                        key={tag.id}
+                        className="px-2 py-1 rounded text-xs text-white"
+                        style={{ backgroundColor: tag.color }}
+                      >
+                        {tag.name}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </div>
       )}

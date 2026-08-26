@@ -31,6 +31,7 @@ import { PersonalStats } from '../components/PersonalStats';
 import { RecentlyViewed } from '../components/RecentlyViewed';
 import { ExportButton } from '../components/ExportButton';
 import { SettingsManager } from '../components/SettingsManager';
+import { TagsManager } from '../components/TagsManager';
 import { exportToCSV, exportToJSON, exportToExcel, exportToPDF } from '../utils/exportData';
 import { Streamer } from '../api/chessApi';
 
@@ -335,6 +336,7 @@ export const Home = () => {
                 disabled={loading || streamers.length === 0}
               />
               <SettingsManager />
+              <TagsManager />
               <button
                 onClick={() => setShowAnalytics(!showAnalytics)}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors duration-200 ${
