@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { FaTwitch, FaYoutube, FaStar, FaExternalLinkAlt, FaUser, FaPlay, FaStickyNote, FaShareAlt, FaTwitter, FaFacebook, FaWhatsapp, FaTags } from 'react-icons/fa';
+import { FaTwitch, FaYoutube, FaStar, FaExternalLinkAlt, FaUser, FaPlay, FaStickyNote, FaShareAlt, FaTwitter, FaFacebook, FaWhatsapp, FaTags, FaBalanceScale } from 'react-icons/fa';
 import { Badge } from './Badge';
 import { Streamer } from '../api/chessApi';
 import { useViewingStatsStore } from '../store/viewingStatsStore';
 import { useFavoritesStore } from '../store/favoritesStore';
 import { useTagsStore } from '../store/tagsStore';
+import { useComparisonStore } from '../store/comparisonStore';
 
 interface StreamerCardProps {
   streamer: Streamer;
@@ -28,6 +29,7 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
   const { recordView } = useViewingStatsStore();
   const { getNote, setNote, clearNote } = useFavoritesStore();
   const { tags, getStreamerTags, addTagToStreamer, removeTagFromStreamer } = useTagsStore();
+  const { selectedStreamers, addStreamer, removeStreamer } = useComparisonStore();
   const [showNoteInput, setShowNoteInput] = useState(false);
   const [noteText, setNoteText] = useState('');
   const [showShareMenu, setShowShareMenu] = useState(false);
@@ -37,6 +39,7 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
     streamer;
   const note = getNote(username);
   const streamerTags = getStreamerTags(username);
+  const isInComparison = selectedStreamers.some((s) => s.username === username);
 
   const shareText = `Check out ${username} on Chess.com!`;
   const shareUrl = url;
@@ -136,6 +139,23 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
             aria-label="Tags"
           >
             <FaTags />
+          </button>
+          <button
+            onClick={() => {
+              if (isInComparison) {
+                removeStreamer(username);
+              } else {
+                addStreamer(streamer);
+              }
+            }}
+            className={`ml-2 transition-colors ${
+              isInComparison
+                ? 'text-green-400 hover:text-green-300'
+                : 'text-gray-400 hover:text-green-300'
+            } ${compactMode ? 'text-xs' : 'text-sm'}`}
+            aria-label={isInComparison ? "Remove from comparison" : "Add to comparison"}
+          >
+            <FaBalanceScale />
           </button>
         </div>
       </div>

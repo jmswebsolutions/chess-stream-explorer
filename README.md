@@ -208,6 +208,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Settings Export/Import**: Backup and restore user preferences
 - [x] **Cinema Mode**: Fullscreen viewing for stream previews
 - [x] **Custom Tags**: Add custom tags to organize streamers
+- [x] **Streamer Comparison**: Compare 2 streamers side-by-side
 
 ## Screenshots
 

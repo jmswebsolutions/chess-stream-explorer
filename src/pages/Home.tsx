@@ -32,6 +32,7 @@ import { RecentlyViewed } from '../components/RecentlyViewed';
 import { ExportButton } from '../components/ExportButton';
 import { SettingsManager } from '../components/SettingsManager';
 import { TagsManager } from '../components/TagsManager';
+import { StreamerComparison } from '../components/StreamerComparison';
 import { exportToCSV, exportToJSON, exportToExcel, exportToPDF } from '../utils/exportData';
 import { Streamer } from '../api/chessApi';
 
@@ -390,6 +391,7 @@ export const Home = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
             <div className="lg:col-span-1 space-y-4">
+              <StreamerComparison />
               <RecentlyViewed onToggleFavorite={toggleFavorite} isFavorite={isFavorite} />
               <PersonalStats />
               <FavoriteGroups />
