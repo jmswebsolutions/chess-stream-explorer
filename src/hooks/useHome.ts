@@ -2,6 +2,7 @@ import { useMemo, useEffect } from 'react';
 import { useStreamers } from './useStreamers';
 import { useStreamersStore } from '../store/streamersStore';
 import { useFavoritesStore } from '../store/favoritesStore';
+import { useTagsStore } from '../store/tagsStore';
 
 export const useHome = () => {
   const { streamers: allStreamers, loading, error, refresh } = useStreamers();
@@ -19,6 +20,7 @@ export const useHome = () => {
     sortBy,
     compactMode,
     dragDropMode,
+    filterByTag,
     setSearchTerm,
     setSearchBy,
     setShowOnlineOnly,
@@ -30,6 +32,7 @@ export const useHome = () => {
     setSortBy,
     setCompactMode,
     setDragDropMode,
+    setFilterByTag,
     clearFilters,
   } = useStreamersStore();
   
@@ -41,6 +44,8 @@ export const useHome = () => {
     isFavorite,
     loadFavorites,
   } = useFavoritesStore();
+
+  const { getStreamerTags } = useTagsStore();
 
   // Load favorites on mount
   useEffect(() => {
@@ -97,6 +102,13 @@ export const useHome = () => {
       filtered = filtered.filter((streamer) => streamer.twitch !== undefined);
     } else if (showYouTubeOnly) {
       filtered = filtered.filter((streamer) => streamer.youtube !== undefined);
+    }
+
+    if (filterByTag) {
+      filtered = filtered.filter((streamer) => {
+        const streamerTags = getStreamerTags(streamer.username);
+        return streamerTags.some((tag) => tag.id === filterByTag);
+      });
     }
 
     const sorted = [...filtered];
@@ -184,6 +196,8 @@ export const useHome = () => {
     setCompactMode,
     dragDropMode,
     setDragDropMode,
+    filterByTag,
+    setFilterByTag,
     handleClearFilters: clearFilters,
     refresh,
     toggleFavorite,

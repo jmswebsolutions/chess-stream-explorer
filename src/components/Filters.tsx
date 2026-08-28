@@ -1,6 +1,7 @@
 import React from 'react';
-import { FaSearch, FaFilter, FaStar, FaTwitch, FaYoutube } from 'react-icons/fa';
+import { FaSearch, FaFilter, FaStar, FaTwitch, FaYoutube, FaTags } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
+import { useTagsStore } from '../store/tagsStore';
 
 interface FiltersProps {
   searchTerm: string;
@@ -19,6 +20,8 @@ interface FiltersProps {
   onShowTwitchOnlyChange: (value: boolean) => void;
   showYouTubeOnly: boolean;
   onShowYouTubeOnlyChange: (value: boolean) => void;
+  filterByTag: string | null;
+  onFilterByTagChange: (value: string | null) => void;
   onClearFilters: () => void;
 }
 
@@ -39,9 +42,12 @@ export const Filters: React.FC<FiltersProps> = ({
   onShowTwitchOnlyChange,
   showYouTubeOnly,
   onShowYouTubeOnlyChange,
+  filterByTag,
+  onFilterByTagChange,
   onClearFilters,
 }) => {
   const { t } = useTranslation();
+  const { tags } = useTagsStore();
   return (
     <div className="bg-gray-800 rounded-lg p-4 shadow-lg mb-6">
       <div className="flex items-center gap-2 mb-4">
@@ -137,6 +143,43 @@ export const Filters: React.FC<FiltersProps> = ({
             {t('filters.youtubeOnly')}
           </label>
         </div>
+
+        {tags.length > 0 && (
+          <div>
+            <div className="flex items-center gap-2 mb-2 text-gray-300">
+              <FaTags className="text-purple-400 text-xs" />
+              <span className="text-sm">Filter by Tag:</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => onFilterByTagChange(null)}
+                className={`px-3 py-1 rounded text-sm transition-colors ${
+                  filterByTag === null
+                    ? 'bg-purple-600 text-white'
+                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                }`}
+              >
+                All
+              </button>
+              {tags.map((tag) => (
+                <button
+                  key={tag.id}
+                  onClick={() => onFilterByTagChange(filterByTag === tag.id ? null : tag.id)}
+                  className={`px-3 py-1 rounded text-sm transition-colors ${
+                    filterByTag === tag.id
+                      ? 'text-white'
+                      : 'text-gray-300 hover:text-white'
+                  }`}
+                  style={{
+                    backgroundColor: filterByTag === tag.id ? tag.color : 'rgba(255,255,255,0.1)',
+                  }}
+                >
+                  {tag.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         <button
           onClick={onClearFilters}

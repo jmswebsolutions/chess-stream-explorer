@@ -209,6 +209,8 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Cinema Mode**: Fullscreen viewing for stream previews
 - [x] **Custom Tags**: Add custom tags to organize streamers
 - [x] **Streamer Comparison**: Compare 2 streamers side-by-side
+- [x] **Smart Recommendations**: AI-powered suggestions based on viewing history
+- [x] **Tag Filtering**: Filter streamers by custom tags
 
 ## Screenshots
 

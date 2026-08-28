@@ -17,6 +17,7 @@ interface StreamersState {
   sortBy: SortOption;
   compactMode: boolean;
   dragDropMode: boolean;
+  filterByTag: string | null;
   setStreamers: (streamers: Streamer[]) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
@@ -31,6 +32,7 @@ interface StreamersState {
   setSortBy: (sort: SortOption) => void;
   setCompactMode: (compact: boolean) => void;
   setDragDropMode: (enabled: boolean) => void;
+  setFilterByTag: (tagId: string | null) => void;
   clearFilters: () => void;
 }
 
@@ -49,6 +51,7 @@ export const useStreamersStore = create<StreamersState>((set) => ({
   sortBy: 'online-first',
   compactMode: false,
   dragDropMode: false,
+  filterByTag: null,
   setStreamers: (streamers) => set({ streamers }),
   setLoading: (loading) => set({ loading }),
   setError: (error) => set({ error }),
@@ -63,6 +66,7 @@ export const useStreamersStore = create<StreamersState>((set) => ({
   setSortBy: (sortBy) => set({ sortBy }),
   setCompactMode: (compactMode) => set({ compactMode }),
   setDragDropMode: (dragDropMode) => set({ dragDropMode }),
+  setFilterByTag: (filterByTag) => set({ filterByTag }),
   clearFilters: () => set({
     searchTerm: '',
     searchBy: 'name',
@@ -73,5 +77,6 @@ export const useStreamersStore = create<StreamersState>((set) => ({
     showTwitchOnly: false,
     showYouTubeOnly: false,
     sortBy: 'online-first',
+    filterByTag: null,
   }),
 }));

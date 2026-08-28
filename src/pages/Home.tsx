@@ -47,33 +47,35 @@ export const Home = () => {
     loading,
     error,
     stats,
+    favorites,
     searchTerm,
     searchBy,
+    showOnlineOnly,
+    showOfflineOnly,
+    showCommunityOnly,
+    showFavoritesOnly,
+    showTwitchOnly,
+    showYouTubeOnly,
+    sortBy,
+    compactMode,
+    dragDropMode,
+    filterByTag,
     setSearchTerm,
     setSearchBy,
-    showOnlineOnly,
     setShowOnlineOnly,
-    showOfflineOnly,
     setShowOfflineOnly,
-    showCommunityOnly,
     setShowCommunityOnly,
-    showFavoritesOnly,
     setShowFavoritesOnly,
-    showTwitchOnly,
     setShowTwitchOnly,
-    showYouTubeOnly,
     setShowYouTubeOnly,
-    sortBy,
     setSortBy,
-    compactMode,
     setCompactMode,
-    dragDropMode,
     setDragDropMode,
+    setFilterByTag,
     handleClearFilters,
     refresh,
     toggleFavorite,
     isFavorite,
-    favorites,
   } = useHome();
   const { getRecommendations } = useRecommendationsStore();
   const { addToRecentlyViewed } = useRecentlyViewedStore();
@@ -412,6 +414,8 @@ export const Home = () => {
                 onShowTwitchOnlyChange={setShowTwitchOnly}
                 showYouTubeOnly={showYouTubeOnly}
                 onShowYouTubeOnlyChange={setShowYouTubeOnly}
+                filterByTag={filterByTag}
+                onFilterByTagChange={setFilterByTag}
                 onClearFilters={handleClearFilters}
               />
             </div>

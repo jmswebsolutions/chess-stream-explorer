@@ -20,6 +20,8 @@ const mockProps = {
   onShowTwitchOnlyChange: vi.fn(),
   showYouTubeOnly: false,
   onShowYouTubeOnlyChange: vi.fn(),
+  filterByTag: null as string | null,
+  onFilterByTagChange: vi.fn(),
   onClearFilters: vi.fn(),
 };
 
