@@ -79,6 +79,57 @@ export const Filters: React.FC<FiltersProps> = ({
           </select>
         </div>
 
+        <div>
+          <div className="flex items-center gap-2 mb-2 text-gray-300">
+            <span className="text-sm font-medium">Quick Platform Filters:</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => {
+                onShowTwitchOnlyChange(!showTwitchOnly);
+                onShowYouTubeOnlyChange(false);
+              }}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
+                showTwitchOnly
+                  ? 'bg-purple-600 text-white shadow-lg'
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+            >
+              <FaTwitch className={showTwitchOnly ? 'text-white' : 'text-purple-400'} />
+              <span className="text-sm font-medium">Twitch</span>
+            </button>
+
+            <button
+              onClick={() => {
+                onShowYouTubeOnlyChange(!showYouTubeOnly);
+                onShowTwitchOnlyChange(false);
+              }}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
+                showYouTubeOnly
+                  ? 'bg-red-600 text-white shadow-lg'
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+            >
+              <FaYoutube className={showYouTubeOnly ? 'text-white' : 'text-red-400'} />
+              <span className="text-sm font-medium">YouTube</span>
+            </button>
+
+            <button
+              onClick={() => {
+                onShowTwitchOnlyChange(false);
+                onShowYouTubeOnlyChange(false);
+              }}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
+                !showTwitchOnly && !showYouTubeOnly
+                  ? 'bg-blue-600 text-white shadow-lg'
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+            >
+              <span className="text-sm font-medium">All Platforms</span>
+            </button>
+          </div>
+        </div>
+
         <div className="flex flex-wrap gap-2">
           <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">
             <input
@@ -119,28 +170,6 @@ export const Filters: React.FC<FiltersProps> = ({
             />
             <FaStar className="text-yellow-400 text-xs" />
             {t('filters.favoritesOnly')}
-          </label>
-
-          <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">
-            <input
-              type="checkbox"
-              checked={showTwitchOnly}
-              onChange={(e) => onShowTwitchOnlyChange(e.target.checked)}
-              className="w-4 h-4 rounded bg-gray-700 border-gray-600 text-purple-500 focus:ring-purple-500"
-            />
-            <FaTwitch className="text-purple-400 text-xs" />
-            {t('filters.twitchOnly')}
-          </label>
-
-          <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">
-            <input
-              type="checkbox"
-              checked={showYouTubeOnly}
-              onChange={(e) => onShowYouTubeOnlyChange(e.target.checked)}
-              className="w-4 h-4 rounded bg-gray-700 border-gray-600 text-red-500 focus:ring-red-500"
-            />
-            <FaYoutube className="text-red-400 text-xs" />
-            {t('filters.youtubeOnly')}
           </label>
         </div>
 

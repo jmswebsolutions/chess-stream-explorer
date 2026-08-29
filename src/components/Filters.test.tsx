@@ -39,8 +39,14 @@ describe('Filters', () => {
     expect(screen.getByLabelText(/offline/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/community/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/favorites/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/twitch/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/youtube/i)).toBeInTheDocument();
+  });
+
+  it('should render quick platform filter buttons', () => {
+    render(<Filters {...mockProps} />);
+    
+    expect(screen.getByText(/Twitch/i)).toBeInTheDocument();
+    expect(screen.getByText(/YouTube/i)).toBeInTheDocument();
+    expect(screen.getByText(/All Platforms/i)).toBeInTheDocument();
   });
 
   it('should render clear filters button', () => {

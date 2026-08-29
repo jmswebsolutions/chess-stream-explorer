@@ -211,6 +211,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Streamer Comparison**: Compare 2 streamers side-by-side
 - [x] **Smart Recommendations**: AI-powered suggestions based on viewing history
 - [x] **Tag Filtering**: Filter streamers by custom tags
+- [x] **Quick Platform Filters**: One-click buttons for Twitch/YouTube/All
 
 ## Screenshots
 
