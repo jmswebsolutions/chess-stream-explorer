@@ -18,6 +18,8 @@ interface TagsState {
   removeTagFromStreamer: (username: string, tagId: string) => void;
   getStreamerTags: (username: string) => Tag[];
   getTagById: (tagId: string) => Tag | undefined;
+  importTags: (importedTags: Tag[]) => void;
+  clearTags: () => void;
 }
 
 export const useTagsStore = create<TagsState>((set, get) => ({
@@ -88,6 +90,25 @@ export const useTagsStore = create<TagsState>((set, get) => ({
   
   getTagById: (tagId) => {
     return get().tags.find((t) => t.id === tagId);
+  },
+
+  importTags: (importedTags) => {
+    set((state) => {
+      // Merge imported tags with existing tags (avoid duplicates by name)
+      const existingNames = new Set(state.tags.map((t) => t.name));
+      const newTags = importedTags.filter((t) => !existingNames.has(t.name));
+      const mergedTags = [...state.tags, ...newTags];
+      localStorage.setItem(TAGS_KEY, JSON.stringify(mergedTags));
+      return { tags: mergedTags };
+    });
+  },
+
+  clearTags: () => {
+    set(() => {
+      localStorage.setItem(TAGS_KEY, JSON.stringify([]));
+      localStorage.setItem(STREAMER_TAGS_KEY, JSON.stringify({}));
+      return { tags: [], streamerTags: {} };
+    });
   },
 }));
 

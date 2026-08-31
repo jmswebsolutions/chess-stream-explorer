@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaTag, FaPlus, FaTrash } from 'react-icons/fa';
+import { FaTag, FaPlus, FaTrash, FaDownload, FaUpload } from 'react-icons/fa';
 import { useTagsStore } from '../store/tagsStore';
 
 const TAG_COLORS = [
@@ -14,7 +14,7 @@ const TAG_COLORS = [
 ];
 
 export const TagsManager: React.FC = () => {
-  const { tags, addTag, removeTag } = useTagsStore();
+  const { tags, addTag, removeTag, importTags } = useTagsStore();
   const [isOpen, setIsOpen] = useState(false);
   const [newTagName, setNewTagName] = useState('');
   const [selectedColor, setSelectedColor] = useState(TAG_COLORS[4].value);
@@ -31,6 +31,46 @@ export const TagsManager: React.FC = () => {
     if (confirm('Remove this tag? It will be removed from all streamers.')) {
       removeTag(tagId);
     }
+  };
+
+  const handleExportTags = () => {
+    const data = {
+      tags: tags,
+      exportDate: new Date().toISOString(),
+      version: '1.0',
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'chess-stream-explorer-tags.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImportTags = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const data = JSON.parse(event.target?.result as string);
+        if (data.tags && Array.isArray(data.tags)) {
+          if (confirm(`Import ${data.tags.length} tags? This will merge with existing tags.`)) {
+            importTags(data.tags);
+          }
+        } else {
+          alert('Invalid tags file format');
+        }
+      } catch (error) {
+        alert('Error reading tags file');
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
   };
 
   return (
@@ -51,7 +91,29 @@ export const TagsManager: React.FC = () => {
             onClick={() => setIsOpen(false)}
           />
           <div className="absolute right-0 mt-2 w-80 bg-gray-800 rounded-lg shadow-xl z-50 p-4">
-            <h3 className="text-white font-semibold mb-3">Manage Tags</h3>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-white font-semibold">Manage Tags</h3>
+              <div className="flex gap-2">
+                <button
+                  onClick={handleExportTags}
+                  className="text-blue-400 hover:text-blue-300 transition-colors p-1"
+                  title="Export tags"
+                  aria-label="Export tags"
+                >
+                  <FaDownload />
+                </button>
+                <label className="text-blue-400 hover:text-blue-300 transition-colors p-1 cursor-pointer" title="Import tags">
+                  <FaUpload />
+                  <input
+                    type="file"
+                    accept=".json"
+                    onChange={handleImportTags}
+                    className="hidden"
+                    aria-label="Import tags"
+                  />
+                </label>
+              </div>
+            </div>
             
             {/* Add new tag */}
             <div className="mb-4 p-3 bg-gray-700 rounded-lg">

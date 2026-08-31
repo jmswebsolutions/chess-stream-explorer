@@ -213,6 +213,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Tag Filtering**: Filter streamers by custom tags
 - [x] **Quick Platform Filters**: One-click buttons for Twitch/YouTube/All
 - [x] **View Count Display**: Show how many times you viewed each streamer
+- [x] **Tags Export/Import**: Backup and restore custom tags
 
 ## Screenshots
 
