@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { FaTwitch, FaYoutube, FaStar, FaExternalLinkAlt, FaUser, FaPlay, FaStickyNote, FaShareAlt, FaTwitter, FaFacebook, FaWhatsapp, FaTags, FaBalanceScale } from 'react-icons/fa';
-import { Badge } from './Badge';
+import { FaTwitch, FaYoutube, FaStar, FaExternalLinkAlt, FaUser, FaPlay, FaStickyNote, FaShareAlt, FaTwitter, FaFacebook, FaWhatsapp, FaTags, FaBalanceScale, FaEye } from 'react-icons/fa';
 import { Streamer } from '../api/chessApi';
 import { useViewingStatsStore } from '../store/viewingStatsStore';
 import { useFavoritesStore } from '../store/favoritesStore';
@@ -26,7 +25,7 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
   compactMode = false,
   className = '',
 }) => {
-  const { recordView } = useViewingStatsStore();
+  const { recordView, getViewCount } = useViewingStatsStore();
   const { getNote, setNote, clearNote } = useFavoritesStore();
   const { tags, getStreamerTags, addTagToStreamer, removeTagFromStreamer } = useTagsStore();
   const { selectedStreamers, addStreamer, removeStreamer } = useComparisonStore();
@@ -40,6 +39,7 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
   const note = getNote(username);
   const streamerTags = getStreamerTags(username);
   const isInComparison = selectedStreamers.some((s) => s.username === username);
+  const viewCount = getViewCount(username);
 
   const shareText = `Check out ${username} on Chess.com!`;
   const shareUrl = url;
@@ -77,7 +77,15 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
         />
         <div className="flex-1">
           <div className="flex items-center justify-between">
-            <h3 className={`text-white font-semibold ${compactMode ? 'text-sm' : 'text-lg'}`}>{username}</h3>
+            <div className="flex items-center gap-2">
+              <h3 className={`text-white font-semibold ${compactMode ? 'text-sm' : 'text-lg'}`}>{username}</h3>
+              {viewCount > 0 && (
+                <div className="flex items-center gap-1 text-xs text-gray-400" title={`Viewed ${viewCount} time${viewCount > 1 ? 's' : ''}`}>
+                  <FaEye />
+                  <span>{viewCount}</span>
+                </div>
+              )}
+            </div>
             <div className={`flex items-center ${compactMode ? 'gap-1' : 'gap-2'}`}>
               {onProfile && (
                 <button
@@ -101,8 +109,6 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
               >
                 <FaStar className={compactMode ? 'text-xs' : ''} />
               </button>
-              <Badge type={status} />
-            </div>
           </div>
           {is_community_streamer && (
             <span className={`inline-block text-blue-400 bg-blue-900/30 rounded ${
@@ -158,6 +164,7 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
             <FaBalanceScale />
           </button>
         </div>
+      </div>
       </div>
 
       <div className={`${compactMode ? 'mt-2' : 'mt-4'} flex flex-wrap gap-2`}>

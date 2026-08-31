@@ -15,6 +15,7 @@ interface ViewingStatsState {
   addViewTime: (username: string, seconds: number) => void;
   recordView: (username: string) => void;
   getStats: () => ViewingStats;
+  getViewCount: (username: string) => number;
   clearStats: () => void;
 }
 
@@ -55,6 +56,10 @@ export const useViewingStatsStore = create<ViewingStatsState>((set, get) => ({
   getStats: () => {
     const { viewingStats } = get();
     return viewingStats;
+  },
+  getViewCount: (username) => {
+    const { viewingStats } = get();
+    return viewingStats[username]?.viewCount || 0;
   },
   clearStats: () => {
     set({ viewingStats: {} });
