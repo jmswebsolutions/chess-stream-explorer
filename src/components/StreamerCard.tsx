@@ -78,13 +78,20 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
         <div className="flex-1">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <h3 className={`text-white font-semibold ${compactMode ? 'text-sm' : 'text-lg'}`}>{username}</h3>
-              {viewCount > 0 && (
-                <div className="flex items-center gap-1 text-xs text-gray-400" title={`Viewed ${viewCount} time${viewCount > 1 ? 's' : ''}`}>
-                  <FaEye />
-                  <span>{viewCount}</span>
-                </div>
-              )}
+              <div className="flex items-center gap-2">
+                <h3 className={`text-white font-semibold ${compactMode ? 'text-sm' : 'text-lg'}`}>{username}</h3>
+                {viewCount === 0 && (
+                  <span className="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded-full font-medium" title="New streamer - not viewed yet">
+                    NEW
+                  </span>
+                )}
+                {viewCount > 0 && (
+                  <div className="flex items-center gap-1 text-xs text-gray-400" title={`Viewed ${viewCount} time${viewCount > 1 ? 's' : ''}`}>
+                    <FaEye />
+                    <span>{viewCount}</span>
+                  </div>
+                )}
+              </div>
             </div>
             <div className={`flex items-center ${compactMode ? 'gap-1' : 'gap-2'}`}>
               {onProfile && (
