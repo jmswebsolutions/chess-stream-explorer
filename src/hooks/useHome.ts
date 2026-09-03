@@ -3,6 +3,7 @@ import { useStreamers } from './useStreamers';
 import { useStreamersStore } from '../store/streamersStore';
 import { useFavoritesStore } from '../store/favoritesStore';
 import { useTagsStore } from '../store/tagsStore';
+import { useViewingStatsStore } from '../store/viewingStatsStore';
 
 export const useHome = () => {
   const { streamers: allStreamers, loading, error, refresh } = useStreamers();
@@ -46,6 +47,7 @@ export const useHome = () => {
   } = useFavoritesStore();
 
   const { getStreamerTags } = useTagsStore();
+  const { getViewCount } = useViewingStatsStore();
 
   // Load favorites on mount
   useEffect(() => {
@@ -131,6 +133,20 @@ export const useHome = () => {
           if (a.status === 'offline' && b.status !== 'offline') return -1;
           if (a.status !== 'offline' && b.status === 'offline') return 1;
           return 0;
+        });
+        break;
+      case 'views-desc':
+        sorted.sort((a, b) => {
+          const viewsA = getViewCount(a.username);
+          const viewsB = getViewCount(b.username);
+          return viewsB - viewsA;
+        });
+        break;
+      case 'views-asc':
+        sorted.sort((a, b) => {
+          const viewsA = getViewCount(a.username);
+          const viewsB = getViewCount(b.username);
+          return viewsA - viewsB;
         });
         break;
     }

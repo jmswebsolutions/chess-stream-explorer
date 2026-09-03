@@ -215,6 +215,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **View Count Display**: Show how many times you viewed each streamer
 - [x] **Tags Export/Import**: Backup and restore custom tags
 - [x] **New Streamer Indicator**: Mark unviewed streamers with NEW badge
+- [x] **Sort by Views**: Order streamers by most/least viewed
 
 ## Screenshots
 

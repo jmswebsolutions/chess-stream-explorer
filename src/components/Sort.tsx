@@ -1,12 +1,14 @@
 import React from 'react';
-import { FaSort } from 'react-icons/fa';
+import { FaSort, FaEye } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
 export type SortOption =
   | 'name-asc'
   | 'name-desc'
   | 'online-first'
-  | 'offline-first';
+  | 'offline-first'
+  | 'views-desc'
+  | 'views-asc';
 
 interface SortProps {
   sortBy: SortOption;
@@ -69,6 +71,32 @@ export const Sort: React.FC<SortProps> = ({ sortBy, onSortChange }) => {
             className="w-4 h-4 bg-gray-700 border-gray-600 text-red-500 focus:ring-red-500"
           />
           {t('sort.status')}: {t('stats.offline')}
+        </label>
+
+        <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">
+          <input
+            type="radio"
+            name="sort"
+            value="views-desc"
+            checked={sortBy === 'views-desc'}
+            onChange={() => onSortChange('views-desc')}
+            className="w-4 h-4 bg-gray-700 border-gray-600 text-purple-500 focus:ring-purple-500"
+          />
+          <FaEye className="text-purple-400 text-xs" />
+          Most Viewed
+        </label>
+
+        <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">
+          <input
+            type="radio"
+            name="sort"
+            value="views-asc"
+            checked={sortBy === 'views-asc'}
+            onChange={() => onSortChange('views-asc')}
+            className="w-4 h-4 bg-gray-700 border-gray-600 text-purple-500 focus:ring-purple-500"
+          />
+          <FaEye className="text-purple-400 text-xs" />
+          Least Viewed
         </label>
       </div>
     </div>
