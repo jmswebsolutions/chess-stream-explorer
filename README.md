@@ -216,6 +216,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Tags Export/Import**: Backup and restore custom tags
 - [x] **New Streamer Indicator**: Mark unviewed streamers with NEW badge
 - [x] **Sort by Views**: Order streamers by most/least viewed
+- [x] **Extra Keyboard Shortcuts**: Add shortcuts for drag-drop, groups, settings, export, tags
 
 ## Screenshots
 

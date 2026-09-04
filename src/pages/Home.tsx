@@ -192,6 +192,43 @@ export const Home = () => {
       description: 'Toggle analytics',
     },
     {
+      key: 'd',
+      action: () => setDragDropMode(!dragDropMode),
+      description: 'Toggle drag-drop mode',
+    },
+    {
+      key: 'g',
+      action: () => {
+        const groupsButton = document.querySelector('[aria-label="Favorite Groups"]');
+        groupsButton?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      },
+      description: 'Open favorite groups',
+    },
+    {
+      key: 's',
+      action: () => {
+        const settingsButton = document.querySelector('[aria-label="Settings"]');
+        settingsButton?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      },
+      description: 'Open settings',
+    },
+    {
+      key: 'e',
+      action: () => {
+        const exportButton = document.querySelector('[aria-label="Export"]');
+        exportButton?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      },
+      description: 'Open export menu',
+    },
+    {
+      key: 'k',
+      action: () => {
+        const tagsButton = document.querySelector('[aria-label="Tags"]');
+        tagsButton?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      },
+      description: 'Open tags manager',
+    },
+    {
       key: '?',
       action: () => setShowShortcutsHelp(true),
       description: 'Show keyboard shortcuts',
