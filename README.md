@@ -217,6 +217,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **New Streamer Indicator**: Mark unviewed streamers with NEW badge
 - [x] **Sort by Views**: Order streamers by most/least viewed
 - [x] **Extra Keyboard Shortcuts**: Add shortcuts for drag-drop, groups, settings, export, tags
+- [x] **Statistics Tooltip**: Show viewing stats on hover over streamer name
 
 ## Screenshots
 

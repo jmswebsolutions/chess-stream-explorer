@@ -25,7 +25,7 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
   compactMode = false,
   className = '',
 }) => {
-  const { recordView, getViewCount } = useViewingStatsStore();
+  const { recordView, getViewCount, getViewTime, getLastViewed } = useViewingStatsStore();
   const { getNote, setNote, clearNote } = useFavoritesStore();
   const { tags, getStreamerTags, addTagToStreamer, removeTagFromStreamer } = useTagsStore();
   const { selectedStreamers, addStreamer, removeStreamer } = useComparisonStore();
@@ -33,6 +33,7 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
   const [noteText, setNoteText] = useState('');
   const [showShareMenu, setShowShareMenu] = useState(false);
   const [showTagMenu, setShowTagMenu] = useState(false);
+  const [showStatsTooltip, setShowStatsTooltip] = useState(false);
   
   const { username, avatar, status, is_community_streamer, url, twitch, youtube } =
     streamer;
@@ -40,6 +41,29 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
   const streamerTags = getStreamerTags(username);
   const isInComparison = selectedStreamers.some((s) => s.username === username);
   const viewCount = getViewCount(username);
+  const viewTime = getViewTime(username);
+  const lastViewed = getLastViewed(username);
+
+  const formatTime = (seconds: number) => {
+    if (seconds < 60) return `${seconds}s`;
+    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ${seconds % 60}s`;
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    return `${hours}h ${minutes}m`;
+  };
+
+  const formatLastViewed = (timestamp: number) => {
+    if (!timestamp) return 'Never';
+    const now = Date.now();
+    const diff = now - timestamp;
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+    if (minutes < 1) return 'Just now';
+    if (minutes < 60) return `${minutes}m ago`;
+    if (hours < 24) return `${hours}h ago`;
+    return `${days}d ago`;
+  };
 
   const shareText = `Check out ${username} on Chess.com!`;
   const shareUrl = url;
@@ -78,8 +102,12 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
         <div className="flex-1">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2">
-                <h3 className={`text-white font-semibold ${compactMode ? 'text-sm' : 'text-lg'}`}>{username}</h3>
+              <div className="flex items-center gap-2 relative">
+                <h3 
+                  className={`text-white font-semibold ${compactMode ? 'text-sm' : 'text-lg'} cursor-help`}
+                  onMouseEnter={() => setShowStatsTooltip(true)}
+                  onMouseLeave={() => setShowStatsTooltip(false)}
+                >{username}</h3>
                 {viewCount === 0 && (
                   <span className="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded-full font-medium" title="New streamer - not viewed yet">
                     NEW
@@ -89,6 +117,24 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
                   <div className="flex items-center gap-1 text-xs text-gray-400" title={`Viewed ${viewCount} time${viewCount > 1 ? 's' : ''}`}>
                     <FaEye />
                     <span>{viewCount}</span>
+                  </div>
+                )}
+                {showStatsTooltip && viewCount > 0 && (
+                  <div className="absolute left-0 top-full mt-2 z-50 bg-gray-900 border border-gray-700 rounded-lg p-3 shadow-xl min-w-48">
+                    <div className="space-y-2 text-xs">
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-400">Views:</span>
+                        <span className="text-white font-semibold">{viewCount}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-400">Watch time:</span>
+                        <span className="text-white font-semibold">{formatTime(viewTime)}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-400">Last viewed:</span>
+                        <span className="text-white font-semibold">{formatLastViewed(lastViewed)}</span>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
