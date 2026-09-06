@@ -6,8 +6,8 @@ import { useTagsStore } from '../store/tagsStore';
 interface FiltersProps {
   searchTerm: string;
   onSearchChange: (value: string) => void;
-  searchBy: 'name' | 'platform' | 'status';
-  onSearchByChange: (value: 'name' | 'platform' | 'status') => void;
+  searchBy: 'name' | 'platform' | 'status' | 'tags';
+  onSearchByChange: (value: 'name' | 'platform' | 'status' | 'tags') => void;
   showOnlineOnly: boolean;
   onShowOnlineOnlyChange: (value: boolean) => void;
   showOfflineOnly: boolean;
@@ -70,12 +70,13 @@ export const Filters: React.FC<FiltersProps> = ({
           </div>
           <select
             value={searchBy}
-            onChange={(e) => onSearchByChange(e.target.value as 'name' | 'platform' | 'status')}
+            onChange={(e) => onSearchByChange(e.target.value as 'name' | 'platform' | 'status' | 'tags')}
             className="px-3 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
           >
             <option value="name">Name</option>
             <option value="platform">Platform</option>
             <option value="status">Status</option>
+            <option value="tags">Tags</option>
           </select>
         </div>
 

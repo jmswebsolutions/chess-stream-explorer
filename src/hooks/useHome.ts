@@ -70,6 +70,9 @@ export const useHome = () => {
             return platforms.some(p => p.includes(term));
           case 'status':
             return streamer.status.toLowerCase().includes(term);
+          case 'tags':
+            const streamerTags = getStreamerTags(streamer.username);
+            return streamerTags.some(tag => tag.name.toLowerCase().includes(term));
           default:
             return streamer.username.toLowerCase().includes(term);
         }

@@ -8,7 +8,7 @@ export interface UserSettings {
   exportDate: string;
   streamersSettings: {
     searchTerm: string;
-    searchBy: 'name' | 'platform' | 'status';
+    searchBy: 'name' | 'platform' | 'status' | 'tags';
     showOnlineOnly: boolean;
     showOfflineOnly: boolean;
     showCommunityOnly: boolean;

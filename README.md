@@ -197,7 +197,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Additional Keyboard Shortcuts**: More shortcuts for navigation and filters
 - [x] **Customizable Themes**: Add color themes (blue, purple, green, orange, pink)
 - [x] **Mobile Header Improvements**: Better responsive layout with hamburger menu
-- [x] **Advanced Search**: Search by name, platform, or status
+- [x] **Advanced Search**: Search by name, platform, status, or tags
 - [x] **Favorites Groups**: Organize favorites in categories/groups
 - [x] **Personal Statistics**: Track viewing time and views per streamer
 - [x] **Advanced Export**: Export data to Excel (.xlsx) and PDF formats
@@ -218,6 +218,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Sort by Views**: Order streamers by most/least viewed
 - [x] **Extra Keyboard Shortcuts**: Add shortcuts for drag-drop, groups, settings, export, tags
 - [x] **Statistics Tooltip**: Show viewing stats on hover over streamer name
+- [x] **Search by Tags**: Search streamers by tag names
 
 ## Screenshots
 

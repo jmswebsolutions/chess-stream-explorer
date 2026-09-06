@@ -7,7 +7,7 @@ interface StreamersState {
   loading: boolean;
   error: string | null;
   searchTerm: string;
-  searchBy: 'name' | 'platform' | 'status';
+  searchBy: 'name' | 'platform' | 'status' | 'tags';
   showOnlineOnly: boolean;
   showOfflineOnly: boolean;
   showCommunityOnly: boolean;
@@ -22,7 +22,7 @@ interface StreamersState {
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   setSearchTerm: (term: string) => void;
-  setSearchBy: (by: 'name' | 'platform' | 'status') => void;
+  setSearchBy: (by: 'name' | 'platform' | 'status' | 'tags') => void;
   setShowOnlineOnly: (show: boolean) => void;
   setShowOfflineOnly: (show: boolean) => void;
   setShowCommunityOnly: (show: boolean) => void;
@@ -56,7 +56,7 @@ export const useStreamersStore = create<StreamersState>((set) => ({
   setLoading: (loading) => set({ loading }),
   setError: (error) => set({ error }),
   setSearchTerm: (searchTerm) => set({ searchTerm }),
-  setSearchBy: (searchBy) => set({ searchBy }),
+  setSearchBy: (searchBy) => set({ searchBy: searchBy as 'name' | 'platform' | 'status' | 'tags' }),
   setShowOnlineOnly: (showOnlineOnly) => set({ showOnlineOnly }),
   setShowOfflineOnly: (showOfflineOnly) => set({ showOfflineOnly }),
   setShowCommunityOnly: (showCommunityOnly) => set({ showCommunityOnly }),
