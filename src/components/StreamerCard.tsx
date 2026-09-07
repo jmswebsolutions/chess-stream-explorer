@@ -13,6 +13,7 @@ interface StreamerCardProps {
   onPreview?: (platform: 'twitch' | 'youtube', channel: string) => void;
   onProfile?: (username: string) => void;
   compactMode?: boolean;
+  listMode?: boolean;
   className?: string;
 }
 
@@ -23,6 +24,7 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
   onPreview,
   onProfile,
   compactMode = false,
+  listMode = false,
   className = '',
 }) => {
   const { recordView, getViewCount, getViewTime, getLastViewed } = useViewingStatsStore();
@@ -89,14 +91,14 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
 
   return (
     <div className={`bg-gray-800 rounded-lg shadow-lg card-hover animate-fade-in ${
-      compactMode ? 'p-2' : 'p-4'
+      listMode ? 'p-4' : compactMode ? 'p-2' : 'p-4'
     } ${className}`}>
-      <div className={`flex items-start ${compactMode ? 'space-x-2' : 'space-x-4'}`}>
+      <div className={`flex items-start ${listMode ? 'space-x-4' : compactMode ? 'space-x-2' : 'space-x-4'}`}>
         <img
           src={avatar}
           alt={username}
           className={`rounded-full object-cover border-2 border-gray-600 ${
-            compactMode ? 'w-10 h-10' : 'w-16 h-16'
+            listMode ? 'w-12 h-12' : compactMode ? 'w-10 h-10' : 'w-16 h-16'
           }`}
         />
         <div className="flex-1">
@@ -104,7 +106,7 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-2 relative">
                 <h3 
-                  className={`text-white font-semibold ${compactMode ? 'text-sm' : 'text-lg'} cursor-help`}
+                  className={`text-white font-semibold ${listMode ? 'text-base' : compactMode ? 'text-sm' : 'text-lg'} cursor-help`}
                   onMouseEnter={() => setShowStatsTooltip(true)}
                   onMouseLeave={() => setShowStatsTooltip(false)}
                 >{username}</h3>

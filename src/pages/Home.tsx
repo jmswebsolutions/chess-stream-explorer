@@ -58,6 +58,7 @@ export const Home = () => {
     showYouTubeOnly,
     sortBy,
     compactMode,
+    listMode,
     dragDropMode,
     filterByTag,
     setSearchTerm,
@@ -70,6 +71,7 @@ export const Home = () => {
     setShowYouTubeOnly,
     setSortBy,
     setCompactMode,
+    setListMode,
     setDragDropMode,
     setFilterByTag,
     handleClearFilters,
@@ -349,6 +351,18 @@ export const Home = () => {
                 <span className="hidden lg:inline">{compactMode ? 'Normal' : 'Compact'}</span>
               </button>
               <button
+                onClick={() => setListMode(!listMode)}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors duration-200 ${
+                  listMode
+                    ? 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                    : 'bg-gray-700 hover:bg-gray-600 text-white'
+                }`}
+                aria-label="Toggle list view mode"
+              >
+                <FaList />
+                <span className="hidden lg:inline">List</span>
+              </button>
+              <button
                 onClick={() => setDragDropMode(!dragDropMode)}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors duration-200 ${
                   dragDropMode
@@ -496,7 +510,9 @@ export const Home = () => {
               onDragEnd={handleDragEnd}
             >
               <div className={`grid gap-4 ${
-                compactMode
+                listMode
+                  ? 'grid-cols-1'
+                  : compactMode
                   ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
                   : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
               }`}>
@@ -512,6 +528,7 @@ export const Home = () => {
                       }
                       onProfile={() => handleProfile(streamer.username)}
                       compactMode={compactMode}
+                      listMode={listMode}
                       className={`animate-fade-in ${index === 0 ? '' : ''}`}
                     />
                   ) : (
@@ -525,6 +542,7 @@ export const Home = () => {
                       }
                       onProfile={handleProfile}
                       compactMode={compactMode}
+                      listMode={listMode}
                       className={`animate-fade-in animate-stagger-${(index % 5) + 1}`}
                     />
                   )

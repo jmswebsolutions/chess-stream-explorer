@@ -11,6 +11,7 @@ interface DraggableStreamerCardProps {
   onPreview?: (platform: 'twitch' | 'youtube', channel: string) => void;
   onProfile?: (username: string) => void;
   compactMode?: boolean;
+  listMode?: boolean;
   className?: string;
 }
 
@@ -21,6 +22,7 @@ export const DraggableStreamerCard: React.FC<DraggableStreamerCardProps> = ({
   onPreview,
   onProfile,
   compactMode = false,
+  listMode = false,
   className = '',
 }) => {
   const {
@@ -47,6 +49,7 @@ export const DraggableStreamerCard: React.FC<DraggableStreamerCardProps> = ({
         onPreview={onPreview}
         onProfile={onProfile}
         compactMode={compactMode}
+        listMode={listMode}
         className={className}
       />
     </div>

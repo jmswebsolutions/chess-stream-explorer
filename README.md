@@ -219,6 +219,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Extra Keyboard Shortcuts**: Add shortcuts for drag-drop, groups, settings, export, tags
 - [x] **Statistics Tooltip**: Show viewing stats on hover over streamer name
 - [x] **Search by Tags**: Search streamers by tag names
+- [x] **List View Mode**: Toggle between grid and single-column list layout
 
 ## Screenshots
 

@@ -17,6 +17,7 @@ export interface UserSettings {
     showYouTubeOnly: boolean;
     sortBy: string;
     compactMode: boolean;
+    listMode: boolean;
     dragDropMode: boolean;
   };
   favoritesSettings: {
@@ -53,6 +54,7 @@ export const exportSettings = () => {
       showYouTubeOnly: streamersStore.showYouTubeOnly,
       sortBy: streamersStore.sortBy,
       compactMode: streamersStore.compactMode,
+      listMode: streamersStore.listMode,
       dragDropMode: streamersStore.dragDropMode,
     },
     favoritesSettings: {
@@ -110,6 +112,7 @@ export const importSettings = (file: File): Promise<boolean> => {
         streamersStore.setShowYouTubeOnly(settings.streamersSettings.showYouTubeOnly);
         streamersStore.setSortBy(settings.streamersSettings.sortBy as any);
         streamersStore.setCompactMode(settings.streamersSettings.compactMode);
+        streamersStore.setListMode(settings.streamersSettings.listMode || false);
         streamersStore.setDragDropMode(settings.streamersSettings.dragDropMode);
 
         // Apply favorites settings

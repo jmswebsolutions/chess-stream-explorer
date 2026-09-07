@@ -16,6 +16,7 @@ interface StreamersState {
   showYouTubeOnly: boolean;
   sortBy: SortOption;
   compactMode: boolean;
+  listMode: boolean;
   dragDropMode: boolean;
   filterByTag: string | null;
   setStreamers: (streamers: Streamer[]) => void;
@@ -31,6 +32,7 @@ interface StreamersState {
   setShowYouTubeOnly: (show: boolean) => void;
   setSortBy: (sort: SortOption) => void;
   setCompactMode: (compact: boolean) => void;
+  setListMode: (list: boolean) => void;
   setDragDropMode: (enabled: boolean) => void;
   setFilterByTag: (tagId: string | null) => void;
   clearFilters: () => void;
@@ -50,6 +52,7 @@ export const useStreamersStore = create<StreamersState>((set) => ({
   showYouTubeOnly: false,
   sortBy: 'online-first',
   compactMode: false,
+  listMode: false,
   dragDropMode: false,
   filterByTag: null,
   setStreamers: (streamers) => set({ streamers }),
@@ -65,6 +68,7 @@ export const useStreamersStore = create<StreamersState>((set) => ({
   setShowYouTubeOnly: (showYouTubeOnly) => set({ showYouTubeOnly }),
   setSortBy: (sortBy) => set({ sortBy }),
   setCompactMode: (compactMode) => set({ compactMode }),
+  setListMode: (listMode) => set({ listMode }),
   setDragDropMode: (dragDropMode) => set({ dragDropMode }),
   setFilterByTag: (filterByTag) => set({ filterByTag }),
   clearFilters: () => set({
@@ -76,7 +80,6 @@ export const useStreamersStore = create<StreamersState>((set) => ({
     showFavoritesOnly: false,
     showTwitchOnly: false,
     showYouTubeOnly: false,
-    sortBy: 'online-first',
     filterByTag: null,
   }),
 }));
