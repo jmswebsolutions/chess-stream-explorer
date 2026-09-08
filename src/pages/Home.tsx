@@ -235,6 +235,11 @@ export const Home = () => {
       action: () => setShowShortcutsHelp(true),
       description: 'Show keyboard shortcuts',
     },
+    {
+      key: 'Escape',
+      action: handleClearFilters,
+      description: 'Clear all filters',
+    },
   ];
 
   useKeyboardShortcuts(shortcuts);

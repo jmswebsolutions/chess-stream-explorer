@@ -220,6 +220,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Statistics Tooltip**: Show viewing stats on hover over streamer name
 - [x] **Search by Tags**: Search streamers by tag names
 - [x] **List View Mode**: Toggle between grid and single-column list layout
+- [x] **ESC to Clear Filters**: Press ESC key to clear all filters
 
 ## Screenshots
 
