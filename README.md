@@ -221,6 +221,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Search by Tags**: Search streamers by tag names
 - [x] **List View Mode**: Toggle between grid and single-column list layout
 - [x] **ESC to Clear Filters**: Press ESC key to clear all filters
+- [x] **T to Toggle Theme**: Press T key to toggle between light and dark theme
 
 ## Screenshots
 

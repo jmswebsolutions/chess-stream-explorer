@@ -15,6 +15,7 @@ import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { useNotifications } from '../hooks/useNotifications';
 import { useRecommendationsStore } from '../store/recommendationsStore';
 import { useRecentlyViewedStore } from '../store/recentlyViewedStore';
+import { useTheme } from '../contexts/ThemeContext';
 import { Stats } from '../components/Stats';
 import { Filters } from '../components/Filters';
 import { Sort } from '../components/Sort';
@@ -81,6 +82,7 @@ export const Home = () => {
   } = useHome();
   const { getRecommendations } = useRecommendationsStore();
   const { addToRecentlyViewed } = useRecentlyViewedStore();
+  const { toggleTheme } = useTheme();
 
   const [previewState, setPreviewState] = useState<{
     isOpen: boolean;
@@ -239,6 +241,11 @@ export const Home = () => {
       key: 'Escape',
       action: handleClearFilters,
       description: 'Clear all filters',
+    },
+    {
+      key: 't',
+      action: toggleTheme,
+      description: 'Toggle theme',
     },
   ];
 
