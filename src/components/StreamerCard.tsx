@@ -157,12 +157,12 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
                 onClick={() => onToggleFavorite(username)}
                 className={`rounded-full transition-colors ${
                   isFavorite
-                    ? 'text-yellow-400 hover:text-yellow-300'
+                    ? 'text-yellow-400 hover:text-yellow-300 scale-110'
                     : 'text-gray-400 hover:text-yellow-400'
                 } ${compactMode ? 'p-1' : 'p-2'}`}
                 aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
               >
-                <FaStar className={compactMode ? 'text-xs' : ''} />
+                <FaStar className={isFavorite ? '' : compactMode ? 'text-xs' : ''} />
               </button>
           </div>
           {is_community_streamer && (
