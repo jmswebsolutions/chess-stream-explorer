@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { Filters } from './Filters';
 
 const mockProps = {
+  streamers: [],
   searchTerm: '',
   onSearchChange: vi.fn(),
   searchBy: 'name' as const,

@@ -473,6 +473,7 @@ export const Home = () => {
               <PersonalStats />
               <FavoriteGroups />
               <Filters
+                streamers={streamers}
                 searchTerm={searchTerm}
                 onSearchChange={setSearchTerm}
                 searchBy={searchBy}

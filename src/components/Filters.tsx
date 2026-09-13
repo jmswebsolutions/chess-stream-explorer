@@ -2,8 +2,10 @@ import React from 'react';
 import { FaSearch, FaFilter, FaStar, FaTwitch, FaYoutube, FaTags } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import { useTagsStore } from '../store/tagsStore';
+import { Streamer } from '../api/chessApi';
 
 interface FiltersProps {
+  streamers: Streamer[];
   searchTerm: string;
   onSearchChange: (value: string) => void;
   searchBy: 'name' | 'platform' | 'status' | 'tags';
@@ -26,6 +28,7 @@ interface FiltersProps {
 }
 
 export const Filters: React.FC<FiltersProps> = ({
+  streamers,
   searchTerm,
   onSearchChange,
   searchBy,
@@ -48,6 +51,13 @@ export const Filters: React.FC<FiltersProps> = ({
 }) => {
   const { t } = useTranslation();
   const { tags } = useTagsStore();
+
+  // Calculate counts for each filter
+  const twitchCount = streamers.filter(s => s.twitch).length;
+  const youtubeCount = streamers.filter(s => s.youtube).length;
+  const onlineCount = streamers.filter(s => s.status === 'live').length;
+  const offlineCount = streamers.filter(s => s.status === 'offline').length;
+  const communityCount = streamers.filter(s => s.is_community_streamer).length;
   return (
     <div className="bg-gray-800 rounded-lg p-4 shadow-lg mb-6">
       <div className="flex items-center gap-2 mb-4">
@@ -98,6 +108,7 @@ export const Filters: React.FC<FiltersProps> = ({
             >
               <FaTwitch className={showTwitchOnly ? 'text-white' : 'text-purple-400'} />
               <span className="text-sm font-medium">Twitch</span>
+              <span className="text-xs bg-gray-600 px-2 py-0.5 rounded-full">{twitchCount}</span>
             </button>
 
             <button
@@ -113,6 +124,7 @@ export const Filters: React.FC<FiltersProps> = ({
             >
               <FaYoutube className={showYouTubeOnly ? 'text-white' : 'text-red-400'} />
               <span className="text-sm font-medium">YouTube</span>
+              <span className="text-xs bg-gray-600 px-2 py-0.5 rounded-full">{youtubeCount}</span>
             </button>
 
             <button
@@ -127,6 +139,7 @@ export const Filters: React.FC<FiltersProps> = ({
               }`}
             >
               <span className="text-sm font-medium">All Platforms</span>
+              <span className="text-xs bg-gray-600 px-2 py-0.5 rounded-full">{streamers.length}</span>
             </button>
           </div>
         </div>
@@ -140,6 +153,7 @@ export const Filters: React.FC<FiltersProps> = ({
               className="w-4 h-4 rounded bg-gray-700 border-gray-600 text-green-500 focus:ring-green-500"
             />
             {t('filters.onlineOnly')}
+            <span className="text-xs bg-gray-600 px-2 py-0.5 rounded-full">{onlineCount}</span>
           </label>
 
           <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">
@@ -150,6 +164,7 @@ export const Filters: React.FC<FiltersProps> = ({
               className="w-4 h-4 rounded bg-gray-700 border-gray-600 text-red-500 focus:ring-red-500"
             />
             {t('filters.offlineOnly')}
+            <span className="text-xs bg-gray-600 px-2 py-0.5 rounded-full">{offlineCount}</span>
           </label>
 
           <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">
@@ -160,6 +175,7 @@ export const Filters: React.FC<FiltersProps> = ({
               className="w-4 h-4 rounded bg-gray-700 border-gray-600 text-blue-500 focus:ring-blue-500"
             />
             {t('filters.communityOnly')}
+            <span className="text-xs bg-gray-600 px-2 py-0.5 rounded-full">{communityCount}</span>
           </label>
 
           <label className="flex items-center gap-2 text-gray-300 cursor-pointer hover:text-white transition-colors">

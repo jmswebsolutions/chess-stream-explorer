@@ -224,6 +224,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **T to Toggle Theme**: Press T key to toggle between light and dark theme
 - [x] **Enhanced Favorite Star**: Make favorite star icon more visible with scale animation
 - [x] **Offline-Only Filter**: Quick button to show only offline streamers
+- [x] **Filter Count Display**: Show streamer count for each filter option
 
 ## Screenshots
 
