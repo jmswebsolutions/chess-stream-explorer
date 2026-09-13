@@ -363,6 +363,18 @@ export const Home = () => {
                 <span className="hidden lg:inline">{compactMode ? 'Normal' : 'Compact'}</span>
               </button>
               <button
+                onClick={() => setShowOfflineOnly(!showOfflineOnly)}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors duration-200 ${
+                  showOfflineOnly
+                    ? 'bg-red-600 hover:bg-red-700 text-white'
+                    : 'bg-gray-700 hover:bg-gray-600 text-white'
+                }`}
+                aria-label="Show offline only"
+              >
+                <FaBellSlash />
+                <span className="hidden lg:inline">Offline</span>
+              </button>
+              <button
                 onClick={() => setListMode(!listMode)}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors duration-200 ${
                   listMode
