@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { FaDownload, FaUpload, FaCog } from 'react-icons/fa';
-import { exportSettings, importSettings } from '../utils/settingsManager';
+import { FaDownload, FaUpload, FaCog, FaUndo } from 'react-icons/fa';
+import { exportSettings, importSettings, resetSettings } from '../utils/settingsManager';
 
 export const SettingsManager: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -30,6 +30,15 @@ export const SettingsManager: React.FC = () => {
     // Reset file input
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
+    }
+    setIsOpen(false);
+  };
+
+  const handleReset = () => {
+    if (confirm('Are you sure you want to reset all settings to default? This will clear all your data including favorites, viewing stats, tags, and preferences.')) {
+      resetSettings();
+      alert('Settings reset successfully! Please refresh the page to apply all changes.');
+      window.location.reload();
     }
     setIsOpen(false);
   };
@@ -66,6 +75,14 @@ export const SettingsManager: React.FC = () => {
               >
                 <FaUpload className="text-blue-400" />
                 <span>Import Settings</span>
+              </button>
+              <div className="border-t border-gray-700 my-2" />
+              <button
+                onClick={handleReset}
+                className="w-full text-left px-3 py-2 hover:bg-gray-700 transition-colors flex items-center gap-3 text-red-400 rounded"
+              >
+                <FaUndo />
+                <span>Reset to Default</span>
               </button>
             </div>
             <input

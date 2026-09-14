@@ -2,6 +2,7 @@ import { useStreamersStore } from '../store/streamersStore';
 import { useFavoritesStore } from '../store/favoritesStore';
 import { useViewingStatsStore } from '../store/viewingStatsStore';
 import { useRecentlyViewedStore } from '../store/recentlyViewedStore';
+import { useTagsStore } from '../store/tagsStore';
 
 export interface UserSettings {
   version: string;
@@ -146,4 +147,45 @@ export const importSettings = (file: File): Promise<boolean> => {
 
     reader.readAsText(file);
   });
+};
+
+export const resetSettings = () => {
+  // Reset streamers settings
+  const streamersStore = useStreamersStore.getState();
+  streamersStore.setSearchTerm('');
+  streamersStore.setSearchBy('name');
+  streamersStore.setShowOnlineOnly(false);
+  streamersStore.setShowOfflineOnly(false);
+  streamersStore.setShowCommunityOnly(false);
+  streamersStore.setShowFavoritesOnly(false);
+  streamersStore.setShowTwitchOnly(false);
+  streamersStore.setShowYouTubeOnly(false);
+  streamersStore.setSortBy('name-asc');
+  streamersStore.setCompactMode(false);
+  streamersStore.setListMode(false);
+  streamersStore.setDragDropMode(false);
+
+  // Reset favorites
+  const favoritesStore = useFavoritesStore.getState();
+  localStorage.removeItem('chess-stream-explorer-favorites');
+  localStorage.removeItem('chess-stream-explorer-favorite-groups');
+  localStorage.removeItem('chess-stream-explorer-favorite-notes');
+  favoritesStore.loadFavorites();
+
+  // Reset viewing stats
+  const viewingStatsStore = useViewingStatsStore.getState();
+  viewingStatsStore.clearStats();
+
+  // Reset recently viewed
+  localStorage.removeItem('chess-stream-explorer-recently-viewed');
+  const recentlyViewedStore = useRecentlyViewedStore.getState();
+  recentlyViewedStore.clearRecentlyViewed();
+
+  // Reset tags
+  const tagsStore = useTagsStore.getState();
+  tagsStore.clearTags();
+
+  // Reset theme settings
+  localStorage.setItem('chess-stream-explorer-theme', 'dark');
+  localStorage.setItem('chess-stream-explorer-color-theme', 'blue');
 };
