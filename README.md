@@ -226,6 +226,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Offline-Only Filter**: Quick button to show only offline streamers
 - [x] **Filter Count Display**: Show streamer count for each filter option
 - [x] **Reset Settings Button**: Restore all settings to default values
+- [x] **Loading Spinner**: Animated spinner when fetching streamers
 
 ## Screenshots
 

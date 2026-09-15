@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react';
-import { FaSync, FaBell, FaBellSlash, FaChartBar, FaShieldAlt, FaTh, FaList, FaBars, FaGripVertical } from 'react-icons/fa';
+import { FaSync, FaBell, FaBellSlash, FaChartBar, FaShieldAlt, FaTh, FaList, FaBars, FaGripVertical, FaSpinner } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -517,10 +517,14 @@ export const Home = () => {
           </div>
 
           {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {[...Array(6)].map((_, index) => (
-                <Skeleton key={index} />
-              ))}
+            <div className="flex flex-col items-center justify-center py-12">
+              <FaSpinner className="animate-spin text-blue-500 text-5xl mb-4" />
+              <p className="text-gray-400 text-lg">{t('results.loading')}</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+                {[...Array(6)].map((_, index) => (
+                  <Skeleton key={index} />
+                ))}
+              </div>
             </div>
           ) : streamers.length === 0 ? (
             <div className="text-center py-12">
