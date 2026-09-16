@@ -227,6 +227,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [x] **Filter Count Display**: Show streamer count for each filter option
 - [x] **Reset Settings Button**: Restore all settings to default values
 - [x] **Loading Spinner**: Animated spinner when fetching streamers
+- [x] **Tag Autocomplete**: Autocomplete suggestions when searching by tags
 
 ## Screenshots
 

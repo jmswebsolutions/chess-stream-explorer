@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaSearch, FaFilter, FaStar, FaTwitch, FaYoutube, FaTags } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import { useTagsStore } from '../store/tagsStore';
@@ -51,6 +51,7 @@ export const Filters: React.FC<FiltersProps> = ({
 }) => {
   const { t } = useTranslation();
   const { tags } = useTagsStore();
+  const [showTagSuggestions, setShowTagSuggestions] = useState(false);
 
   // Calculate counts for each filter
   const twitchCount = streamers.filter(s => s.twitch).length;
@@ -58,6 +59,19 @@ export const Filters: React.FC<FiltersProps> = ({
   const onlineCount = streamers.filter(s => s.status === 'live').length;
   const offlineCount = streamers.filter(s => s.status === 'offline').length;
   const communityCount = streamers.filter(s => s.is_community_streamer).length;
+
+  // Get unique tag names
+  const tagNames = tags.map(t => t.name);
+
+  // Filter tag suggestions based on search term
+  const tagSuggestions = searchBy === 'tags' && searchTerm
+    ? tagNames.filter(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 5)
+    : [];
+
+  const handleTagSuggestionClick = (tag: string) => {
+    onSearchChange(tag);
+    setShowTagSuggestions(false);
+  };
   return (
     <div className="bg-gray-800 rounded-lg p-4 shadow-lg mb-6">
       <div className="flex items-center gap-2 mb-4">
@@ -75,8 +89,23 @@ export const Filters: React.FC<FiltersProps> = ({
               placeholder={t('filters.search')}
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
+              onFocus={() => searchBy === 'tags' && setShowTagSuggestions(true)}
+              onBlur={() => setTimeout(() => setShowTagSuggestions(false), 200)}
               className="w-full pl-10 pr-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
+            {searchBy === 'tags' && showTagSuggestions && tagSuggestions.length > 0 && (
+              <div className="absolute top-full left-0 right-0 mt-1 bg-gray-700 rounded-lg shadow-lg z-10 max-h-48 overflow-y-auto">
+                {tagSuggestions.map((tag) => (
+                  <button
+                    key={tag}
+                    onClick={() => handleTagSuggestionClick(tag)}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-600 text-white text-sm transition-colors"
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
           <select
             value={searchBy}
