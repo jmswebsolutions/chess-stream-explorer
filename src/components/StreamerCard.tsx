@@ -231,6 +231,7 @@ export const StreamerCard = React.memo<StreamerCardProps>(({
           className={`flex items-center gap-1 text-gray-300 hover:text-white transition-colors ${
             compactMode ? 'text-xs' : 'text-sm'
           }`}
+          title={`Visit ${username}'s Chess.com profile`}
         >
           <FaExternalLinkAlt className={compactMode ? 'text-[10px]' : 'text-xs'} />
           Chess.com
