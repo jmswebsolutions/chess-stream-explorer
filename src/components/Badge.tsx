@@ -14,6 +14,8 @@ export const Badge: React.FC<BadgeProps> = ({ type }) => {
       className={`${bgColor} text-white text-xs font-semibold px-2 py-1 rounded-full ${
         isLive ? 'badge-pulse' : ''
       }`}
+      title={text}
+      aria-label={text}
     >
       {text}
     </span>
