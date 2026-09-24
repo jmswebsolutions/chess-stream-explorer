@@ -73,16 +73,16 @@ export const Filters: React.FC<FiltersProps> = ({
     setShowTagSuggestions(false);
   };
   return (
-    <div className="bg-gray-800 rounded-lg p-4 shadow-lg mb-6">
+    <div className="bg-gray-800 rounded-lg p-4 shadow-lg mb-6" role="region" aria-label="Filter options">
       <div className="flex items-center gap-2 mb-4">
-        <FaFilter className="text-blue-400" />
+        <FaFilter className="text-blue-400" aria-hidden="true" />
         <h2 className="text-white font-semibold text-lg">{t('filters.title')}</h2>
       </div>
 
       <div className="space-y-4">
         <div className="flex gap-2">
           <div className="relative flex-1">
-            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true" />
             <input
               id="search-input"
               type="text"
@@ -92,6 +92,7 @@ export const Filters: React.FC<FiltersProps> = ({
               onFocus={() => searchBy === 'tags' && setShowTagSuggestions(true)}
               onBlur={() => setTimeout(() => setShowTagSuggestions(false), 200)}
               className="w-full pl-10 pr-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              aria-label="Search streamers"
             />
             {searchBy === 'tags' && showTagSuggestions && tagSuggestions.length > 0 && (
               <div className="absolute top-full left-0 right-0 mt-1 bg-gray-700 rounded-lg shadow-lg z-10 max-h-48 overflow-y-auto">
@@ -111,6 +112,7 @@ export const Filters: React.FC<FiltersProps> = ({
             value={searchBy}
             onChange={(e) => onSearchByChange(e.target.value as 'name' | 'platform' | 'status' | 'tags')}
             className="px-3 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            aria-label="Search by"
           >
             <option value="name">Name</option>
             <option value="platform">Platform</option>
@@ -123,7 +125,7 @@ export const Filters: React.FC<FiltersProps> = ({
           <div className="flex items-center gap-2 mb-2 text-gray-300">
             <span className="text-sm font-medium">Quick Platform Filters:</span>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Platform filters">
             <button
               onClick={() => {
                 onShowTwitchOnlyChange(!showTwitchOnly);
@@ -134,8 +136,10 @@ export const Filters: React.FC<FiltersProps> = ({
                   ? 'bg-purple-600 text-white shadow-lg'
                   : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
               }`}
+              aria-pressed={showTwitchOnly}
+              aria-label={`Filter by Twitch streamers (${twitchCount})`}
             >
-              <FaTwitch className={showTwitchOnly ? 'text-white' : 'text-purple-400'} />
+              <FaTwitch className={showTwitchOnly ? 'text-white' : 'text-purple-400'} aria-hidden="true" />
               <span className="text-sm font-medium">Twitch</span>
               <span className="text-xs bg-gray-600 px-2 py-0.5 rounded-full">{twitchCount}</span>
             </button>
@@ -150,8 +154,10 @@ export const Filters: React.FC<FiltersProps> = ({
                   ? 'bg-red-600 text-white shadow-lg'
                   : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
               }`}
+              aria-pressed={showYouTubeOnly}
+              aria-label={`Filter by YouTube streamers (${youtubeCount})`}
             >
-              <FaYoutube className={showYouTubeOnly ? 'text-white' : 'text-red-400'} />
+              <FaYoutube className={showYouTubeOnly ? 'text-white' : 'text-red-400'} aria-hidden="true" />
               <span className="text-sm font-medium">YouTube</span>
               <span className="text-xs bg-gray-600 px-2 py-0.5 rounded-full">{youtubeCount}</span>
             </button>
@@ -166,6 +172,8 @@ export const Filters: React.FC<FiltersProps> = ({
                   ? 'bg-blue-600 text-white shadow-lg'
                   : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
               }`}
+              aria-pressed={!showTwitchOnly && !showYouTubeOnly}
+              aria-label={`Show all platforms (${streamers.length})`}
             >
               <span className="text-sm font-medium">All Platforms</span>
               <span className="text-xs bg-gray-600 px-2 py-0.5 rounded-full">{streamers.length}</span>
