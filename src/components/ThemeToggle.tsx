@@ -13,8 +13,10 @@ export const ThemeToggle = () => {
           : 'bg-gray-200 hover:bg-gray-300 text-gray-900'
       }`}
       aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+      aria-pressed={theme === 'light'}
+      role="switch"
     >
-      {theme === 'dark' ? <FaSun /> : <FaMoon />}
+      {theme === 'dark' ? <FaSun aria-hidden="true" /> : <FaMoon aria-hidden="true" />}
       <span className="hidden sm:inline">
         {theme === 'dark' ? 'Light' : 'Dark'}
       </span>
