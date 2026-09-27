@@ -25,8 +25,10 @@ export const ExportButton = ({ onExportCSV, onExportJSON, onExportExcel, onExpor
             : 'bg-gray-700 hover:bg-gray-600 text-white'
         }`}
         aria-label="Export data"
+        aria-expanded={isOpen}
+        aria-haspopup="true"
       >
-        <FaDownload />
+        <FaDownload aria-hidden="true" />
         <span className="hidden sm:inline">{t('header.export')}</span>
       </button>
 
@@ -35,16 +37,23 @@ export const ExportButton = ({ onExportCSV, onExportJSON, onExportExcel, onExpor
           <div
             className="fixed inset-0 z-40"
             onClick={() => setIsOpen(false)}
+            aria-hidden="true"
           />
-          <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-xl z-50">
+          <div 
+            className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-xl z-50"
+            role="menu"
+            aria-label="Export format options"
+          >
             <button
               onClick={() => {
                 onExportCSV();
                 setIsOpen(false);
               }}
               className="w-full text-left px-4 py-3 hover:bg-gray-700 transition-colors flex items-center gap-3 text-white"
+              role="menuitem"
+              aria-label="Export as CSV"
             >
-              <FaFileCsv className="text-green-400" />
+              <FaFileCsv className="text-green-400" aria-hidden="true" />
               <span>CSV</span>
             </button>
             <button
@@ -53,8 +62,10 @@ export const ExportButton = ({ onExportCSV, onExportJSON, onExportExcel, onExpor
                 setIsOpen(false);
               }}
               className="w-full text-left px-4 py-3 hover:bg-gray-700 transition-colors flex items-center gap-3 text-white"
+              role="menuitem"
+              aria-label="Export as JSON"
             >
-              <FaFileCode className="text-blue-400" />
+              <FaFileCode className="text-blue-400" aria-hidden="true" />
               <span>JSON</span>
             </button>
             {onExportExcel && (
@@ -64,8 +75,10 @@ export const ExportButton = ({ onExportCSV, onExportJSON, onExportExcel, onExpor
                   setIsOpen(false);
                 }}
                 className="w-full text-left px-4 py-3 hover:bg-gray-700 transition-colors flex items-center gap-3 text-white"
+                role="menuitem"
+                aria-label="Export as Excel"
               >
-                <FaFileExcel className="text-green-600" />
+                <FaFileExcel className="text-green-600" aria-hidden="true" />
                 <span>Excel</span>
               </button>
             )}
@@ -76,8 +89,10 @@ export const ExportButton = ({ onExportCSV, onExportJSON, onExportExcel, onExpor
                   setIsOpen(false);
                 }}
                 className="w-full text-left px-4 py-3 hover:bg-gray-700 transition-colors flex items-center gap-3 text-white"
+                role="menuitem"
+                aria-label="Export as PDF"
               >
-                <FaFilePdf className="text-red-500" />
+                <FaFilePdf className="text-red-500" aria-hidden="true" />
                 <span>PDF</span>
               </button>
             )}
