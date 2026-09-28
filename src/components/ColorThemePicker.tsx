@@ -20,13 +20,19 @@ export const ColorThemePicker: React.FC = () => {
       <button
         className="p-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-colors duration-200"
         aria-label="Change color theme"
+        aria-expanded="false"
+        aria-haspopup="true"
       >
-        <FaPalette />
+        <FaPalette aria-hidden="true" />
       </button>
-      <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+      <div 
+        className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50"
+        role="menu"
+        aria-label="Color theme options"
+      >
         <div className="p-3">
           <p className="text-gray-400 text-xs mb-2">Color Theme</p>
-          <div className="grid grid-cols-5 gap-2">
+          <div className="grid grid-cols-5 gap-2" role="group" aria-label="Color options">
             {colorOptions.map((option) => (
               <button
                 key={option.value}
@@ -36,6 +42,7 @@ export const ColorThemePicker: React.FC = () => {
                 }`}
                 style={{ backgroundColor: option.color }}
                 aria-label={`Select ${option.label} theme`}
+                aria-pressed={colorTheme === option.value}
                 title={option.label}
               />
             ))}
