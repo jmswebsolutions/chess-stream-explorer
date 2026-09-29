@@ -23,9 +23,9 @@ export const PersonalStats: React.FC = () => {
 
   if (sortedStats.length === 0) {
     return (
-      <div className="bg-gray-800 rounded-lg p-4 shadow-lg mb-4">
+      <div className="bg-gray-800 rounded-lg p-4 shadow-lg mb-4" role="region" aria-label="Personal statistics">
         <div className="flex items-center gap-2 mb-3">
-          <FaChartBar className="text-purple-400" />
+          <FaChartBar className="text-purple-400" aria-hidden="true" />
           <h3 className="text-white font-semibold">Personal Statistics</h3>
         </div>
         <p className="text-gray-400 text-sm">No viewing data yet. Start watching streamers to track your statistics!</p>
@@ -34,10 +34,10 @@ export const PersonalStats: React.FC = () => {
   }
 
   return (
-    <div className="bg-gray-800 rounded-lg p-4 shadow-lg mb-4">
+    <div className="bg-gray-800 rounded-lg p-4 shadow-lg mb-4" role="region" aria-label="Personal statistics">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <FaChartBar className="text-purple-400" />
+          <FaChartBar className="text-purple-400" aria-hidden="true" />
           <h3 className="text-white font-semibold">Personal Statistics</h3>
         </div>
         <button
@@ -47,25 +47,26 @@ export const PersonalStats: React.FC = () => {
             }
           }}
           className="text-xs text-gray-400 hover:text-red-400 transition-colors"
+          aria-label="Clear all viewing statistics"
         >
           Clear
         </button>
       </div>
 
       <div className="grid grid-cols-2 gap-2 mb-4">
-        <div className="bg-gray-700 rounded-lg p-3">
+        <div className="bg-gray-700 rounded-lg p-3" role="group" aria-label={`Total viewing time: ${formatTime(totalViewTime)}`}>
           <div className="flex items-center gap-2 text-gray-400 text-sm mb-1">
-            <FaClock />
+            <FaClock aria-hidden="true" />
             <span>Total Time</span>
           </div>
-          <div className="text-white font-bold text-lg">{formatTime(totalViewTime)}</div>
+          <div className="text-white font-bold text-lg" aria-label={`${formatTime(totalViewTime)} total viewing time`}>{formatTime(totalViewTime)}</div>
         </div>
-        <div className="bg-gray-700 rounded-lg p-3">
+        <div className="bg-gray-700 rounded-lg p-3" role="group" aria-label={`Total views: ${totalViews}`}>
           <div className="flex items-center gap-2 text-gray-400 text-sm mb-1">
-            <FaEye />
+            <FaEye aria-hidden="true" />
             <span>Total Views</span>
           </div>
-          <div className="text-white font-bold text-lg">{totalViews}</div>
+          <div className="text-white font-bold text-lg" aria-label={`${totalViews} total views`}>{totalViews}</div>
         </div>
       </div>
 
@@ -74,12 +75,12 @@ export const PersonalStats: React.FC = () => {
         {sortedStats.slice(0, 5).map(({ username, totalSeconds, viewCount, lastViewed }) => {
           const percentage = totalViewTime > 0 ? (totalSeconds / totalViewTime) * 100 : 0;
           return (
-            <div key={username} className="bg-gray-700 rounded-lg p-3">
+            <div key={username} className="bg-gray-700 rounded-lg p-3" role="group" aria-label={`${username}: ${formatTime(totalSeconds)}, ${viewCount} views`}>
               <div className="flex justify-between items-center mb-2">
                 <span className="text-white font-medium">{username}</span>
                 <span className="text-gray-400 text-sm">{formatTime(totalSeconds)}</span>
               </div>
-              <div className="w-full bg-gray-600 rounded-full h-2 mb-2">
+              <div className="w-full bg-gray-600 rounded-full h-2 mb-2" role="progressbar" aria-valuenow={percentage} aria-valuemin={0} aria-valuemax={100} aria-label={`${username} viewing time percentage`}>
                 <div
                   className="bg-purple-500 h-2 rounded-full transition-all"
                   style={{ width: `${percentage}%` }}
