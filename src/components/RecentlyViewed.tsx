@@ -16,10 +16,10 @@ export const RecentlyViewed: React.FC<RecentlyViewedProps> = ({ onToggleFavorite
   }
 
   return (
-    <div className="bg-gray-800 rounded-lg p-4 shadow-lg mb-4">
+    <div className="bg-gray-800 rounded-lg p-4 shadow-lg mb-4" role="region" aria-label="Recently viewed streamers">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <FaHistory className="text-yellow-400" />
+          <FaHistory className="text-yellow-400" aria-hidden="true" />
           <h3 className="text-white font-semibold">Recently Viewed</h3>
         </div>
         <button
@@ -29,12 +29,13 @@ export const RecentlyViewed: React.FC<RecentlyViewedProps> = ({ onToggleFavorite
             }
           }}
           className="text-xs text-gray-400 hover:text-red-400 transition-colors"
+          aria-label="Clear recently viewed history"
         >
-          <FaTrash />
+          <FaTrash aria-hidden="true" />
         </button>
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-2" role="list" aria-label="Recently viewed streamers list">
         {recentlyViewed.map((streamer) => (
           <StreamerCard
             key={streamer.username}
