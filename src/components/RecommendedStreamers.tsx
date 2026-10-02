@@ -23,12 +23,12 @@ export const RecommendedStreamers = ({ streamers }: RecommendedStreamersProps) =
   };
 
   return (
-    <div className="mb-8">
+    <div className="mb-8" role="region" aria-label="Recommended streamers">
       <div className="flex items-center gap-2 mb-4">
-        <FaLightbulb className="text-yellow-400" />
+        <FaLightbulb className="text-yellow-400" aria-hidden="true" />
         <h2 className="text-xl font-semibold text-white">Recommended for You</h2>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" role="list" aria-label="Recommended streamers list">
         {streamers.map((streamer) => (
           <StreamerCard
             key={streamer.username}
