@@ -49,8 +49,10 @@ export const SettingsManager: React.FC = () => {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-colors duration-200"
         aria-label="Settings"
+        aria-expanded={isOpen}
+        aria-haspopup="true"
       >
-        <FaCog />
+        <FaCog aria-hidden="true" />
         <span className="hidden sm:inline">Settings</span>
       </button>
 
@@ -59,29 +61,40 @@ export const SettingsManager: React.FC = () => {
           <div
             className="fixed inset-0 z-40"
             onClick={() => setIsOpen(false)}
+            aria-hidden="true"
           />
-          <div className="absolute right-0 mt-2 w-56 bg-gray-800 rounded-lg shadow-xl z-50">
+          <div 
+            className="absolute right-0 mt-2 w-56 bg-gray-800 rounded-lg shadow-xl z-50"
+            role="menu"
+            aria-label="Settings menu"
+          >
             <div className="p-2">
               <button
                 onClick={handleExport}
                 className="w-full text-left px-3 py-2 hover:bg-gray-700 transition-colors flex items-center gap-3 text-white rounded"
+                role="menuitem"
+                aria-label="Export settings"
               >
-                <FaDownload className="text-green-400" />
+                <FaDownload className="text-green-400" aria-hidden="true" />
                 <span>Export Settings</span>
               </button>
               <button
                 onClick={handleImport}
                 className="w-full text-left px-3 py-2 hover:bg-gray-700 transition-colors flex items-center gap-3 text-white rounded"
+                role="menuitem"
+                aria-label="Import settings"
               >
-                <FaUpload className="text-blue-400" />
+                <FaUpload className="text-blue-400" aria-hidden="true" />
                 <span>Import Settings</span>
               </button>
               <div className="border-t border-gray-700 my-2" />
               <button
                 onClick={handleReset}
                 className="w-full text-left px-3 py-2 hover:bg-gray-700 transition-colors flex items-center gap-3 text-red-400 rounded"
+                role="menuitem"
+                aria-label="Reset settings to default"
               >
-                <FaUndo />
+                <FaUndo aria-hidden="true" />
                 <span>Reset to Default</span>
               </button>
             </div>
@@ -91,6 +104,7 @@ export const SettingsManager: React.FC = () => {
               accept=".json"
               onChange={handleFileChange}
               className="hidden"
+              aria-label="Import settings file"
             />
           </div>
         </>
