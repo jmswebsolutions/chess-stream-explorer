@@ -79,8 +79,10 @@ export const TagsManager: React.FC = () => {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-colors duration-200"
         aria-label="Tags"
+        aria-expanded={isOpen}
+        aria-haspopup="true"
       >
-        <FaTag />
+        <FaTag aria-hidden="true" />
         <span className="hidden sm:inline">Tags</span>
       </button>
 
@@ -89,8 +91,13 @@ export const TagsManager: React.FC = () => {
           <div
             className="fixed inset-0 z-40"
             onClick={() => setIsOpen(false)}
+            aria-hidden="true"
           />
-          <div className="absolute right-0 mt-2 w-80 bg-gray-800 rounded-lg shadow-xl z-50 p-4">
+          <div 
+            className="absolute right-0 mt-2 w-80 bg-gray-800 rounded-lg shadow-xl z-50 p-4"
+            role="dialog"
+            aria-label="Manage tags"
+          >
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-white font-semibold">Manage Tags</h3>
               <div className="flex gap-2">
@@ -100,10 +107,10 @@ export const TagsManager: React.FC = () => {
                   title="Export tags"
                   aria-label="Export tags"
                 >
-                  <FaDownload />
+                  <FaDownload aria-hidden="true" />
                 </button>
                 <label className="text-blue-400 hover:text-blue-300 transition-colors p-1 cursor-pointer" title="Import tags">
-                  <FaUpload />
+                  <FaUpload aria-hidden="true" />
                   <input
                     type="file"
                     accept=".json"
@@ -116,7 +123,7 @@ export const TagsManager: React.FC = () => {
             </div>
             
             {/* Add new tag */}
-            <div className="mb-4 p-3 bg-gray-700 rounded-lg">
+            <div className="mb-4 p-3 bg-gray-700 rounded-lg" role="form" aria-label="Create new tag">
               <input
                 type="text"
                 placeholder="Tag name..."
@@ -126,8 +133,9 @@ export const TagsManager: React.FC = () => {
                 onKeyPress={(e) => {
                   if (e.key === 'Enter') handleAddTag();
                 }}
+                aria-label="Tag name"
               />
-              <div className="flex gap-2 mb-2">
+              <div className="flex gap-2 mb-2" role="group" aria-label="Select tag color">
                 {TAG_COLORS.map((color) => (
                   <button
                     key={color.value}
@@ -139,6 +147,8 @@ export const TagsManager: React.FC = () => {
                     }`}
                     style={{ backgroundColor: color.value }}
                     title={color.name}
+                    aria-label={`Select ${color.name} color`}
+                    aria-pressed={selectedColor === color.value}
                   />
                 ))}
               </div>
@@ -146,14 +156,15 @@ export const TagsManager: React.FC = () => {
                 onClick={handleAddTag}
                 disabled={!newTagName.trim()}
                 className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white text-sm px-3 py-2 rounded transition-colors"
+                aria-label="Add new tag"
               >
-                <FaPlus />
+                <FaPlus aria-hidden="true" />
                 Add Tag
               </button>
             </div>
 
             {/* Existing tags */}
-            <div className="space-y-2 max-h-60 overflow-y-auto">
+            <div className="space-y-2 max-h-60 overflow-y-auto" role="list" aria-label="Existing tags">
               {tags.length === 0 ? (
                 <p className="text-gray-400 text-sm text-center py-4">No tags created yet</p>
               ) : (
@@ -161,20 +172,22 @@ export const TagsManager: React.FC = () => {
                   <div
                     key={tag.id}
                     className="flex items-center justify-between p-2 bg-gray-700 rounded"
+                    role="listitem"
                   >
                     <div className="flex items-center gap-2">
                       <div
                         className="w-3 h-3 rounded-full"
                         style={{ backgroundColor: tag.color }}
+                        aria-hidden="true"
                       />
                       <span className="text-white text-sm">{tag.name}</span>
                     </div>
                     <button
                       onClick={() => handleRemoveTag(tag.id)}
                       className="text-red-400 hover:text-red-300 transition-colors p-1"
-                      aria-label="Remove tag"
+                      aria-label={`Remove ${tag.name} tag`}
                     >
-                      <FaTrash className="text-xs" />
+                      <FaTrash className="text-xs" aria-hidden="true" />
                     </button>
                   </div>
                 ))
