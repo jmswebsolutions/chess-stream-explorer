@@ -9,35 +9,36 @@ export const StreamerComparison: React.FC = () => {
   if (selectedStreamers.length === 0) return null;
 
   return (
-    <div className="bg-gray-800 rounded-lg p-4 shadow-lg mb-4">
+    <div className="bg-gray-800 rounded-lg p-4 shadow-lg mb-4" role="region" aria-label="Streamer comparison">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <FaBalanceScale className="text-purple-400" />
+          <FaBalanceScale className="text-purple-400" aria-hidden="true" />
           <h3 className="text-white font-semibold">Streamer Comparison</h3>
         </div>
         <button
           onClick={clearComparison}
           className="text-xs text-gray-400 hover:text-red-400 transition-colors"
+          aria-label="Clear comparison"
         >
           Clear
         </button>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4" role="list" aria-label="Compared streamers">
         {selectedStreamers.map((streamer) => (
-          <div key={streamer.username} className="bg-gray-700 rounded-lg p-4 relative">
+          <div key={streamer.username} className="bg-gray-700 rounded-lg p-4 relative" role="listitem">
             <button
               onClick={() => removeStreamer(streamer.username)}
               className="absolute top-2 right-2 text-gray-400 hover:text-red-400 transition-colors"
-              aria-label="Remove from comparison"
+              aria-label={`Remove ${streamer.username} from comparison`}
             >
-              <FaTimes />
+              <FaTimes aria-hidden="true" />
             </button>
 
             <div className="flex items-center gap-3 mb-3">
               <img
                 src={streamer.avatar}
-                alt={streamer.username}
+                alt={`${streamer.username} avatar`}
                 className="w-12 h-12 rounded-full object-cover border-2 border-gray-600"
               />
               <div>
@@ -56,7 +57,7 @@ export const StreamerComparison: React.FC = () => {
                 <span className="text-white">
                   {streamer.twitch ? (
                     <span className="flex items-center gap-1">
-                      <FaTwitch className="text-purple-400" />
+                      <FaTwitch className="text-purple-400" aria-hidden="true" />
                       Yes
                     </span>
                   ) : (
@@ -69,7 +70,7 @@ export const StreamerComparison: React.FC = () => {
                 <span className="text-white">
                   {streamer.youtube ? (
                     <span className="flex items-center gap-1">
-                      <FaYoutube className="text-red-400" />
+                      <FaYoutube className="text-red-400" aria-hidden="true" />
                       Yes
                     </span>
                   ) : (
@@ -89,7 +90,7 @@ export const StreamerComparison: React.FC = () => {
       </div>
 
       {selectedStreamers.length === 1 && (
-        <p className="text-gray-400 text-sm text-center mt-4">
+        <p className="text-gray-400 text-sm text-center mt-4" role="status">
           Select another streamer to compare
         </p>
       )}
