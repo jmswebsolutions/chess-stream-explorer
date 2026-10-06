@@ -41,7 +41,15 @@ export const DraggableStreamerCard: React.FC<DraggableStreamerCardProps> = ({
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <div 
+      ref={setNodeRef} 
+      style={style} 
+      {...attributes} 
+      {...listeners}
+      role="listitem"
+      aria-label={`${streamer.username} - Drag to reorder`}
+      aria-roledescription="Draggable item"
+    >
       <StreamerCard
         streamer={streamer}
         onToggleFavorite={onToggleFavorite}
