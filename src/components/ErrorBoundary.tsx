@@ -31,16 +31,16 @@ export class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4" role="alert" aria-live="assertive">
           <div className="bg-gray-800 rounded-lg p-8 max-w-md w-full shadow-2xl">
             <div className="text-center">
-              <div className="text-6xl mb-4">⚠️</div>
+              <div className="text-6xl mb-4" role="img" aria-label="Warning icon">⚠️</div>
               <h1 className="text-2xl font-bold text-white mb-2">Something went wrong</h1>
               <p className="text-gray-400 mb-6">
                 An unexpected error occurred. Please try refreshing the page.
               </p>
               {this.state.error && (
-                <div className="bg-gray-900 rounded p-4 mb-6 text-left">
+                <div className="bg-gray-900 rounded p-4 mb-6 text-left" role="region" aria-label="Error details">
                   <p className="text-red-400 text-sm font-mono break-words">
                     {this.state.error.message}
                   </p>
@@ -49,6 +49,7 @@ export class ErrorBoundary extends Component<Props, State> {
               <button
                 onClick={this.handleReset}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200"
+                aria-label="Refresh page to try again"
               >
                 Refresh Page
               </button>
