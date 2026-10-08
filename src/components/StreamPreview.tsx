@@ -52,10 +52,11 @@ export const StreamPreview: React.FC<StreamPreviewProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4" role="dialog" aria-modal="true" aria-label={`${username}'s stream preview`}>
       <div 
         ref={containerRef}
         className="bg-gray-800 rounded-lg w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-2xl flex flex-col"
+        role="document"
       >
         <div className="flex items-center justify-between p-4 border-b border-gray-700">
           <h2 className="text-white font-semibold text-lg">
@@ -67,14 +68,14 @@ export const StreamPreview: React.FC<StreamPreviewProps> = ({
               className="text-gray-400 hover:text-white transition-colors p-2"
               aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
             >
-              {isFullscreen ? <FaCompress className="text-xl" /> : <FaExpand className="text-xl" />}
+              {isFullscreen ? <FaCompress className="text-xl" aria-hidden="true" /> : <FaExpand className="text-xl" aria-hidden="true" />}
             </button>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-white transition-colors p-2"
               aria-label="Close preview"
             >
-              <FaTimes className="text-xl" />
+              <FaTimes className="text-xl" aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -85,6 +86,7 @@ export const StreamPreview: React.FC<StreamPreviewProps> = ({
             allowFullScreen
             allow="autoplay; encrypted-media"
             title={`${username}'s stream`}
+            aria-label={`${username}'s live stream from ${platform}`}
           />
         </div>
       </div>
