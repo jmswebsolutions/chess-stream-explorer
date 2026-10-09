@@ -52,26 +52,26 @@ export const StreamerProfile = ({ username, isOpen, onClose }: StreamerProfilePr
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-      <div className="bg-gray-800 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 shadow-2xl">
+    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4" role="dialog" aria-modal="true" aria-label={`${username}'s profile`}>
+      <div className="bg-gray-800 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 shadow-2xl" role="document">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-white font-semibold text-2xl">{t('profile.title')}</h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-white transition-colors p-2"
-            aria-label="Close"
+            aria-label="Close profile"
           >
-            <FaTimes />
+            <FaTimes aria-hidden="true" />
           </button>
         </div>
 
         {loading ? (
-          <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+          <div className="text-center py-12" role="status" aria-live="polite">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto" aria-hidden="true"></div>
             <p className="text-gray-400 mt-4">{t('profile.loading')}</p>
           </div>
         ) : error ? (
-          <div className="text-center py-12">
+          <div className="text-center py-12" role="alert">
             <p className="text-red-400">{error}</p>
           </div>
         ) : profile && stats ? (
@@ -80,7 +80,7 @@ export const StreamerProfile = ({ username, isOpen, onClose }: StreamerProfilePr
             <div className="flex items-start space-x-4">
               <img
                 src={profile.avatar}
-                alt={profile.username}
+                alt={`${profile.username} avatar`}
                 className="w-24 h-24 rounded-full object-cover border-4 border-gray-600"
               />
               <div className="flex-1">
@@ -89,12 +89,12 @@ export const StreamerProfile = ({ username, isOpen, onClose }: StreamerProfilePr
                   <p className="text-gray-400">{profile.name}</p>
                 )}
                 <div className="flex items-center gap-2 mt-2 text-gray-300 text-sm">
-                  <FaFlag />
+                  <FaFlag aria-hidden="true" />
                   <span>{getCountryFlag(profile.country)}</span>
                 </div>
                 {profile.location && (
                   <div className="flex items-center gap-2 mt-1 text-gray-300 text-sm">
-                    <FaUser />
+                    <FaUser aria-hidden="true" />
                     <span>{profile.location}</span>
                   </div>
                 )}
@@ -102,25 +102,25 @@ export const StreamerProfile = ({ username, isOpen, onClose }: StreamerProfilePr
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4" role="group" aria-label="Player statistics">
               <div className="bg-gray-700 rounded-lg p-4 text-center">
-                <FaUsers className="text-blue-400 text-2xl mx-auto mb-2" />
+                <FaUsers className="text-blue-400 text-2xl mx-auto mb-2" aria-hidden="true" />
                 <p className="text-white font-bold">{profile.followers.toLocaleString()}</p>
                 <p className="text-gray-400 text-sm">{t('profile.followers')}</p>
               </div>
               <div className="bg-gray-700 rounded-lg p-4 text-center">
-                <FaUsers className="text-green-400 text-2xl mx-auto mb-2" />
+                <FaUsers className="text-green-400 text-2xl mx-auto mb-2" aria-hidden="true" />
                 <p className="text-white font-bold">{profile.following.toLocaleString()}</p>
                 <p className="text-gray-400 text-sm">{t('profile.following')}</p>
               </div>
               <div className="bg-gray-700 rounded-lg p-4 text-center">
-                <FaCalendar className="text-purple-400 text-2xl mx-auto mb-2" />
+                <FaCalendar className="text-purple-400 text-2xl mx-auto mb-2" aria-hidden="true" />
                 <p className="text-white font-bold">{formatDate(profile.joined)}</p>
                 <p className="text-gray-400 text-sm">{t('profile.joined')}</p>
               </div>
               {profile.fide_rating && (
                 <div className="bg-gray-700 rounded-lg p-4 text-center">
-                  <FaTrophy className="text-yellow-400 text-2xl mx-auto mb-2" />
+                  <FaTrophy className="text-yellow-400 text-2xl mx-auto mb-2" aria-hidden="true" />
                   <p className="text-white font-bold">{profile.fide_rating}</p>
                   <p className="text-gray-400 text-sm">{t('profile.fideRating')}</p>
                 </div>
@@ -130,12 +130,12 @@ export const StreamerProfile = ({ username, isOpen, onClose }: StreamerProfilePr
             {/* Game Stats */}
             <div className="space-y-4">
               <h4 className="text-white font-semibold text-lg flex items-center gap-2">
-                <FaChess />
+                <FaChess aria-hidden="true" />
                 {t('profile.gameStatistics')}
               </h4>
               
               {stats.chess_blitz && (
-                <div className="bg-gray-700 rounded-lg p-4">
+                <div className="bg-gray-700 rounded-lg p-4" role="region" aria-label="Blitz statistics">
                   <h5 className="text-white font-semibold mb-3">{t('profile.blitz')}</h5>
                   <div className="grid grid-cols-3 gap-4 text-sm">
                     <div>
@@ -157,7 +157,7 @@ export const StreamerProfile = ({ username, isOpen, onClose }: StreamerProfilePr
               )}
 
               {stats.chess_rapid && (
-                <div className="bg-gray-700 rounded-lg p-4">
+                <div className="bg-gray-700 rounded-lg p-4" role="region" aria-label="Rapid statistics">
                   <h5 className="text-white font-semibold mb-3">{t('profile.rapid')}</h5>
                   <div className="grid grid-cols-3 gap-4 text-sm">
                     <div>
@@ -179,7 +179,7 @@ export const StreamerProfile = ({ username, isOpen, onClose }: StreamerProfilePr
               )}
 
               {stats.chess_daily && (
-                <div className="bg-gray-700 rounded-lg p-4">
+                <div className="bg-gray-700 rounded-lg p-4" role="region" aria-label="Daily statistics">
                   <h5 className="text-white font-semibold mb-3">{t('profile.daily')}</h5>
                   <div className="grid grid-cols-3 gap-4 text-sm">
                     <div>
@@ -201,7 +201,7 @@ export const StreamerProfile = ({ username, isOpen, onClose }: StreamerProfilePr
               )}
 
               {stats.tactics && (
-                <div className="bg-gray-700 rounded-lg p-4">
+                <div className="bg-gray-700 rounded-lg p-4" role="region" aria-label="Tactics statistics">
                   <h5 className="text-white font-semibold mb-3">{t('profile.tactics')}</h5>
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
@@ -219,7 +219,7 @@ export const StreamerProfile = ({ username, isOpen, onClose }: StreamerProfilePr
 
             {/* League */}
             {profile.league && (
-              <div className="bg-gray-700 rounded-lg p-4">
+              <div className="bg-gray-700 rounded-lg p-4" role="region" aria-label="League information">
                 <h5 className="text-white font-semibold mb-2">{t('profile.league')}</h5>
                 <p className="text-gray-300">{profile.league}</p>
               </div>
