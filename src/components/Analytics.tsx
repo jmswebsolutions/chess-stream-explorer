@@ -57,12 +57,12 @@ export const Analytics = ({ streamers }: AnalyticsProps) => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" role="region" aria-label="Analytics dashboard">
       <h2 className="text-white font-semibold text-xl">{t('analytics.title')}</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
         {/* Platform Distribution */}
-        <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
+        <div className="bg-gray-800 rounded-lg p-6 shadow-lg" role="region" aria-label="Platform distribution chart">
           <h3 className="text-white font-semibold mb-4">{t('analytics.platformDistribution')}</h3>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart>
@@ -87,7 +87,7 @@ export const Analytics = ({ streamers }: AnalyticsProps) => {
         </div>
 
         {/* Status Distribution */}
-        <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
+        <div className="bg-gray-800 rounded-lg p-6 shadow-lg" role="region" aria-label="Live status distribution chart">
           <h3 className="text-white font-semibold mb-4">{t('analytics.liveStatus')}</h3>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart>
@@ -112,7 +112,7 @@ export const Analytics = ({ streamers }: AnalyticsProps) => {
         </div>
 
         {/* Community vs Regular */}
-        <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
+        <div className="bg-gray-800 rounded-lg p-6 shadow-lg" role="region" aria-label="Streamer type distribution chart">
           <h3 className="text-white font-semibold mb-4">{t('analytics.streamerType')}</h3>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart>
@@ -137,7 +137,7 @@ export const Analytics = ({ streamers }: AnalyticsProps) => {
         </div>
 
         {/* Platform Overlap */}
-        <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
+        <div className="bg-gray-800 rounded-lg p-6 shadow-lg" role="region" aria-label="Platform overlap bar chart">
           <h3 className="text-white font-semibold mb-4">{t('analytics.platformOverlap')}</h3>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={analyticsData.platformOverlap}>
@@ -152,21 +152,21 @@ export const Analytics = ({ streamers }: AnalyticsProps) => {
       </div>
 
       {/* Summary Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-gray-800 rounded-lg p-4 text-center">
-          <p className="text-3xl font-bold text-white">{streamers.length}</p>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4" role="group" aria-label="Summary statistics">
+        <div className="bg-gray-800 rounded-lg p-4 text-center" role="group" aria-label={`Total streamers: ${streamers.length}`}>
+          <p className="text-3xl font-bold text-white" aria-label={`${streamers.length} total streamers`}>{streamers.length}</p>
           <p className="text-gray-400 text-sm">{t('analytics.totalStreamers')}</p>
         </div>
-        <div className="bg-gray-800 rounded-lg p-4 text-center">
-          <p className="text-3xl font-bold text-green-400">{analyticsData.statusData[0].value}</p>
+        <div className="bg-gray-800 rounded-lg p-4 text-center" role="group" aria-label={`Currently live: ${analyticsData.statusData[0].value}`}>
+          <p className="text-3xl font-bold text-green-400" aria-label={`${analyticsData.statusData[0].value} currently live`}>{analyticsData.statusData[0].value}</p>
           <p className="text-gray-400 text-sm">{t('analytics.currentlyLive')}</p>
         </div>
-        <div className="bg-gray-800 rounded-lg p-4 text-center">
-          <p className="text-3xl font-bold text-purple-400">{analyticsData.platformData[0].value}</p>
+        <div className="bg-gray-800 rounded-lg p-4 text-center" role="group" aria-label={`On Twitch: ${analyticsData.platformData[0].value}`}>
+          <p className="text-3xl font-bold text-purple-400" aria-label={`${analyticsData.platformData[0].value} on Twitch`}>{analyticsData.platformData[0].value}</p>
           <p className="text-gray-400 text-sm">{t('analytics.onTwitch')}</p>
         </div>
-        <div className="bg-gray-800 rounded-lg p-4 text-center">
-          <p className="text-3xl font-bold text-red-400">{analyticsData.platformData[1].value}</p>
+        <div className="bg-gray-800 rounded-lg p-4 text-center" role="group" aria-label={`On YouTube: ${analyticsData.platformData[1].value}`}>
+          <p className="text-3xl font-bold text-red-400" aria-label={`${analyticsData.platformData[1].value} on YouTube`}>{analyticsData.platformData[1].value}</p>
           <p className="text-gray-400 text-sm">{t('analytics.onYouTube')}</p>
         </div>
       </div>
