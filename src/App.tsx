@@ -11,7 +11,11 @@ function App() {
       <QueryProvider>
         <ThemeProvider>
           <BrowserRouter basename="/chess-stream-explorer">
-            <a href="#main-content" className="skip-to-main">
+            <a 
+              href="#main-content" 
+              className="skip-to-main"
+              aria-label="Skip to main content"
+            >
               Skip to main content
             </a>
             <Routes>
