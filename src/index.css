@@ -74,10 +74,13 @@
   transition: top 0.3s;
   text-decoration: none;
   font-weight: bold;
+  border-radius: 0 0 4px 0;
 }
 
 .skip-to-main:focus {
   top: 0;
+  outline: 3px solid white;
+  outline-offset: 2px;
 }
 
 /* Improved focus styles for accessibility */
