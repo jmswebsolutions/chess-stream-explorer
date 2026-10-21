@@ -2,6 +2,14 @@ import axios from 'axios';
 
 const API_BASE_URL = 'https://api.chess.com/pub';
 
+const apiClient = axios.create({
+  baseURL: API_BASE_URL,
+  timeout: 10000, // 10 seconds timeout
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
 export interface Streamer {
   username: string;
   avatar: string;
@@ -99,8 +107,8 @@ interface StreamersResponse {
 export const chessApi = {
   async getStreamers(): Promise<Streamer[]> {
     try {
-      const response = await axios.get<StreamersResponse>(
-        `${API_BASE_URL}/streamers`
+      const response = await apiClient.get<StreamersResponse>(
+        '/streamers'
       );
       return response.data.streamers;
     } catch (error) {
@@ -111,8 +119,8 @@ export const chessApi = {
 
   async getPlayerProfile(username: string): Promise<PlayerProfile> {
     try {
-      const response = await axios.get<PlayerProfile>(
-        `${API_BASE_URL}/player/${username}`
+      const response = await apiClient.get<PlayerProfile>(
+        `/player/${username}`
       );
       return response.data;
     } catch (error) {
@@ -123,8 +131,8 @@ export const chessApi = {
 
   async getPlayerStats(username: string): Promise<PlayerStats> {
     try {
-      const response = await axios.get<PlayerStats>(
-        `${API_BASE_URL}/player/${username}/stats`
+      const response = await apiClient.get<PlayerStats>(
+        `/player/${username}/stats`
       );
       return response.data;
     } catch (error) {
