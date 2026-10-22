@@ -8,6 +8,9 @@ export const useStreamers = () => {
     queryKey: ['streamers'],
     queryFn: chessApi.getStreamers,
     refetchInterval: 60000, // Refresh every 60 seconds
+    staleTime: 30000, // Consider data fresh for 30 seconds
+    retry: 3, // Retry failed requests 3 times
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000), // Exponential backoff
   });
 
   const refresh = () => {
@@ -19,5 +22,6 @@ export const useStreamers = () => {
     loading: query.isLoading,
     error: query.error ? 'Failed to fetch streamers. Please try again later.' : null,
     refresh,
+    isRefetching: query.isRefetching,
   };
 };
