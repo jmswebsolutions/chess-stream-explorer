@@ -97,11 +97,15 @@ export const useHome = () => {
     }
 
     if (activeGroup) {
-      const groupAssignments = JSON.parse(localStorage.getItem('chess-stream-explorer-group-assignments') || '{}');
-      filtered = filtered.filter((streamer) => {
-        const groupId = groupAssignments[streamer.username];
-        return groupId === activeGroup;
-      });
+      try {
+        const groupAssignments = JSON.parse(localStorage.getItem('chess-stream-explorer-group-assignments') || '{}');
+        filtered = filtered.filter((streamer) => {
+          const groupId = groupAssignments[streamer.username];
+          return groupId === activeGroup;
+        });
+      } catch (error) {
+        console.error('Error parsing group assignments:', error);
+      }
     }
 
     if (showTwitchOnly && showYouTubeOnly) {
