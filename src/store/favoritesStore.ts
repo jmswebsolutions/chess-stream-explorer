@@ -51,17 +51,29 @@ export const useFavoritesStore = create<FavoritesState>((set) => ({
   removeFavorite: (username) => {
     set((state) => {
       const newFavorites = state.favorites.filter((f) => f !== username);
-      localStorage.setItem(FAVORITES_KEY, JSON.stringify(newFavorites));
+      try {
+        localStorage.setItem(FAVORITES_KEY, JSON.stringify(newFavorites));
+      } catch (error) {
+        console.error('Failed to save favorites:', error);
+      }
       
       // Also remove from group assignments
-      const groupAssignments = JSON.parse(localStorage.getItem(GROUP_ASSIGNMENTS_KEY) || '{}');
-      delete groupAssignments[username];
-      localStorage.setItem(GROUP_ASSIGNMENTS_KEY, JSON.stringify(groupAssignments));
+      try {
+        const groupAssignments = JSON.parse(localStorage.getItem(GROUP_ASSIGNMENTS_KEY) || '{}');
+        delete groupAssignments[username];
+        localStorage.setItem(GROUP_ASSIGNMENTS_KEY, JSON.stringify(groupAssignments));
+      } catch (error) {
+        console.error('Failed to update group assignments:', error);
+      }
       
       // Also remove note
       const newNotes = { ...state.favoriteNotes };
       delete newNotes[username];
-      localStorage.setItem(FAVORITE_NOTES_KEY, JSON.stringify(newNotes));
+      try {
+        localStorage.setItem(FAVORITE_NOTES_KEY, JSON.stringify(newNotes));
+      } catch (error) {
+        console.error('Failed to update favorite notes:', error);
+      }
       
       return { favorites: newFavorites, favoriteNotes: newNotes };
     });
@@ -90,23 +102,35 @@ export const useFavoritesStore = create<FavoritesState>((set) => ({
         color,
       };
       const newGroups = [...state.favoriteGroups, newGroup];
-      localStorage.setItem(FAVORITE_GROUPS_KEY, JSON.stringify(newGroups));
+      try {
+        localStorage.setItem(FAVORITE_GROUPS_KEY, JSON.stringify(newGroups));
+      } catch (error) {
+        console.error('Failed to save favorite groups:', error);
+      }
       return { favoriteGroups: newGroups };
     });
   },
   removeGroup: (groupId) => {
     set((state) => {
       const newGroups = state.favoriteGroups.filter((g) => g.id !== groupId);
-      localStorage.setItem(FAVORITE_GROUPS_KEY, JSON.stringify(newGroups));
+      try {
+        localStorage.setItem(FAVORITE_GROUPS_KEY, JSON.stringify(newGroups));
+      } catch (error) {
+        console.error('Failed to save favorite groups:', error);
+      }
       
       // Clear group assignments for removed group
-      const groupAssignments = JSON.parse(localStorage.getItem(GROUP_ASSIGNMENTS_KEY) || '{}');
-      Object.keys(groupAssignments).forEach((username) => {
-        if (groupAssignments[username] === groupId) {
-          delete groupAssignments[username];
-        }
-      });
-      localStorage.setItem(GROUP_ASSIGNMENTS_KEY, JSON.stringify(groupAssignments));
+      try {
+        const groupAssignments = JSON.parse(localStorage.getItem(GROUP_ASSIGNMENTS_KEY) || '{}');
+        Object.keys(groupAssignments).forEach((username) => {
+          if (groupAssignments[username] === groupId) {
+            delete groupAssignments[username];
+          }
+        });
+        localStorage.setItem(GROUP_ASSIGNMENTS_KEY, JSON.stringify(groupAssignments));
+      } catch (error) {
+        console.error('Failed to update group assignments:', error);
+      }
       
       if (state.activeGroup === groupId) {
         return { favoriteGroups: newGroups, activeGroup: null };
@@ -117,7 +141,11 @@ export const useFavoritesStore = create<FavoritesState>((set) => ({
   setNote: (username, note) => {
     set((state) => {
       const newNotes = { ...state.favoriteNotes, [username]: note };
-      localStorage.setItem(FAVORITE_NOTES_KEY, JSON.stringify(newNotes));
+      try {
+        localStorage.setItem(FAVORITE_NOTES_KEY, JSON.stringify(newNotes));
+      } catch (error) {
+        console.error('Failed to save favorite notes:', error);
+      }
       return { favoriteNotes: newNotes };
     });
   },
@@ -128,7 +156,11 @@ export const useFavoritesStore = create<FavoritesState>((set) => ({
     set((state) => {
       const newNotes = { ...state.favoriteNotes };
       delete newNotes[username];
-      localStorage.setItem(FAVORITE_NOTES_KEY, JSON.stringify(newNotes));
+      try {
+        localStorage.setItem(FAVORITE_NOTES_KEY, JSON.stringify(newNotes));
+      } catch (error) {
+        console.error('Failed to save favorite notes:', error);
+      }
       return { favoriteNotes: newNotes };
     });
   },
