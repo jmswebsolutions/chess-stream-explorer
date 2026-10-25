@@ -34,7 +34,11 @@ export const useTagsStore = create<TagsState>((set, get) => ({
         color,
       };
       const newTags = [...state.tags, newTag];
-      localStorage.setItem(TAGS_KEY, JSON.stringify(newTags));
+      try {
+        localStorage.setItem(TAGS_KEY, JSON.stringify(newTags));
+      } catch (error) {
+        console.error('Failed to save tags:', error);
+      }
       return { tags: newTags };
     });
   },
@@ -42,14 +46,22 @@ export const useTagsStore = create<TagsState>((set, get) => ({
   removeTag: (tagId) => {
     set((state) => {
       const newTags = state.tags.filter((t) => t.id !== tagId);
-      localStorage.setItem(TAGS_KEY, JSON.stringify(newTags));
+      try {
+        localStorage.setItem(TAGS_KEY, JSON.stringify(newTags));
+      } catch (error) {
+        console.error('Failed to save tags:', error);
+      }
       
       // Remove tag from all streamers
       const newStreamerTags = { ...state.streamerTags };
       Object.keys(newStreamerTags).forEach((username) => {
         newStreamerTags[username] = newStreamerTags[username].filter((id) => id !== tagId);
       });
-      localStorage.setItem(STREAMER_TAGS_KEY, JSON.stringify(newStreamerTags));
+      try {
+        localStorage.setItem(STREAMER_TAGS_KEY, JSON.stringify(newStreamerTags));
+      } catch (error) {
+        console.error('Failed to save streamer tags:', error);
+      }
       
       return { tags: newTags, streamerTags: newStreamerTags };
     });
@@ -65,7 +77,11 @@ export const useTagsStore = create<TagsState>((set, get) => ({
         ...state.streamerTags,
         [username]: [...currentTags, tagId],
       };
-      localStorage.setItem(STREAMER_TAGS_KEY, JSON.stringify(newStreamerTags));
+      try {
+        localStorage.setItem(STREAMER_TAGS_KEY, JSON.stringify(newStreamerTags));
+      } catch (error) {
+        console.error('Failed to save streamer tags:', error);
+      }
       return { streamerTags: newStreamerTags };
     });
   },
@@ -77,7 +93,11 @@ export const useTagsStore = create<TagsState>((set, get) => ({
         ...state.streamerTags,
         [username]: currentTags.filter((id) => id !== tagId),
       };
-      localStorage.setItem(STREAMER_TAGS_KEY, JSON.stringify(newStreamerTags));
+      try {
+        localStorage.setItem(STREAMER_TAGS_KEY, JSON.stringify(newStreamerTags));
+      } catch (error) {
+        console.error('Failed to save streamer tags:', error);
+      }
       return { streamerTags: newStreamerTags };
     });
   },
@@ -98,15 +118,23 @@ export const useTagsStore = create<TagsState>((set, get) => ({
       const existingNames = new Set(state.tags.map((t) => t.name));
       const newTags = importedTags.filter((t) => !existingNames.has(t.name));
       const mergedTags = [...state.tags, ...newTags];
-      localStorage.setItem(TAGS_KEY, JSON.stringify(mergedTags));
+      try {
+        localStorage.setItem(TAGS_KEY, JSON.stringify(mergedTags));
+      } catch (error) {
+        console.error('Failed to save tags:', error);
+      }
       return { tags: mergedTags };
     });
   },
 
   clearTags: () => {
     set(() => {
-      localStorage.setItem(TAGS_KEY, JSON.stringify([]));
-      localStorage.setItem(STREAMER_TAGS_KEY, JSON.stringify({}));
+      try {
+        localStorage.setItem(TAGS_KEY, JSON.stringify([]));
+        localStorage.setItem(STREAMER_TAGS_KEY, JSON.stringify({}));
+      } catch (error) {
+        console.error('Failed to clear tags:', error);
+      }
       return { tags: [], streamerTags: {} };
     });
   },
