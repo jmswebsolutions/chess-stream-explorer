@@ -37,7 +37,11 @@ export const useViewingStatsStore = create<ViewingStatsState>((set, get) => ({
         [username]: newStats,
       },
     });
-    localStorage.setItem(VIEWING_STATS_KEY, JSON.stringify(get().viewingStats));
+    try {
+      localStorage.setItem(VIEWING_STATS_KEY, JSON.stringify(get().viewingStats));
+    } catch (error) {
+      console.error('Failed to save viewing stats:', error);
+    }
   },
   recordView: (username) => {
     const { viewingStats } = get();
@@ -53,7 +57,11 @@ export const useViewingStatsStore = create<ViewingStatsState>((set, get) => ({
         [username]: newStats,
       },
     });
-    localStorage.setItem(VIEWING_STATS_KEY, JSON.stringify(get().viewingStats));
+    try {
+      localStorage.setItem(VIEWING_STATS_KEY, JSON.stringify(get().viewingStats));
+    } catch (error) {
+      console.error('Failed to save viewing stats:', error);
+    }
   },
   getStats: () => {
     const { viewingStats } = get();
@@ -73,7 +81,11 @@ export const useViewingStatsStore = create<ViewingStatsState>((set, get) => ({
   },
   clearStats: () => {
     set({ viewingStats: {} });
-    localStorage.removeItem(VIEWING_STATS_KEY);
+    try {
+      localStorage.removeItem(VIEWING_STATS_KEY);
+    } catch (error) {
+      console.error('Failed to clear viewing stats:', error);
+    }
   },
 }));
 
