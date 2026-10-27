@@ -16,13 +16,21 @@ export const useRecentlyViewedStore = create<RecentlyViewedState>((set) => ({
     set((state) => {
       const filtered = state.recentlyViewed.filter((s) => s.username !== streamer.username);
       const updated = [streamer, ...filtered].slice(0, MAX_RECENT);
-      localStorage.setItem(RECENTLY_VIEWED_KEY, JSON.stringify(updated));
+      try {
+        localStorage.setItem(RECENTLY_VIEWED_KEY, JSON.stringify(updated));
+      } catch (error) {
+        console.error('Failed to save recently viewed:', error);
+      }
       return { recentlyViewed: updated };
     });
   },
   clearRecentlyViewed: () => {
     set({ recentlyViewed: [] });
-    localStorage.removeItem(RECENTLY_VIEWED_KEY);
+    try {
+      localStorage.removeItem(RECENTLY_VIEWED_KEY);
+    } catch (error) {
+      console.error('Failed to clear recently viewed:', error);
+    }
   },
 }));
 
