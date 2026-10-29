@@ -25,7 +25,11 @@ export const useFavorites = () => {
       } else {
         newFavorites.add(username);
       }
-      localStorage.setItem(FAVORITES_KEY, JSON.stringify([...newFavorites]));
+      try {
+        localStorage.setItem(FAVORITES_KEY, JSON.stringify([...newFavorites]));
+      } catch (error) {
+        console.error('Error saving favorites:', error);
+      }
       return newFavorites;
     });
   };
