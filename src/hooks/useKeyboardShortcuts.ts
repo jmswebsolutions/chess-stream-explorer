@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 
 interface KeyboardShortcut {
   key: string;
@@ -11,26 +11,26 @@ interface KeyboardShortcut {
 }
 
 export const useKeyboardShortcuts = (shortcuts: KeyboardShortcut[]) => {
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      for (const shortcut of shortcuts) {
-        const keyMatch = event.key.toLowerCase() === shortcut.key.toLowerCase();
-        const ctrlMatch = shortcut.ctrlKey ? event.ctrlKey || event.metaKey : !event.ctrlKey && !event.metaKey;
-        const shiftMatch = shortcut.shiftKey ? event.shiftKey : !event.shiftKey;
-        const altMatch = shortcut.altKey ? event.altKey : !event.altKey;
-        const metaMatch = shortcut.metaKey ? event.metaKey : !event.metaKey;
+  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+    for (const shortcut of shortcuts) {
+      const keyMatch = event.key.toLowerCase() === shortcut.key.toLowerCase();
+      const ctrlMatch = shortcut.ctrlKey ? event.ctrlKey || event.metaKey : !event.ctrlKey && !event.metaKey;
+      const shiftMatch = shortcut.shiftKey ? event.shiftKey : !event.shiftKey;
+      const altMatch = shortcut.altKey ? event.altKey : !event.altKey;
+      const metaMatch = shortcut.metaKey ? event.metaKey : !event.metaKey;
 
-        if (keyMatch && ctrlMatch && shiftMatch && altMatch && metaMatch) {
-          event.preventDefault();
-          shortcut.action();
-          break;
-        }
+      if (keyMatch && ctrlMatch && shiftMatch && altMatch && metaMatch) {
+        event.preventDefault();
+        shortcut.action();
+        break;
       }
-    };
+    }
+  }, [shortcuts]);
 
+  useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [shortcuts]);
+  }, [handleKeyDown]);
 };
 
 export const getShortcutDescription = (shortcut: KeyboardShortcut): string => {
