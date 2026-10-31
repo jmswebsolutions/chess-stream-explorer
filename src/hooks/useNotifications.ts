@@ -13,11 +13,15 @@ export const useNotifications = () => {
   useEffect(() => {
     if ('Notification' in window) {
       setPermission(Notification.permission);
-      
+
       // Check if notifications were previously enabled
-      const savedEnabled = localStorage.getItem('notifications-enabled');
-      if (savedEnabled === 'true') {
-        setEnabled(true);
+      try {
+        const savedEnabled = localStorage.getItem('notifications-enabled');
+        if (savedEnabled === 'true') {
+          setEnabled(true);
+        }
+      } catch (error) {
+        console.error('Error loading notification settings:', error);
       }
     }
   }, []);
@@ -30,7 +34,11 @@ export const useNotifications = () => {
 
     if (Notification.permission === 'granted') {
       setEnabled(true);
-      localStorage.setItem('notifications-enabled', 'true');
+      try {
+        localStorage.setItem('notifications-enabled', 'true');
+      } catch (error) {
+        console.error('Error saving notification settings:', error);
+      }
       return true;
     }
 
@@ -40,7 +48,11 @@ export const useNotifications = () => {
       
       if (result === 'granted') {
         setEnabled(true);
-        localStorage.setItem('notifications-enabled', 'true');
+        try {
+          localStorage.setItem('notifications-enabled', 'true');
+        } catch (error) {
+          console.error('Error saving notification settings:', error);
+        }
         return true;
       }
     }
@@ -62,7 +74,11 @@ export const useNotifications = () => {
   const toggleNotifications = () => {
     if (enabled) {
       setEnabled(false);
-      localStorage.setItem('notifications-enabled', 'false');
+      try {
+        localStorage.setItem('notifications-enabled', 'false');
+      } catch (error) {
+        console.error('Error saving notification settings:', error);
+      }
     } else {
       requestPermission();
     }
