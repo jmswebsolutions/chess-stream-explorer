@@ -38,7 +38,7 @@ export const Admin = () => {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" role="region" aria-label="Quick statistics">
           <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700">
             <div className="text-gray-400 text-sm mb-1">Total Streamers</div>
             <div className="text-3xl font-bold text-white">{stats.total}</div>
@@ -60,7 +60,7 @@ export const Admin = () => {
 
         {/* Platform Distribution */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700">
+          <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700" role="region" aria-label="Platform distribution">
             <h2 className="text-xl font-semibold text-white mb-4">Platform Distribution</h2>
             <div className="space-y-4">
               <div>
@@ -68,8 +68,8 @@ export const Admin = () => {
                   <span className="text-gray-300">Twitch</span>
                   <span className="text-purple-400">{platformStats.twitch}</span>
                 </div>
-                <div className="w-full bg-gray-700 rounded-full h-2">
-                  <div 
+                <div className="w-full bg-gray-700 rounded-full h-2" role="progressbar" aria-valuenow={platformStats.twitch} aria-valuemin={0} aria-valuemax={stats.total} aria-label="Twitch streamers">
+                  <div
                     className="bg-purple-500 h-2 rounded-full transition-all"
                     style={{ width: `${(platformStats.twitch / stats.total) * 100}%` }}
                   />
@@ -80,8 +80,8 @@ export const Admin = () => {
                   <span className="text-gray-300">YouTube</span>
                   <span className="text-red-400">{platformStats.youtube}</span>
                 </div>
-                <div className="w-full bg-gray-700 rounded-full h-2">
-                  <div 
+                <div className="w-full bg-gray-700 rounded-full h-2" role="progressbar" aria-valuenow={platformStats.youtube} aria-valuemin={0} aria-valuemax={stats.total} aria-label="YouTube streamers">
+                  <div
                     className="bg-red-500 h-2 rounded-full transition-all"
                     style={{ width: `${(platformStats.youtube / stats.total) * 100}%` }}
                   />
@@ -92,8 +92,8 @@ export const Admin = () => {
                   <span className="text-gray-300">Both Platforms</span>
                   <span className="text-blue-400">{platformStats.both}</span>
                 </div>
-                <div className="w-full bg-gray-700 rounded-full h-2">
-                  <div 
+                <div className="w-full bg-gray-700 rounded-full h-2" role="progressbar" aria-valuenow={platformStats.both} aria-valuemin={0} aria-valuemax={stats.total} aria-label="Streamers on both platforms">
+                  <div
                     className="bg-blue-500 h-2 rounded-full transition-all"
                     style={{ width: `${(platformStats.both / stats.total) * 100}%` }}
                   />
@@ -102,7 +102,7 @@ export const Admin = () => {
             </div>
           </div>
 
-          <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700">
+          <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700" role="region" aria-label="Status overview">
             <h2 className="text-xl font-semibold text-white mb-4">Status Overview</h2>
             <div className="space-y-4">
               <div>
@@ -110,8 +110,8 @@ export const Admin = () => {
                   <span className="text-gray-300">Live</span>
                   <span className="text-green-400">{stats.online}</span>
                 </div>
-                <div className="w-full bg-gray-700 rounded-full h-2">
-                  <div 
+                <div className="w-full bg-gray-700 rounded-full h-2" role="progressbar" aria-valuenow={stats.online} aria-valuemin={0} aria-valuemax={stats.total} aria-label="Live streamers">
+                  <div
                     className="bg-green-500 h-2 rounded-full transition-all"
                     style={{ width: `${(stats.online / stats.total) * 100}%` }}
                   />
@@ -122,8 +122,8 @@ export const Admin = () => {
                   <span className="text-gray-300">Offline</span>
                   <span className="text-gray-400">{stats.offline}</span>
                 </div>
-                <div className="w-full bg-gray-700 rounded-full h-2">
-                  <div 
+                <div className="w-full bg-gray-700 rounded-full h-2" role="progressbar" aria-valuenow={stats.offline} aria-valuemin={0} aria-valuemax={stats.total} aria-label="Offline streamers">
+                  <div
                     className="bg-gray-500 h-2 rounded-full transition-all"
                     style={{ width: `${(stats.offline / stats.total) * 100}%` }}
                   />
