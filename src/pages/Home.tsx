@@ -601,28 +601,28 @@ export const Home = () => {
       </Suspense>
 
       {showShortcutsHelp && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-800 rounded-lg w-full max-w-md p-6 shadow-2xl">
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4" role="dialog" aria-modal="true" aria-labelledby="shortcuts-title">
+          <div className="bg-gray-800 rounded-lg w-full max-w-md p-6 shadow-2xl" role="document">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-white font-semibold text-lg">Keyboard Shortcuts</h2>
+              <h2 id="shortcuts-title" className="text-white font-semibold text-lg">Keyboard Shortcuts</h2>
               <button
                 onClick={() => setShowShortcutsHelp(false)}
                 className="text-gray-400 hover:text-white transition-colors p-2"
-                aria-label="Close"
+                aria-label="Close keyboard shortcuts help"
               >
                 ✕
               </button>
             </div>
-            <div className="space-y-3">
-              <div className="flex items-center justify-between text-gray-300">
+            <div className="space-y-3" role="list" aria-label="Keyboard shortcuts list">
+              <div className="flex items-center justify-between text-gray-300" role="listitem">
                 <span>Refresh streamers</span>
                 <kbd className="px-2 py-1 bg-gray-700 rounded text-sm">R</kbd>
               </div>
-              <div className="flex items-center justify-between text-gray-300">
+              <div className="flex items-center justify-between text-gray-300" role="listitem">
                 <span>Clear filters</span>
                 <kbd className="px-2 py-1 bg-gray-700 rounded text-sm">Esc</kbd>
               </div>
-              <div className="flex items-center justify-between text-gray-300">
+              <div className="flex items-center justify-between text-gray-300" role="listitem">
                 <span>Show shortcuts</span>
                 <kbd className="px-2 py-1 bg-gray-700 rounded text-sm">?</kbd>
               </div>
