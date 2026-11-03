@@ -67,8 +67,22 @@ export const exportSettings = () => {
     viewingStats: viewingStatsStore.viewingStats,
     recentlyViewed: recentlyViewedStore.recentlyViewed,
     themeSettings: {
-      theme: localStorage.getItem('chess-stream-explorer-theme') || 'dark',
-      colorTheme: localStorage.getItem('chess-stream-explorer-color-theme') || 'blue',
+      theme: (() => {
+        try {
+          return localStorage.getItem('chess-stream-explorer-theme') || 'dark';
+        } catch (error) {
+          console.error('Error reading theme setting:', error);
+          return 'dark';
+        }
+      })(),
+      colorTheme: (() => {
+        try {
+          return localStorage.getItem('chess-stream-explorer-color-theme') || 'blue';
+        } catch (error) {
+          console.error('Error reading color theme setting:', error);
+          return 'blue';
+        }
+      })(),
     },
   };
 
@@ -118,21 +132,37 @@ export const importSettings = (file: File): Promise<boolean> => {
 
         // Apply favorites settings
         const favoritesStore = useFavoritesStore.getState();
-        localStorage.setItem('chess-stream-explorer-favorites', JSON.stringify(settings.favoritesSettings.favorites));
-        localStorage.setItem('chess-stream-explorer-favorite-groups', JSON.stringify(settings.favoritesSettings.favoriteGroups));
-        localStorage.setItem('chess-stream-explorer-favorite-notes', JSON.stringify(settings.favoritesSettings.favoriteNotes));
+        try {
+          localStorage.setItem('chess-stream-explorer-favorites', JSON.stringify(settings.favoritesSettings.favorites));
+          localStorage.setItem('chess-stream-explorer-favorite-groups', JSON.stringify(settings.favoritesSettings.favoriteGroups));
+          localStorage.setItem('chess-stream-explorer-favorite-notes', JSON.stringify(settings.favoritesSettings.favoriteNotes));
+        } catch (error) {
+          console.error('Error saving favorites settings:', error);
+        }
         favoritesStore.loadFavorites();
 
         // Apply viewing stats
-        localStorage.setItem('chess-stream-explorer-viewing-stats', JSON.stringify(settings.viewingStats));
+        try {
+          localStorage.setItem('chess-stream-explorer-viewing-stats', JSON.stringify(settings.viewingStats));
+        } catch (error) {
+          console.error('Error saving viewing stats:', error);
+        }
 
         // Apply recently viewed
-        localStorage.setItem('chess-stream-explorer-recently-viewed', JSON.stringify(settings.recentlyViewed));
+        try {
+          localStorage.setItem('chess-stream-explorer-recently-viewed', JSON.stringify(settings.recentlyViewed));
+        } catch (error) {
+          console.error('Error saving recently viewed:', error);
+        }
 
         // Apply theme settings
         if (settings.themeSettings) {
-          localStorage.setItem('chess-stream-explorer-theme', settings.themeSettings.theme);
-          localStorage.setItem('chess-stream-explorer-color-theme', settings.themeSettings.colorTheme);
+          try {
+            localStorage.setItem('chess-stream-explorer-theme', settings.themeSettings.theme);
+            localStorage.setItem('chess-stream-explorer-color-theme', settings.themeSettings.colorTheme);
+          } catch (error) {
+            console.error('Error saving theme settings:', error);
+          }
         }
 
         resolve(true);
@@ -167,9 +197,13 @@ export const resetSettings = () => {
 
   // Reset favorites
   const favoritesStore = useFavoritesStore.getState();
-  localStorage.removeItem('chess-stream-explorer-favorites');
-  localStorage.removeItem('chess-stream-explorer-favorite-groups');
-  localStorage.removeItem('chess-stream-explorer-favorite-notes');
+  try {
+    localStorage.removeItem('chess-stream-explorer-favorites');
+    localStorage.removeItem('chess-stream-explorer-favorite-groups');
+    localStorage.removeItem('chess-stream-explorer-favorite-notes');
+  } catch (error) {
+    console.error('Error removing favorites settings:', error);
+  }
   favoritesStore.loadFavorites();
 
   // Reset viewing stats
@@ -177,7 +211,11 @@ export const resetSettings = () => {
   viewingStatsStore.clearStats();
 
   // Reset recently viewed
-  localStorage.removeItem('chess-stream-explorer-recently-viewed');
+  try {
+    localStorage.removeItem('chess-stream-explorer-recently-viewed');
+  } catch (error) {
+    console.error('Error removing recently viewed:', error);
+  }
   const recentlyViewedStore = useRecentlyViewedStore.getState();
   recentlyViewedStore.clearRecentlyViewed();
 
@@ -186,6 +224,10 @@ export const resetSettings = () => {
   tagsStore.clearTags();
 
   // Reset theme settings
-  localStorage.setItem('chess-stream-explorer-theme', 'dark');
-  localStorage.setItem('chess-stream-explorer-color-theme', 'blue');
+  try {
+    localStorage.setItem('chess-stream-explorer-theme', 'dark');
+    localStorage.setItem('chess-stream-explorer-color-theme', 'blue');
+  } catch (error) {
+    console.error('Error resetting theme settings:', error);
+  }
 };
