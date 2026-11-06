@@ -14,7 +14,14 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: localStorage.getItem('language') || 'en',
+    lng: (() => {
+      try {
+        return localStorage.getItem('language') || 'en';
+      } catch (error) {
+        console.error('Error loading language preference:', error);
+        return 'en';
+      }
+    })(),
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false,
@@ -22,7 +29,11 @@ i18n
   });
 
 i18n.on('languageChanged', (lng) => {
-  localStorage.setItem('language', lng);
+  try {
+    localStorage.setItem('language', lng);
+  } catch (error) {
+    console.error('Error saving language preference:', error);
+  }
 });
 
 export default i18n;
