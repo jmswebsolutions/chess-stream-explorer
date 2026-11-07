@@ -452,7 +452,7 @@ export const Home = () => {
         </div>
       </header>
 
-      <main id="main-content" role="main" tabIndex={-1}>
+      <main role="main" tabIndex={-1}>
         <div className="max-w-7xl mx-auto px-4 py-8">
           <Stats {...stats} />
 
