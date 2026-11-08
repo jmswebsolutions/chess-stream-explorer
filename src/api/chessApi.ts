@@ -10,6 +10,42 @@ const apiClient = axios.create({
   },
 });
 
+// Request interceptor for logging
+apiClient.interceptors.request.use(
+  (config) => {
+    console.log(`API Request: ${config.method?.toUpperCase()} ${config.url}`);
+    return config;
+  },
+  (error) => {
+    console.error('API Request Error:', error);
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor for error handling
+apiClient.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response) {
+      // Server responded with error status
+      console.error('API Response Error:', {
+        status: error.response.status,
+        data: error.response.data,
+        url: error.config?.url,
+      });
+    } else if (error.request) {
+      // Request made but no response
+      console.error('API No Response:', error.config?.url);
+    } else {
+      // Error in request setup
+      console.error('API Request Setup Error:', error.message);
+    }
+    return Promise.reject(error);
+  }
+);
+
 export interface Streamer {
   username: string;
   avatar: string;
