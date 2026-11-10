@@ -58,6 +58,19 @@ export default defineConfig({
     // }),
   ],
   base: '/chess-stream-explorer/',
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'query-vendor': ['@tanstack/react-query'],
+          'chart-vendor': ['recharts'],
+          'export-vendor': ['xlsx', 'jspdf', 'jspdf-autotable', 'html2canvas', 'dompurify'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+  },
   test: {
     globals: true,
     environment: 'jsdom',
