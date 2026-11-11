@@ -72,11 +72,40 @@ Run ESLint to check for code issues:
 npm run lint
 ```
 
+Auto-fix ESLint issues:
+```bash
+npm run lint:fix
+```
+
 ## Formatting
 
 Format code with Prettier:
 ```bash
 npm run format
+```
+
+Check if code is formatted correctly:
+```bash
+npm run format:check
+```
+
+## Type Checking
+
+Check TypeScript types without building:
+```bash
+npm run type-check
+```
+
+## Testing
+
+Run tests:
+```bash
+npm run test
+```
+
+Run tests with coverage:
+```bash
+npm run test:coverage
 ```
 
 ## Deployment
