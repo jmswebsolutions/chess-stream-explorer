@@ -44,27 +44,32 @@ export const useRecommendationsStore = create<RecommendationsState>()(
       getRecommendations: (streamers: Streamer[], favorites: string[]) => {
         const { viewingHistory } = get();
         const scores = new Map<string, number>();
-        
+
+        // Validate inputs
+        if (!Array.isArray(streamers) || !Array.isArray(favorites)) {
+          return [];
+        }
+
         // Score based on viewing history
         viewingHistory.forEach(({ username, count }) => {
           const score = count * 2;
           scores.set(username, (scores.get(username) || 0) + score);
         });
-        
+
         // Score based on favorites
         favorites.forEach(username => {
           scores.set(username, (scores.get(username) || 0) + 5);
         });
-        
+
         // Score based on similar streamers (same platform)
         const viewedStreamers = streamers.filter(s =>
           viewingHistory.some(h => h.username === s.username)
         );
-        
+
         viewedStreamers.forEach(viewed => {
           streamers.forEach(streamer => {
             if (streamer.username === viewed.username) return;
-            
+
             // Same platform similarity
             if (viewed.twitch && streamer.twitch) {
               scores.set(streamer.username, (scores.get(streamer.username) || 0) + 1);
@@ -72,14 +77,14 @@ export const useRecommendationsStore = create<RecommendationsState>()(
             if (viewed.youtube && streamer.youtube) {
               scores.set(streamer.username, (scores.get(streamer.username) || 0) + 1);
             }
-            
+
             // Both community streamers
             if (viewed.is_community_streamer && streamer.is_community_streamer) {
               scores.set(streamer.username, (scores.get(streamer.username) || 0) + 1);
             }
           });
         });
-        
+
         // Sort by score and return top recommendations
         return streamers
           .filter(s => !favorites.includes(s.username)) // Exclude already favorited
