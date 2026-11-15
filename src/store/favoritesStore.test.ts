@@ -78,20 +78,34 @@ describe('favoritesStore', () => {
   describe('loadFavorites', () => {
     it('should load favorites from localStorage', () => {
       localStorage.setItem('chess-stream-explorer-favorites', JSON.stringify(['user1', 'user2']));
-      
+
       const { loadFavorites } = useFavoritesStore.getState();
       loadFavorites();
-      
+
       expect(useFavoritesStore.getState().favorites).toEqual(['user1', 'user2']);
     });
 
     it('should handle invalid localStorage data', () => {
       localStorage.setItem('chess-stream-explorer-favorites', 'invalid-json');
-      
+
       const { loadFavorites } = useFavoritesStore.getState();
       loadFavorites();
-      
+
       expect(useFavoritesStore.getState().favorites).toEqual([]);
+    });
+
+    it('should handle localStorage errors gracefully', () => {
+      // Mock localStorage.getItem to throw an error
+      const originalGetItem = localStorage.getItem;
+      localStorage.getItem = () => {
+        throw new Error('Storage error');
+      };
+
+      const { loadFavorites } = useFavoritesStore.getState();
+      expect(() => loadFavorites()).not.toThrow();
+
+      // Restore original
+      localStorage.getItem = originalGetItem;
     });
   });
 });
