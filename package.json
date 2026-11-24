@@ -2,6 +2,9 @@
   "name": "chess-stream-explorer",
   "private": true,
   "version": "1.0.0",
+  "description": "A modern React application to discover and follow chess streamers from around the world",
+  "author": "Chess Stream Explorer",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",
